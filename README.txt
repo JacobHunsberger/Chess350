@@ -17,9 +17,9 @@ Paste https://github.com/JacobHunsberger/Chess350/ into URI, Host and Repository
 
 You'll then create a clone of the repository on your own computer.
 
-The rest is pretty straight forward, email me if you have questions or something doesn't work.
+The rest is straight forward, email me if you have questions or something doesn't work.
 
-A shared project should look like a regular project but with orange cylinders on the iccons.
+A shared project looks like a regular project but with orange cylinders on the icons.
 
 
 
