@@ -25,7 +25,7 @@ A shared project should look like a regular project but with orange cylinders on
 
 USING GIT
 ---------
-There's a lot I don't know about git yet, but I figured out some of the basics.
+I don't know a lot about Git yet, but I figured out some of the basics.
 
 You need to commit all your changes and then push or publish your local repository.  If you right click a shared project and go to Team, there is a whole menu of options for Git available.  Click commit, check the files you want to updated, then click "commit and push".
 
