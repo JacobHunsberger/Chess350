@@ -1,28 +1,35 @@
 package model;
 
 /**
- * A Bishop in a game of chess
- * 
- * @author YOUR NAME(S)
+ * A Bishop in a game of chess.
+ * @author Jonathan Powers, Jacob Hunsberger and Jared Thomas
  */
 public class Bishop extends ChessPiece {
 
-	/**
-	 * Constructs a new Bishop object
-	 * 
-	 * @param color the player that owns this piece
-	 */
-	protected Bishop(Player color) {
-		super(color);
-	}
-
+/**
+* Constructs a new Bishop object.
+* @param color the player that owns this piece
+*/
+    protected Bishop(final Player color) {
+        super(color);
+    }
+/**
+ * A Bishop has the type String.
+ * Used for identification.
+ * @return String identifying the Bishop
+ */
 	@Override
-	public String type() {
+	public final String type() {
 		return "Bishop";
 	}
-
+/**
+ * Method check if move is valid for Bishop.
+ * @param move for the move of the Bishop
+ * @param board of type IChessBoard
+ * @return boolean if the move is valid or not
+ */
 	@Override
-	public boolean isValidMove(Move move, IChessBoard board) {
+	public final boolean isValidMove(final Move move, final IChessBoard board) {
 		if (!super.isValidMove(move, board)) {
 			return false;
 		}
@@ -34,3 +41,4 @@ public class Bishop extends ChessPiece {
 		return false;
 	}
 }
+
