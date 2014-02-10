@@ -2,19 +2,30 @@ package model;
 
 /**
  * A player of a chess game.
- *
- * @author Zachary Kurmas
+ * @author Jonathan Powers, Jacob Hunsberger and Jared Thomas
  */
  
+/**
+ * Enum Player, the color can be black or white.
+ */
 public enum Player {
-   BLACK, WHITE;
+   /**
+    * Black Player.
+    */
+   BLACK, 
+   /**
+    * White Player.
+    */
+   WHITE;
 
    /**
     * Return the Player whose turn is next.
-    *
     * @return the Player whose turn is next
     */
    public Player next() {
-      return this == BLACK ? WHITE : BLACK;
+      if (this == BLACK) { 
+    	  return WHITE; }
+      else {
+    	  return BLACK; } 
    }
 }

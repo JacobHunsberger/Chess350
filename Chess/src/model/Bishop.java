@@ -20,7 +20,7 @@ public class Bishop extends ChessPiece {
  */
 	@Override
 	public final String type() {
-		return "Bishop";
+		return "bishop";
 	}
 /**
  * Method check if move is valid for Bishop.
@@ -31,6 +31,9 @@ public class Bishop extends ChessPiece {
 	@Override
 	public final boolean isValidMove(final Move move, final IChessBoard board) {
 		if (!super.isValidMove(move, board)) {
+			return false; 
+			} else if (move.getFromColumn() == move.getToColumn() 
+				|| move.getFromRow() == move.getToRow()) {
 			return false;
 		}
 		
