@@ -3,21 +3,24 @@ package model;
 public class ChessBoard implements IChessBoard {
 
 	// add instance and/or class variables as needed
-	
 	// add other (public or private) methods as needed
+	private IChessPiece[][] board;
 	
 	@Override
 	public int numRows() {
 		// TODO
-		return 0;
+		return 8;
 	}
 
 	@Override
 	public int numColumns() {
 		// TODO
-		return 0;
+		return 8;
 	}
 
+	public final IChessPiece[][] getBoard() {
+		return board;
+	}
 	@Override
 	public IChessPiece pieceAt(int row, int column) {
 		// TODO
@@ -38,5 +41,4 @@ public class ChessBoard implements IChessBoard {
 	public void unset(int row, int column) {
 		// TODO
 	}
-
 }

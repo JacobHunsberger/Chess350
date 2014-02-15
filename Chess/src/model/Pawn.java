@@ -1,9 +1,8 @@
 package model;
 
 /**
- * A pawn in a game of chess
- * 
- * @author YOUR NAME(S)
+ * A pawn in a game of chess.
+ * @author Jonathan Powers, Jacob Hunsberger and Jared Thomas
  */
 public class Pawn extends ChessPiece {
 
@@ -12,22 +11,27 @@ public class Pawn extends ChessPiece {
 
 	/**
 	 * Constructs a new Pawn object
-	 * 
 	 * @param color the player that owns this piece.
 	 */
-	public Pawn(Player color) {
+	public Pawn(final Player color) {
 		super(color);
 		direction = (this.player() == Player.WHITE ? 1 : -1);
 		startingRow = (this.player() == Player.WHITE ? 1 : 6);
 	}
 
-	@Override
-	public String type() {
-		return "Pawn";
+	/**
+	 * @return String "pawn"
+	 */
+	public final String type() {
+		return "pawn";
 	}
 
-	@Override
-	public boolean isValidMove(Move move, IChessBoard board) {
+	/**
+	 * @param move input the move of the pawn
+	 * @param board input the board to check the move
+	 * @return boolean true or false if the move is valid
+	 */
+	public final boolean isValidMove(final Move move, final IChessBoard board) {
 		if (!super.isValidMove(move, board)) {
 			return false;
 		}

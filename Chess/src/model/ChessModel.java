@@ -8,11 +8,12 @@ package model;
 public class ChessModel implements IChessModel {
 
 	/**
-	 * 
+	 * A 2D array of IChessPieces to make up the board.
 	 */
-	private IChessPiece[][] board;
+	private ChessBoard board = new ChessBoard();
+	
 	/**
-	 * 
+	 * The currect player kept in the model.
 	 */
 	private Player currentPlayer;
 	
@@ -39,10 +40,8 @@ public class ChessModel implements IChessModel {
 	 */
 	public final void move(final Move move) {
 		if (isValidMove(move)) {
-			board[move.getToRow()][move.getToColumn()]
-					= pieceAt(move.getFromRow(), move.getFromColumn());
-			board[move.getFromRow()][move.getFromColumn()] 
-					= null;
+			board.set(board.pieceAt(move.getFromRow(), move.getFromColumn()), 
+					move.getToRow(), move.getToColumn());
 		}
 	}
 	/**
@@ -67,7 +66,7 @@ public class ChessModel implements IChessModel {
 	 * @param row an int representing the row
 	 * @return IChessPiece 
 	 */
-	@SuppressWarnings("null")
+	/**@SuppressWarnings("null")
 	public final IChessPiece pieceAt(final int row, final int column) {
 		try {
 			return board[row][column];
@@ -76,5 +75,5 @@ public class ChessModel implements IChessModel {
 					+ "ChessModel " + q.getMessage());
 			return board[(Integer) null][(Integer) null];
 		}
-	}
+	}**/
 }

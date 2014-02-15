@@ -47,63 +47,74 @@ public class Bishop extends ChessPiece {
 				//The move has to be perfectly diagonal
 				return false;
 			} else {
-				if(move.getFromRow() < move.getToRow() && move.getFromColumn() < move.getToColumn()){
+				if (move.getFromRow() < move.getToRow() && move.getFromColumn()
+						< move.getToColumn()) {
 					int i = move.getFromRow() + 1;
 					int c = move.getFromColumn() + 1;
-					while(i < move.getToRow()){
+					while (i < move.getToRow()){
 						/**if(board[i][c].type() != "blank"){
-							System.out.println("Problem, piece at row:" + i + " column:" + c);
+							System.out.println("Problem, piece at row:"
+							 + i + " column:" + c);
 							return false;
 						}
 						else{
 							i++;
 							c++;
-							System.out.println("Nothing at row:" + i + " column:" + c);
+							System.out.println("Nothing at row:" 
+							+ i + " column:" + c);
 						}*/
 					}
-				}
-				else if(move.getFromRow() > move.getToRow() && move.getFromColumn() < move.getToColumn()){
+				} else if (move.getFromRow() > move.getToRow() 
+						&& move.getFromColumn() < move.getToColumn()) {
 					int i = move.getToRow() + 1;
 					int c = move.getToColumn() - 1;
-					while(i < move.getFromRow()){
+					while (i < move.getFromRow()){
 						/**if(board[i][c].type() != "blank"){
-							System.out.println("Problem, piece at row:" + i + " column:" + c);
+							System.out.println("Problem, piece at row:"
+							 + i + " column:" + c);
 							return false;
 						}
 						else{
 							i++;
 							c--;
-							System.out.println("Nothing at row:" + i + " column:" + c);
+							System.out.println("Nothing at row:"
+							 + i + " column:" + c);
 						}*/
 					}
 				}
-				else if(move.getFromRow() < move.getToRow() && move.getFromColumn() > move.getToColumn()){
+				else if (move.getFromRow() < move.getToRow() 
+						&& move.getFromColumn() > move.getToColumn()) {
 					int i = move.getFromRow() +1;
 					int c = move.getFromColumn() - 1;
-					while(i < move.getToRow()){
+					while (i < move.getToRow()){
 						/**if(board[i][c].type() != "blank"){
-							System.out.println("Problem, piece at row:" + i + " column:" + c);
+							System.out.println("Problem, piece at row:"
+							 + i + " column:" + c);
 							return false;
 						}
 						else{
 							i++;
 							c--;
-							System.out.println("Nothing at row:" + i + " column:" + c);
+							System.out.println("Nothing at row:" 
+							+ i + " column:" + c);
 						}*/
 					}
 				}
-				else if(move.getFromRow() > move.getToRow() && move.getFromColumn() > move.getToColumn()){
+				else if (move.getFromRow() > move.getToRow()
+						&& move.getFromColumn() > move.getToColumn()) {
 					int i = move.getToRow() + 1;
 					int c = move.getToColumn() + 1;
-					while(i < move.getFromRow()){
+					while (i < move.getFromRow()){
 						/**if(board[i][c].type() != "blank"){
-							System.out.println("Problem, piece at row:" + i + " column:" + c);
+							System.out.println("Problem, piece at row:" 
+							+ i + " column:" + c);
 							return false;
 						}
 						else{
 							i++;
 							c++;
-							System.out.println("Nothing at row:" + i + " column:" + c);
+							System.out.println("Nothing at row:" + i 
+							+ " column:" + c);
 						}*/
 					}
 				}
