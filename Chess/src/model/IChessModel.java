@@ -4,15 +4,13 @@ package model;
  * Objects implementing this interface represent the state of a chess game.
  * Notice that this interface is designed to maintain the game state only,
  * it does not provide any methods to control the flow of the game.
- *
- * @author Zachary Kurmas
+ * @author Jonathan Powers, Jacob Hunsberger and Jared Thomas
  */
 
 public interface IChessModel {
 
    /**
     * Returns whether the game is complete.
-    *
     * @return true if complete, false otherwise.
     */
    boolean isComplete();
@@ -20,11 +18,11 @@ public interface IChessModel {
    /**
     * Returns whether the piece at location [move.fromRow, move.fromColumn]
     * is allowed to move to location [move.fromRow, move.fromColumn].
-    *
     * @param move a Move object describing the move to be made.
     * @return true if the proposed move is valid, false otherwise.
-    * @throws IndexOutOfBoundsException if either [move.fromRow, move.fromColumn]
-    * 			or [move.toRow,move.toColumn] don't represent valid locations on the board.
+    * @throws IndexOutOfBoundsException if either [move.fromRow, 
+    * move.fromColumn] or [move.toRow,move.toColumn] 
+    * don't represent valid locations on the board.
     */
    boolean isValidMove(Move move);
 
