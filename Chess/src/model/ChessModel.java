@@ -66,14 +66,17 @@ public class ChessModel implements IChessModel {
 	 * @param row an int representing the row
 	 * @return IChessPiece 
 	 */
-	/**@SuppressWarnings("null")
+	/**@SuppressWarnings("null") */
 	public final IChessPiece pieceAt(final int row, final int column) {
+		IChessPiece chessPiece = null;
+		
 		try {
-			return board[row][column];
+			chessPiece = board.pieceAt(row, column);
 		} catch (IndexOutOfBoundsException q) {
 			System.out.println("IndexOutOfBoundsException pieceAt() "
 					+ "ChessModel " + q.getMessage());
-			return board[(Integer) null][(Integer) null];
 		}
-	}**/
+		
+		return chessPiece;
+	}
 }

@@ -6,39 +6,47 @@ public class ChessBoard implements IChessBoard {
 	// add other (public or private) methods as needed
 	private IChessPiece[][] board;
 	
+	private final int numRows = 8;
+	private final int numColumns = 8;
+	
+	public ChessBoard() {
+		board = new ChessPiece[numRows][numColumns];
+	}
+	
 	@Override
 	public int numRows() {
-		// TODO
-		return 8;
+		return numRows;
 	}
 
 	@Override
 	public int numColumns() {
-		// TODO
-		return 8;
+		return numColumns;
 	}
 
 	public final IChessPiece[][] getBoard() {
 		return board;
 	}
+	
 	@Override
 	public IChessPiece pieceAt(int row, int column) {
-		// TODO
-		return null;
+		return board[row][column];
 	}
 
 	@Override
 	public void move(Move move) {
-		// TODO
+		IChessPiece chessPiece = 
+				board[move.getFromRow()][move.getFromColumn()];
+		unset(move.getFromRow(), move.getFromColumn());
+		board[move.getToRow()][move.getToColumn()] = chessPiece;
 	}
 
 	@Override
 	public void set(IChessPiece piece, int row, int column) {
-		// TODO
+		board[row][column] = piece;
 	}
 
 	@Override
 	public void unset(int row, int column) {
-		// TODO
+		board[row][column] = null;
 	}
 }
