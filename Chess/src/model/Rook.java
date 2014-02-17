@@ -23,6 +23,11 @@ public class Rook extends ChessPiece {
 
     @Override
     public boolean isValidMove(final Move move, final IChessBoard board) {
+        int fromRow = move.getFromRow();
+        int toRow =   move.getToRow();
+        int fromCol = move.getFromColumn();
+        int toCol =   move.getToColumn();
+
         if (!super.isValidMove(move, board)) {
             return false;
         }
@@ -31,19 +36,37 @@ public class Rook extends ChessPiece {
         // spaces as desired without jumping over other chess pieces;
         // can't move diagonally
 
-        // Cannot move diagonally.
-        if (move.getFromRow() != move.getToRow()) {
+        // Moved diagonally
+        if (fromRow != toRow) {
             return false;
         }
 
-        if (move.getFromRow() != move.getToRow()) {
+        if (fromCol != toCol) {
             return false;
         }
 
-        // Cannot jump over spaces.
+        // Vertical move
+        if (fromRow == toRow) {
+        	for (int i = Math.min(fromCol, toCol) + 1;
+        		     i < Math.max(fromCol, toCol); i++) {
+        		// TODO change check to match board model
+        		if (board.pieceAt(fromRow, i) != null) {
+        			return false;
+        		}
+        	}
+        }
+        
+        // Horizontal move
+        if (fromCol == toCol) {
+        	for (int i = Math.min(fromCol, toCol) + 1;
+        			 i < Math.max(fromCol, toCol); i++) {
+        		// TODO change check to match board model
+        		if (board.pieceAt(i, fromCol) != null) {
+        			return false;
+        		}
+        	}
+        }
 
-        // Vertical move.
-
-        return false;
+        return true;
     }
 }
