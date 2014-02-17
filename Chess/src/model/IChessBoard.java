@@ -24,10 +24,9 @@ public interface IChessBoard {
     * @param row    the row (numbered 0 through numRows -1)
     * @param column the column (numbered 0 through numColumns -1)
     * @return the ChessPiece object at location [row, column].
-    * @throws IndexOutOfBoundsException if [row, column] is not a valid location on the board.
     */
    IChessPiece pieceAt(int row, int column);
-   
+
     /**
     * Make the specified move.  The move must be validated (i.e., this method
     * will not verify that the move is legal).
