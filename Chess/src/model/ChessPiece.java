@@ -60,7 +60,8 @@ public abstract class ChessPiece implements IChessPiece {
             // Cannot take piece of your own color.
             if (board.pieceAt(move.getToRow(), move.getToColumn()).
                 player().equals(this.player())) {
-                return false;
+               
+            	return false;
             }
         } catch (IndexOutOfBoundsException e) {
             return false;

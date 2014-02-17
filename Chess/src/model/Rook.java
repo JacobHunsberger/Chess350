@@ -37,16 +37,13 @@ public class Rook extends ChessPiece {
         // can't move diagonally
 
         // Moved diagonally
-        if (fromRow != toRow) {
-            return false;
-        }
-
-        if (fromCol != toCol) {
+        if (fromRow != toRow && fromCol != toCol) {
             return false;
         }
 
         // Vertical move
         if (fromRow == toRow) {
+        	// Check empty spaces
         	for (int i = Math.min(fromCol, toCol) + 1;
         		     i < Math.max(fromCol, toCol); i++) {
         		// TODO change check to match board model
@@ -57,7 +54,8 @@ public class Rook extends ChessPiece {
         }
         
         // Horizontal move
-        if (fromCol == toCol) {
+        else if (fromCol == toCol) {
+        	// Check empty spaces
         	for (int i = Math.min(fromRow, toRow) + 1;
         			 i < Math.max(fromRow, toRow); i++) {
         		// TODO change check to match board model
