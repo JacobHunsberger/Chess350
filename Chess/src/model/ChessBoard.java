@@ -11,7 +11,7 @@ public class ChessBoard implements IChessBoard {
 	
 	public ChessBoard() {
 		board = new ChessPiece[numRows][numColumns];
-		setBoardTraditional();
+//		setBoardTraditional();		// deactivated for testing
 	}
 	
 	@Override
