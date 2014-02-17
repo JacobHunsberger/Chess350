@@ -31,7 +31,7 @@ public class Knight extends ChessPiece {
 		if (!super.isValidMove(move, board)) {
 			return false;
 		}
-		// verify move is only 2 by 1
+		// verify move is only 2 by 1 or 1 by 2
 		else if(!(((Math.abs(fromColumn - toColumn) == 2) &&
 				(Math.abs(fromRow - toRow) == 1)) ||
 				((Math.abs(fromColumn - toColumn) == 1) &&
