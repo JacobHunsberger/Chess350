@@ -6,8 +6,9 @@ package model;
  */
 public class Pawn extends ChessPiece {
 
-	private int direction;
+	private int d;
 	private int startingRow;
+	private boolean firstMove;
 
 	/**
 	 * Constructs a new Pawn object
@@ -15,8 +16,9 @@ public class Pawn extends ChessPiece {
 	 */
 	public Pawn(final Player color) {
 		super(color);
-		direction = (this.player() == Player.WHITE ? 1 : -1);
+		d = (this.player() == Player.WHITE ? 1 : -1);
 		startingRow = (this.player() == Player.WHITE ? 1 : 6);
+		firstMove = false;
 	}
 
 	/**
@@ -41,8 +43,21 @@ public class Pawn extends ChessPiece {
 		// Pawn can only move straight forward.
 		// Pawn can only capture one of the enemy by approaching diagonally
 		
-		// TODO
-		return false;
+		if (this.player() == Player.WHITE) {
+			return whiteMove(move, board);
+		}
+		
+		return blackMove(move, board);
 	}
-
+	
+	private boolean whiteMove(final Move move, final IChessBoard board) {
+		if (firstMove) {
+			if (move.)
+		}
+		return true;
+	}
+	
+	private boolean blackMove(final Move move, final IChessBoard board) {
+		return true;
+	}
 }

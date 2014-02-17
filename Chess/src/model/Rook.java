@@ -58,8 +58,8 @@ public class Rook extends ChessPiece {
         
         // Horizontal move
         if (fromCol == toCol) {
-        	for (int i = Math.min(fromCol, toCol) + 1;
-        			 i < Math.max(fromCol, toCol); i++) {
+        	for (int i = Math.min(fromRow, toRow) + 1;
+        			 i < Math.max(fromRow, toRow); i++) {
         		// TODO change check to match board model
         		if (board.pieceAt(i, fromCol) != null) {
         			return false;
