@@ -56,11 +56,16 @@ public class Pawn extends ChessPiece {
 			}
 		}
 		
-		// If the pawn didn't take the special move, 
+		// If the pawn didn't make the special move, 
 		// then it must make an ordinary move.
 		
 		// Pawn must move forward 1 row
 	    if ((move.getFromRow() + direction) != move.getToRow()) {
+	    	return false;
+	    }
+	    
+	    // Pawn may only move 1 space diagonally
+	    if (Math.abs(move.getToRow() - move.getFromRow()) > 1) {
 	    	return false;
 	    }
 	    
@@ -69,11 +74,6 @@ public class Pawn extends ChessPiece {
 	    	if (board.pieceAt(move.getToRow(), move.getToColumn()) != null) {
 	    		return false;
 	    	}
-	    }
-		
-	    // Pawn may only move 1 space diagonally
-	    if (Math.abs(move.getToRow() - move.getFromRow()) > 1) {
-	    	return false;
 	    }
 	    
 	    // If pawn moved diagonally, space cannot be empty or occupied
