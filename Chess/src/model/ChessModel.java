@@ -64,9 +64,8 @@ public class ChessModel implements IChessModel {
 	 * This method tells you if there is a piece at a spot you specify.
 	 * @param column an int representing the column
 	 * @param row an int representing the row
-	 * @return IChessPiece 
+	 * @return IChessPiece Piece at the spot
 	 */
-	/**@SuppressWarnings("null") */
 	public final IChessPiece pieceAt(final int row, final int column) {
 		IChessPiece chessPiece = null;
 		

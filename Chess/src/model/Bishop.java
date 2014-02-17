@@ -122,9 +122,8 @@ public class Bishop extends ChessPiece {
 		
 		// Bishop can move diagonally only just as many spaces as desired
 		// without jumping over other chess pieces
-		
-		// TODO
-		return false;
+	
+		return true;
 	}
 }
 

@@ -59,6 +59,6 @@ public interface IChessModel {
     * @throws IndexOutOfBoundsException if {@code [row, column]} is not a valid
     *														location on the board.
     */
-    /**IChessPiece pieceAt(int row, int column);
-	**/
+    IChessPiece pieceAt(int row, int column);
+	
 }
