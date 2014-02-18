@@ -10,8 +10,11 @@ public class ChessModel implements IChessModel {
 	/**
 	 * A 2D array of IChessPieces to make up the board.
 	 */
-	private ChessBoard board = new ChessBoard();
-	board.setBoard();
+	ChessBoard board = new ChessBoard();
+	private ChessModel(){
+		board.setBoard();
+	}
+	
 	/**
 	 * The currect player kept in the model.
 	 */
