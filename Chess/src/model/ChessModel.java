@@ -11,7 +11,7 @@ public class ChessModel implements IChessModel {
 	 * A 2D array of IChessPieces to make up the board.
 	 */
 	private ChessBoard board = new ChessBoard();
-	
+	board.setBoard();
 	/**
 	 * The currect player kept in the model.
 	 */
@@ -40,8 +40,7 @@ public class ChessModel implements IChessModel {
 	 */
 	public final void move(final Move move) {
 		if (isValidMove(move)) {
-			board.set(board.pieceAt(move.getFromRow(), move.getFromColumn()), 
-					move.getToRow(), move.getToColumn());
+			board.move(move);
 		}
 	}
 	/**
