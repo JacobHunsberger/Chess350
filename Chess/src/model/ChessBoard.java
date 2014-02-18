@@ -35,10 +35,10 @@ public class ChessBoard implements IChessBoard {
 
 	@Override
 	public void move(Move move) {
-		IChessPiece chessPiece = 
+		IChessPiece piece = 
 				board[move.getFromRow()][move.getFromColumn()];
 		unset(move.getFromRow(), move.getFromColumn());
-		board[move.getToRow()][move.getToColumn()] = chessPiece;
+		set(piece, move.getToRow(), move.getToColumn());
 	}
 
 	@Override
@@ -54,7 +54,7 @@ public class ChessBoard implements IChessBoard {
 	/**
 	 * Sets up this board for a traditional game of Chess.
 	 */
-	private void setBoardTraditional() {
+	public void setBoard() {
 		Player p = Player.WHITE;
 		int row = 0;
 		
