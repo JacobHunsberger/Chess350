@@ -1,7 +1,6 @@
 package model;
 
 public class ChessBoard implements IChessBoard {
-
 	// add instance and/or class variables as needed
 	// add other (public or private) methods as needed
 	private IChessPiece[][] board;
@@ -85,4 +84,3 @@ public class ChessBoard implements IChessBoard {
 		}
 	}
 }
-	
