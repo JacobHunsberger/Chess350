@@ -36,7 +36,7 @@ public class Rook extends ChessPiece {
         // spaces as desired without jumping over other chess pieces;
         // can't move diagonally
 
-        // Moved diagonally
+        // Rooks can only move horizontally
         if (fromRow != toRow && fromCol != toCol) {
             return false;
         }
