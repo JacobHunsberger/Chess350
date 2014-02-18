@@ -38,14 +38,13 @@ public interface IChessModel {
 
    /**
     * Report whether the current player is in check.
-    *
     * @return true if the current player is in check, false otherwise.
+    * @param move input the last move made.
     */
-   boolean inCheck();
+   boolean inCheck(Move move);
 
    /**
     * Return the current player.
-    *
     * @return the current player
     */
    Player currentPlayer();
