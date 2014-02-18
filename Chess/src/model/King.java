@@ -7,6 +7,8 @@ package model;
  */
 public class King extends ChessPiece {
 
+	private boolean firstMove;
+	
     /**
      * Constructs a new King object.
      *
@@ -14,6 +16,7 @@ public class King extends ChessPiece {
      */
     protected King(final Player color) {
         super(color);
+        firstMove = true;
     }
 
     @Override
@@ -38,6 +41,11 @@ public class King extends ChessPiece {
             return false;
         }
 
+        firstMove = false;
         return true;
+    }
+    
+    public boolean firstMove() {
+    	return firstMove;
     }
 }

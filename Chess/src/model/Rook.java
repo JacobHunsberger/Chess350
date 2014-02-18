@@ -7,6 +7,8 @@ package model;
  */
 public class Rook extends ChessPiece {
 
+	private boolean firstMove;
+	
     /**
      * Constructor a new Rook object.
      *
@@ -14,6 +16,7 @@ public class Rook extends ChessPiece {
      */
     public Rook(final Player color) {
         super(color);
+        firstMove = true;
     }
 
     @Override
@@ -65,6 +68,11 @@ public class Rook extends ChessPiece {
         	}
         }
 
+        firstMove = false;
         return true;
+    }
+    
+    public boolean firstMove() {
+    	return firstMove;
     }
 }
