@@ -10,7 +10,6 @@ public class ChessBoard implements IChessBoard {
 	
 	public ChessBoard() {
 		board = new ChessPiece[numRows][numColumns];
-//		setBoardTraditional();		// deactivated for testing
 	}
 	
 	@Override
