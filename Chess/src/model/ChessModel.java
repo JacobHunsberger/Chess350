@@ -24,8 +24,33 @@ public class ChessModel implements IChessModel {
 	 * @return boolean true or false if the game is complete
 	 */
 	public final boolean isComplete() {
-		// TODO
-		return false;
+		if (board.getMoveLength() < 7){ //Shortest checkmate is 4 move checkmate
+			return false;
+		}
+		//First the king must be in check
+		int[] temp = findKing(currentPlayer());
+		if (!inCheck(board.getMove(board.getMoveLength() - 1))) {
+			return false;
+		}
+		//Can the king move out of check
+		for (int i = 0; i < 3; i++) {
+			for (int k = 0; k < 3; k++) {
+				if(pieceAt(temp[0],temp[1]).isValidMove(new Move(temp[0],temp[1],i,k), board)) {
+					ChessBoard tempBoard = board;
+					Move tempMove = new Move(temp[0],temp[1],i,k);
+					move(tempMove);
+					if (inCheck(tempMove)) {
+						board = tempBoard;
+						return false;
+					}
+					board = tempBoard;
+				}
+			}
+		}
+		//Can piece block the check move
+		
+		//If all the fails then we have checkmate
+		return true;
 	}
 
 	/**
