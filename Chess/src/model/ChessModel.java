@@ -33,17 +33,18 @@ public class ChessModel implements IChessModel {
 	 * @return boolean true or false if the move is valid
 	 */
 	public final boolean isValidMove(final Move move) {
-		//First check if we are castling 
-		if (pieceAt(move.getFromRow(),move.getFromColumn()).type() == "king") {
+		//Make sure the peice you move is your piece.
+		if (pieceAt(move.getFromRow(),move.getFromColumn()).player() != currentPlayer()) {
+			return false;
+		}
+		//castling - to be implemented later 
+		//if (pieceAt(move.getFromRow(),move.getFromColumn()).type() == "king") {
 			// Check if the king is on it's first move
 			//if () {
 				
 			//}
-		}
-		if (pieceAt(move.getFromRow(),move.getFromColumn()).isValidMove(move, board)) {
-			return true;
-		}
-		return false;
+		//}
+		return pieceAt(move.getFromRow(),move.getFromColumn()).isValidMove(move, board);
 	}
 
 	/**
