@@ -3,7 +3,7 @@ package model;
 /**
  * A Queen in a game of chess
  * 
- * @author Jared Thomas
+ * @author Jonathan Powers, Jacob Hunsberger and Jared Thomas
  */
 public class Queen extends ChessPiece {
 	
@@ -32,7 +32,7 @@ public class Queen extends ChessPiece {
 			return false;
 		}
 		// check for not horizontal, vertical, or diagonal moves
-		else if((Math.abs(fromColumn- toColumn) != Math.abs(fromRow - toRow))&&
+		if((Math.abs(fromColumn- toColumn) != Math.abs(fromRow - toRow))&&
 				(!(fromRow - toRow != 0 && fromColumn - toColumn == 0) &&
 				!(fromColumn - toColumn != 0 && fromRow - toRow == 0))) {
 			return false;
@@ -43,7 +43,7 @@ public class Queen extends ChessPiece {
 		{
 			// vertical
 			if(fromColumn == toColumn) {
-				int dy = (toRow - fromRow) / (toRow - fromRow);
+				int dy = (toRow - fromRow) / Math.abs(toRow - fromRow);
 				for(int i = 1; i <= Math.abs(toRow - fromRow); i++) {
 					// verify no pieces on point unless at 2nd point
 					if(board.pieceAt(fromRow + dy * i, toColumn) != null &&
@@ -56,7 +56,7 @@ public class Queen extends ChessPiece {
 			
 			// horizontal
 			else if(fromRow == toRow) {
-				int dx = (toColumn - fromColumn) / (toColumn - fromColumn);
+				int dx = (toColumn - fromColumn) / Math.abs(toColumn - fromColumn);
 				for(int i = 1; i < Math.abs(toColumn - fromColumn); i++) {
 					// verify no pieces at point unless at 2nd point
 					if(board.pieceAt(toRow, fromColumn + dx * i) != null &&
@@ -69,12 +69,11 @@ public class Queen extends ChessPiece {
 			
 			// diagonal
 			else {
-				int dx = (toColumn - fromColumn) / (toColumn - fromColumn);
-				int dy = (toRow - fromRow) / (toRow - fromRow);
+				int dx = (toColumn - fromColumn) / Math.abs(toColumn - fromColumn);
+				int dy = (toRow - fromRow) / Math.abs(toRow - fromRow);
 				for(int i = 1; i < Math.abs(toColumn - fromColumn);i++) {
-					// verify no pieces at point unless 2nd point
-					if(board.pieceAt(fromRow + i * dy, fromColumn + i * dx) !=
-							null && (fromColumn + dx * i != toColumn)) {
+					// verify no pieces at point
+					if(board.pieceAt(fromRow + i * dy, fromColumn + i * dx) != null) {
 						return false;
 					}
 				}

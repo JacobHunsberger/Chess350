@@ -24,10 +24,92 @@ public class ChessModel implements IChessModel {
 	 * @return boolean true or false if the game is complete
 	 */
 	public final boolean isComplete() {
-		// TODO
-		return false;
+		if (board.getMoveLength() < 7){ //Shortest checkmate is 4 move checkmate
+			return false;
+		}
+		//First the king must be in check
+		int[] temp = findKing(currentPlayer());
+		if (!inCheck(board.getMove(board.getMoveLength() - 1))) {
+			return false;
+		}
+		//Can the king move out of check
+		for (int i = 0; i < 3; i++) {
+			for (int k = 0; k < 3; k++) {
+				if(pieceAt(temp[0],temp[1]).isValidMove(new Move(temp[0],temp[1],i,k), board)) {
+					ChessBoard tempBoard = board;
+					Move tempMove = new Move(temp[0],temp[1],i,k);
+					move(tempMove);
+					if (inCheck(tempMove)) {
+						board = tempBoard;
+						return false;
+					}
+					board = tempBoard;
+				}
+			}
+		}
+		//Can a piece take the checkMaker
+		IChessPiece checkMakers = pieceTakePiece(temp);
+		int[] foundPiece = pieceAtReverse(checkMakers);
+		if (boardCheckHelper(foundPiece[0],foundPiece[1],checkMakers.player())) {
+			return false;
+		}
+		//Can we block the checkMaker
+		if (canBlock(pieceAt(temp[0],temp[1]),checkMakers)) {
+			return false;
+		}
+		//If all the fails then we have checkmate
+		return true;
 	}
 
+	/**
+	 * 
+	 * @param defending assumes this piece is the one you want to protect
+	 * @param taker assumes this piece is the taker 
+	 * @return
+	 */
+	private final boolean canBlock(IChessPiece defending, IChessPiece taker) {
+		/* If the taker piece is a knight you can't block a knight.
+		 * You also can't block a pawn or a King because they only can
+		 * take one one spot at a time. 
+		*/
+		if (taker.type() == "knight" || taker.type() == "king" 
+				|| taker.type() == "pawn") {
+			return false;
+		}
+		int[] defPoint = pieceAtReverse(defending);
+		int[] takePoint = pieceAtReverse(taker);
+		// Is this a horozontal or vertial move
+		if (defPoint[0] == takePoint[0] || defPoint[1] == takePoint[1]) {
+			// Make sure there is space between the two pieces to block each other
+			if (Math.abs(defPoint[0] - takePoint[0]) > 1 
+					|| Math.abs(defPoint[1] - takePoint[1]) > 1 ) {
+				//TODO
+			}
+			return true;
+		}
+		// Now we know that the move is diagonal
+		//TODO
+		return true;
+	}
+	/**
+	 * Input the piece that can be taken. This could be used for the king 
+	 * or for stategy for the A.I.
+	 * @param p
+	 * @return int[] the piece that can take another piece
+	 */
+	private final IChessPiece pieceTakePiece (int[] h) {
+		IChessPiece temp = null;
+		Move m;
+		for(int i = 0; i < 8; i++){
+			for(int k = 0; k < 8; k++){
+				m = new Move(i,k,h[0],h[1]);
+				if (pieceAt(i,k).isValidMove(m, board)) {
+					temp = pieceAt(i,k);
+				}
+			}
+		}
+		return temp;
+	}
 	/**
 	 * @param move input the move of the piece
 	 * @return boolean true or false if the move is valid
@@ -40,8 +122,7 @@ public class ChessModel implements IChessModel {
 		//castling - to be implemented later 
 		//if (pieceAt(move.getFromRow(),move.getFromColumn()).type() == "king") {
 			// Check if the king is on it's first move
-			//if () {
-				
+			//if () {		
 			//}
 		//}
 		return pieceAt(move.getFromRow(),move.getFromColumn()).isValidMove(move, board);
@@ -153,5 +234,17 @@ public class ChessModel implements IChessModel {
 					+ "ChessModel " + q.getMessage());
 		}
 		return chessPiece;
+	}
+	private final int[] pieceAtReverse(IChessPiece p) {
+		int[] temp = new int[2];
+		for(int i = 0; i < 8; i++){
+			for(int k = 0; k < 8; k++){
+				if (pieceAt(i,k).equals(p)) {
+					temp[0] = i;
+					temp[1] = k;
+				}
+			}
+		}
+		return temp;
 	}
 }

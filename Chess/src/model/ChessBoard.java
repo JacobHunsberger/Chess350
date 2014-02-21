@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 public class ChessBoard implements IChessBoard {
 	// add instance and/or class variables as needed
 	// add other (public or private) methods as needed
@@ -7,18 +9,19 @@ public class ChessBoard implements IChessBoard {
 	
 	private final int numRows = 8;
 	private final int numColumns = 8;
+	ArrayList<Move> allMoves = new ArrayList<Move>();
 	
 	public ChessBoard() {
 		board = new ChessPiece[numRows][numColumns];
 	}
 	
 	@Override
-	public int numRows() {
+	public final int numRows() {
 		return numRows;
 	}
 
 	@Override
-	public int numColumns() {
+	public final int numColumns() {
 		return numColumns;
 	}
 
@@ -37,8 +40,18 @@ public class ChessBoard implements IChessBoard {
 				board[move.getFromRow()][move.getFromColumn()];
 		unset(move.getFromRow(), move.getFromColumn());
 		set(piece, move.getToRow(), move.getToColumn());
+		updateMoveList(move);
 	}
 
+	private void updateMoveList(Move move){
+		allMoves.add(move);
+	}
+	protected Move getMove(int x){
+		return allMoves.get(x);
+	}
+	protected int getMoveLength(){
+		return allMoves.size();
+	}
 	@Override
 	public void set(IChessPiece piece, int row, int column) {
 		board[row][column] = piece;

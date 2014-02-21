@@ -3,7 +3,7 @@ package model;
 /**
  * The Knight in a game of chess
  * 
- * @author Jared Thomas
+ * @author Jonathan Powers, Jacob Hunsberger and Jared Thomas
  */
 public class Knight extends ChessPiece {
 
