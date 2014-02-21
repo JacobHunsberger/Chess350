@@ -20,7 +20,7 @@ public class Bishop extends ChessPiece {
  */
 	@Override
 	public final String type() {
-		return "bishop";
+		return "Bishop";
 	}
 /**
  * Method check if move is valid for Bishop.

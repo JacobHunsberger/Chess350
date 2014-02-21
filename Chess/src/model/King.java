@@ -21,7 +21,7 @@ public class King extends ChessPiece {
 
     @Override
     public String type() {
-        return "king";
+        return "King";
     }
 
     @Override

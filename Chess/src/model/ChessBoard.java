@@ -46,12 +46,15 @@ public class ChessBoard implements IChessBoard {
 	private void updateMoveList(Move move){
 		allMoves.add(move);
 	}
+	
 	protected Move getMove(int x){
 		return allMoves.get(x);
 	}
+	
 	protected int getMoveLength(){
 		return allMoves.size();
 	}
+	
 	@Override
 	public void set(IChessPiece piece, int row, int column) {
 		board[row][column] = piece;

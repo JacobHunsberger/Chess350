@@ -24,7 +24,7 @@ public class Pawn extends ChessPiece {
 	 * @return String "pawn"
 	 */
 	public final String type() {
-		return "pawn";
+		return "Pawn";
 	}
 
 	/**
