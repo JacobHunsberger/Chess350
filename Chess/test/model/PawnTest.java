@@ -26,7 +26,7 @@ public class PawnTest {
 		move = new Move(1, c, r, c);
 		assertTrue(pawn.isValidMove(move, board));
 		
-		// Test normal movement
+		// Test movement
 		for (int i = -2; i <= 2; i++) {
 			for (int j = -2; j <= 2; j++) {
 				move = new Move(r, c, r + i, c + j);
@@ -44,25 +44,58 @@ public class PawnTest {
 		board.set(new Rook(Player.BLACK), r + 1, c - 1);
 		move = new Move(r, c, r + 1, c - 1);
 		assertTrue(pawn.isValidMove(move, board));
-		move = new Move(r, c, r + 1, c);
-		assertTrue(pawn.isValidMove(move, board));
+		
 		move = new Move(r, c, r + 1, c + 1);
 		assertFalse(pawn.isValidMove(move, board));
 		
 		board.set(new Rook(Player.BLACK), r + 1, c + 1);
-		move = new Move(r, c, r + 1, c - 1);
-		assertTrue(pawn.isValidMove(move, board));
-		move = new Move(r, c, r + 1, c);
-		assertTrue(pawn.isValidMove(move, board));
 		move = new Move(r, c, r + 1, c + 1);
 		assertTrue(pawn.isValidMove(move, board));
 		
-		board.unset(r + 1, c - 1);
+		board.set(new Rook(Player.WHITE), r + 1, c - 1);
 		move = new Move(r, c, r + 1, c - 1);
 		assertFalse(pawn.isValidMove(move, board));
-		move = new Move(r, c, r + 1, c);
+		
+		// BLACK
+		board = new ChessBoard();
+		pawn = new Pawn(Player.BLACK);
+		board.set(pawn, 6, c);
+		
+		r = 4;
+		c = 4;
+		
+		// Test special move
+		move = new Move(6, c, r, c);
 		assertTrue(pawn.isValidMove(move, board));
-		move = new Move(r, c, r + 1, c + 1);
+		
+		// Test movement
+		for (int i = -2; i <= 2; i++) {
+			for (int j = -2; j <= 2; j++) {
+				move = new Move(r, c, r + i, c + j);
+				
+				if (i == -1 && j == 0) {
+					assertTrue(pawn.isValidMove(move, board));
+				}
+				else {
+					assertFalse(pawn.isValidMove(move, board));
+				}
+			}
+		}
+		
+		// Test capturing 
+		board.set(new Rook(Player.WHITE), r - 1, c - 1);
+		move = new Move(r, c, r - 1, c - 1);
 		assertTrue(pawn.isValidMove(move, board));
+		
+		move = new Move(r, c, r - 1, c + 1);
+		assertFalse(pawn.isValidMove(move, board));
+		
+		board.set(new Rook(Player.WHITE), r - 1, c + 1);
+		move = new Move(r, c, r - 1, c + 1);
+		assertTrue(pawn.isValidMove(move, board));
+		
+		board.set(new Rook(Player.BLACK), r - 1, c - 1);
+		move = new Move(r, c, r - 1, c - 1);
+		assertFalse(pawn.isValidMove(move, board));
 	}
 }
