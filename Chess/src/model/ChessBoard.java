@@ -97,5 +97,11 @@ public class ChessBoard implements IChessBoard {
 			row = 6;
 			p.next();
 		}
+		
+		for (int i = 2; i <= 5; i++) {
+			for (int j = 0; j < numColumns; j++) {
+				set(null, i, j);
+			}
+		}
 	}
 }

@@ -8,20 +8,20 @@ public class ChessBoardTest {
 
 	@Test
 	public void testNumRows() {
-		ChessBoard board = new ChessBoard();
+		IChessBoard board = new ChessBoard();
 		assertEquals(8, board.numRows());
 	}
 	
 	@Test
 	public void testNumColumns() {
-		ChessBoard board = new ChessBoard();
+		IChessBoard board = new ChessBoard();
 		assertEquals(8, board.numColumns());
 	}
 
 	@Test
 	public void testPieceAt() {
-		ChessBoard board = new ChessBoard();
-		board.setBoard();
+		IChessBoard board = new ChessBoard();
+		((ChessBoard) board).setBoard();
 		
 		assertTrue(board.pieceAt(1, 0).type().equals("Pawn"));
 		assertTrue(board.pieceAt(6, 4).type().equals("Pawn"));
@@ -34,7 +34,7 @@ public class ChessBoardTest {
 	
 	@Test
 	public void testMove() {
-		ChessBoard board = new ChessBoard();
+		IChessBoard board = new ChessBoard();
 		
 		// Move to an empty space
 		IChessPiece piece = new Rook(Player.WHITE);
@@ -60,32 +60,32 @@ public class ChessBoardTest {
 	
 	@Test
 	public void testSet() {
-		ChessBoard board = new ChessBoard();
+		IChessBoard board = new ChessBoard();
 		
 		// Add first piece
-		ChessPiece pawn = new Pawn(Player.WHITE);
+		IChessPiece pawn = new Pawn(Player.WHITE);
 		assertEquals(null, board.pieceAt(0,  0));
 		board.set(pawn, 0, 0);
 		assertEquals(pawn, board.pieceAt(0, 0));
 		
 		// Add second piece in same row
-		ChessPiece rook = new Rook(Player.BLACK);
+		IChessPiece rook = new Rook(Player.BLACK);
 		assertEquals(null, board.pieceAt(0, 1));
 		board.set(rook, 0, 1);
 		assertEquals(rook, board.pieceAt(0, 1));
 		
 		// Add third piece in same column
-		ChessPiece knight = new Knight(Player.BLACK);
+		IChessPiece knight = new Knight(Player.BLACK);
 		board.set(knight, 1, 1);
 		assertEquals(knight, board.pieceAt(1,1));
 		
 		// Add fourth piece in different row and column
-		ChessPiece king = new Bishop(Player.WHITE);
+		IChessPiece king = new Bishop(Player.WHITE);
 		board.set(king, 5, 6);
 		assertEquals(king, board.pieceAt(5, 6));
 		
 		// Overwrite piece
-		ChessPiece bishop = new Bishop(Player.WHITE);
+		IChessPiece bishop = new Bishop(Player.WHITE);
 		assertTrue(board.pieceAt(0, 0) == pawn);
 		board.set(bishop, 0, 0);
 		assertEquals(bishop, board.pieceAt(0, 0));
@@ -94,8 +94,8 @@ public class ChessBoardTest {
 	}
 	
 	public void testUnset() {
-		ChessBoard board = new ChessBoard();
-		board.setBoard();
+		IChessBoard board = new ChessBoard();
+		((ChessBoard) board).setBoard();
 		
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {

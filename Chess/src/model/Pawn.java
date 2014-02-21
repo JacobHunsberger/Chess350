@@ -17,7 +17,7 @@ public class Pawn extends ChessPiece {
 		super(color);
 		direction = (this.player() == Player.WHITE ? 1 : -1);
 		startingRow = (this.player() == Player.WHITE ? 1 : 6);
-		firstMove = false;
+		firstMove = true;
 	}
 
 	/**
@@ -78,7 +78,7 @@ public class Pawn extends ChessPiece {
 	    
 	    // If pawn moved diagonally, space cannot be empty or occupied
 	    // by the same color (already checked in super)
-	    if (board.pieceAt(move.getToRow(), move.getToColumn()) == null) {
+	    else if (board.pieceAt(move.getToRow(), move.getToColumn()) == null) {
     		return false;
     	}
 		
