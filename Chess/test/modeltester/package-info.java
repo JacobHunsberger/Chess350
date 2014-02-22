@@ -5,4 +5,4 @@
  * @author Jon Powers Laptop
  *
  */
-package modelTest;
+package modeltester;
