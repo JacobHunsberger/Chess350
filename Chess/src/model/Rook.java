@@ -6,7 +6,9 @@ package model;
  * @author Jacob Hunsberger, Jon Powers, Jared Thomas
  */
 public class Rook extends ChessPiece {
-
+	/**
+	 * boolean to record first move or not.
+	 */
 	private boolean firstMove;
 	
     /**
@@ -19,31 +21,33 @@ public class Rook extends ChessPiece {
         firstMove = true;
     }
 
-    @Override
-    public String type() {
-        return "Rook";
+    /**
+     * @return String 'rook'
+     */
+    public final String type() {
+        return "rook";
     }
 
-    @Override
-    public boolean isValidMove(final Move move, final IChessBoard board) {
+    /**
+     * @return boolean is the move valid or not
+     * @param move the move of the piece
+     * @param board the board the piece moves on
+     */
+    public final boolean isValidMove(final Move move, final IChessBoard board) {
         int fromRow = move.getFromRow();
         int toRow =   move.getToRow();
         int fromCol = move.getFromColumn();
         int toCol =   move.getToColumn();
-
         if (!super.isValidMove(move, board)) {
             return false;
         }
-
         // Rook can move forward, backward, left, and right as many
         // spaces as desired without jumping over other chess pieces;
         // can't move diagonally
-
         // Rooks can only move horizontally
         if (fromRow != toRow && fromCol != toCol) {
             return false;
         }
-
         // Vertical move
         if (fromRow == toRow) {
         	// Check empty spaces
@@ -54,10 +58,8 @@ public class Rook extends ChessPiece {
         			return false;
         		}
         	}
-        }
-        
-        // Horizontal move
-        else if (fromCol == toCol) {
+        } else if (fromCol == toCol) {
+        	// Horizontal move
         	// Check empty spaces
         	for (int i = Math.min(fromRow, toRow) + 1;
         			 i < Math.max(fromRow, toRow); i++) {
@@ -71,8 +73,11 @@ public class Rook extends ChessPiece {
         firstMove = false;
         return true;
     }
-    
-    public boolean firstMove() {
+    /**
+     * This is used for the castle move with the king.
+     * @return boolean first move true or false
+     */
+    public final boolean firstMove() {
     	return firstMove;
     }
 }

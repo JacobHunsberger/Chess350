@@ -12,8 +12,7 @@ public abstract class ChessPiece implements IChessPiece {
     private Player owner;
     
     /**
-     * Constructs a new ChessPiece
-     *
+     * Constructs a new ChessPiece.
      * @param color Color of new piece.
      */
     protected ChessPiece(final Player color) {

@@ -2,11 +2,13 @@ package model;
 
 /**
  * The King in a game of chess.
- *
  * @author Jacob Hunsberger, Jon Powers, Jared Thomas
  */
 public class King extends ChessPiece {
 
+	/**
+	 * True/false for the first move.
+	 */
 	private boolean firstMove;
 	
     /**
@@ -19,13 +21,21 @@ public class King extends ChessPiece {
         firstMove = true;
     }
 
-    @Override
-    public String type() {
-        return "King";
+    /**
+     * This class returns a string for the king piece.
+     * @return String 'king'
+     */
+    public final String type() {
+        return "king";
     }
 
-    @Override
-    public boolean isValidMove(final Move move, final IChessBoard board) {
+    /**
+     * This class checks the move for the king chess piece.
+     * @return boolean true or false if the move is valid.
+     * @param move the move of the piece
+     * @param board the board the piece is on
+     */
+    public final boolean isValidMove(final Move move, final IChessBoard board) {
         if (!super.isValidMove(move, board)) {
             return false;
         }
@@ -44,8 +54,11 @@ public class King extends ChessPiece {
         firstMove = false;
         return true;
     }
-    
-    public boolean firstMove() {
+    /**
+     * Is the piece on the first move or not.
+     * @return boolean first move true or false
+     */
+    public final boolean firstMove() {
     	return firstMove;
     }
 }

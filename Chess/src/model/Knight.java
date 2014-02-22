@@ -1,28 +1,34 @@
 package model;
 
 /**
- * The Knight in a game of chess
- * 
+ * The Knight in a game of chess.
  * @author Jonathan Powers, Jacob Hunsberger and Jared Thomas
  */
 public class Knight extends ChessPiece {
 
 	/**
-	 * Constructs a new Knight object
-	 * 
+	 * Constructs a new Knight object.
 	 * @param color the player that owns this piece
 	 */
-	protected Knight(Player color) {
+	protected Knight(final Player color) {
 		super(color);
 	}
 
-	@Override
-	public String type() {
-		return "Knight";
+	/**
+	 * Returns string for th class knight.
+	 * @return String 'knight'
+	 */
+	public final String type() {
+		return "knight";
 	}
 
-	@Override
-	public boolean isValidMove(Move move, IChessBoard board) {
+	/**
+	 * This method checks if the move is valid or not for the Knight.
+	 * @param board the borad that the piece moves on
+	 * @param move the move of the piece
+	 * @return boolean true or false if the move is valid
+	 */
+	public final boolean isValidMove(final Move move, final IChessBoard board) {
 		int toRow = move.getToRow();
 		int toColumn = move.getToColumn();
 		int fromRow = move.getFromRow();
@@ -30,21 +36,12 @@ public class Knight extends ChessPiece {
 		
 		if (!super.isValidMove(move, board)) {
 			return false;
-		}
-		// verify move is only 2 by 1 or 1 by 2
-		else if(!(((Math.abs(fromColumn - toColumn) == 2) &&
-				(Math.abs(fromRow - toRow) == 1)) ||
-				((Math.abs(fromColumn - toColumn) == 1) &&
-			    (Math.abs(fromRow - toRow) == 2)))   ) {
+			} else if (!(((Math.abs(fromColumn - toColumn) == 2)
+				&& (Math.abs(fromRow - toRow) == 1)) 
+				|| ((Math.abs(fromColumn - toColumn) == 1) 
+				&& (Math.abs(fromRow - toRow) == 2)))) {
 			return false;
 		}
-		
-			
-		// Knight can jump over another chess piece or pieces
-		// Can move two squares either forward, backward, left, or right
-		// and then left or right one square.
-
 		return true;
 	}
-
 }
