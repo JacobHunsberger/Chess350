@@ -1,6 +1,12 @@
 package model;
 
 import static org.junit.Assert.*;
+import model.ChessBoard;
+import model.IChessBoard;
+import model.IChessPiece;
+import model.Knight;
+import model.Move;
+import model.Player;
 
 import org.junit.Test;
 

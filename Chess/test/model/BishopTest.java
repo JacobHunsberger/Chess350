@@ -1,38 +1,46 @@
 package model;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 
 import org.junit.Test;
 
+/**
+ * Test the class Bishop.
+ * @author Jonathan Powers, Jacob Hunsberger and Jared Thomas
+ */
 public class BishopTest {
-
+	/**
+	 * Test the type.
+	 */
 	@Test
-	public void testType() {
+	public final void testType() {
 		IChessPiece bishop = new Bishop(Player.WHITE);
 		assertEquals("Bishop", bishop.type());
 	}
-	
+	/**
+	 * Test the isValidMove.
+	 */
 	@Test
-	public void testIsValidMove() {
+	public final void testIsValidMove() {
 		IChessPiece bishop = new Bishop(Player.WHITE);
 		IChessBoard board = new ChessBoard();
-		
-		int r = 3, c = 3;
+		final int three = 3;
+		int r = three, c = three;
 		Move move = null;
 		board.set(bishop, r, c);
-		
+		final int negtwo = -2;
 		// Test basic movement
-		for (int i = -2; i <= 2; i++) {
-			for (int j = -2; j <= 2; j++) {
+		for (int i = negtwo; i <= 2; i++) {
+			for (int j = negtwo; j <= 2; j++) {
 				move = new Move(r, c, r + i, c + j);
 				
 				if (i == 0 && j == 0) {
 					assertFalse(bishop.isValidMove(move, board));
-				}
-				else if (Math.abs(i) == Math.abs(j)) {
+				} else if (Math.abs(i) == Math.abs(j)) {
 					assertTrue(bishop.isValidMove(move, board));
-				}
-				else {
+				} else {
 					assertFalse(bishop.isValidMove(move, board));
 				}
 				
@@ -45,23 +53,23 @@ public class BishopTest {
 		assertFalse(bishop.isValidMove(move, board));
 		move = new Move(r, c, 2, 2);
 		assertTrue(bishop.isValidMove(move, board));
-		
-		board.set(new Pawn(Player.WHITE), 1, 5);
-		move = new Move(r, c, 0, 6);
+		final int five = 5, six = 6, four = 4;
+		board.set(new Pawn(Player.WHITE), 1, five);
+		move = new Move(r, c, 0, six);
 		assertFalse(bishop.isValidMove(move, board));
-		move = new Move(r, c, 2, 4);
+		move = new Move(r, c, 2, four);
 		assertTrue(bishop.isValidMove(move, board));
 		
-		board.set(new Pawn(Player.BLACK), 5, 5);
-		move = new Move(r, c, 6, 6);
-		assertFalse(bishop.isValidMove(move,board));
-		move = new Move(r, c, 4, 4);
+		board.set(new Pawn(Player.BLACK), five, five);
+		move = new Move(r, c, six, six);
+		assertFalse(bishop.isValidMove(move, board));
+		move = new Move(r, c, four, four);
 		assertTrue(bishop.isValidMove(move, board));
 		
-		board.set(new Pawn(Player.WHITE), 5, 1);
-		move = new Move(r, c, 6, 0);
+		board.set(new Pawn(Player.WHITE), five, 1);
+		move = new Move(r, c, six, 0);
 		assertFalse(bishop.isValidMove(move, board));
-		move = new Move(r, c, 4, 2);
-		assertTrue(bishop.isValidMove(move,board));
+		move = new Move(r, c, four, 2);
+		assertTrue(bishop.isValidMove(move, board));
 	}
 }

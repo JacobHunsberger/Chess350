@@ -1,5 +1,5 @@
 /**
- * @author YOUR NAME(S)
+ * @author Jonathan Powers, Jacob Hunsberger and Jared Thomas
  *
  */
 package model;

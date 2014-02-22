@@ -110,19 +110,22 @@ public final class ChessModel implements IChessModel {
 	}
 	/**
 	 * 
-	 * @param point1
-	 * @param point2
+	 * @param point1 row 
+	 * @param point2 column
+	 * @param point3 row of other piece
 	 * @return boolean
 	 */
-	private final boolean blockCheckmate2 (int point1, int point2, int point3) {
+	private boolean blockCheckmate2(final int point1, 
+			final int point2, final int point3) {
 		int dist = point1 - point3;
 		Move m;
-		for(int i = 0; i < 8; i++){
-			for(int k = 0; k < 8; k++){
+		final int max = 8;
+		for (int i = 0; i < max; i++) {
+			for (int k = 0; k < max; k++) {
 				while (dist > 0) {
-					m = new Move(i,k,point1 - dist,point2 - dist);
-					if (pieceAt(i,k).player() == currentPlayer()) {
-						if (pieceAt(i,k).isValidMove(m, board) == true) {
+					m = new Move(i, k, point1 - dist, point2 - dist);
+					if (pieceAt(i, k).player() == currentPlayer()) {
+						if (pieceAt(i, k).isValidMove(m, board)) {
 							return true;
 						}
 					}
@@ -134,8 +137,8 @@ public final class ChessModel implements IChessModel {
 	}
 	/**
 	 * 
-	 * @param point1
-	 * @param point2
+	 * @param point1 row
+	 * @param point2 column
 	 * @return boolean
 	 */
 	private boolean blockCheckmate1(final int point1, final int point2) {
@@ -160,7 +163,7 @@ public final class ChessModel implements IChessModel {
 	/**
 	 * Input the piece that can be taken. This could be used for the king 
 	 * or for stategy for the A.I.
-	 * @param h
+	 * @param h row and column array
 	 * @return int[] the piece that can take another piece
 	 */
 	private IChessPiece pieceTakePiece(final int[] h) {
@@ -217,20 +220,24 @@ public final class ChessModel implements IChessModel {
 			temp = findKing(Player.WHITE);
 		}
 		//Now use isValidMove to try and move the piece to the king.
-		if (pieceAt(move.getToRow(),move.getToColumn()).isValidMove(new Move(move.getToRow(), 
+		if (pieceAt(move.getToRow(), move.getToColumn())
+				.isValidMove(new Move(move.getToRow(), 
 				move.getToColumn(), temp[0], temp[1]), board)) {
 			return true;
-		} else if (pieceAt(move.getToRow(), move.getToColumn()).type() == "king") {
+		} else if (pieceAt(move.getToRow(), move.getToColumn())
+				.type() == "king") {
 			//This part checks if the king you moved is now in check.
-			if (boardCheckHelper(move.getToRow(), move.getToColumn(), pieceAt(move.getToRow(), 
-					move.getToColumn()).player())) {
+			if (boardCheckHelper(move.getToRow(), move.getToColumn(),
+					pieceAt(move.getToRow(), move.getToColumn()).player())) {
 				return true;
 			} else {
 				return false;
 			}
 		} else {
-			//This part checks if a piece moved and now a different piece gets the other king in check.
-			if (boardCheckHelper(temp[0], temp[1], pieceAt(temp[0],temp[1]).player())) {
+			//This part checks if a piece moved and now a different 
+			//piece gets the other king in check.
+			if (boardCheckHelper(temp[0], temp[1], 
+					pieceAt(temp[0], temp[1]).player())) {
 				return true;
 			} else {
 				return false;
@@ -306,8 +313,8 @@ public final class ChessModel implements IChessModel {
 	}
 	/**
 	 * 
-	 * @param p
-	 * @return
+	 * @param p the piece specified
+	 * @return int[] the row and column of r=the piece
 	 */
 	private int[] pieceAtReverse(final IChessPiece p) {
 		int[] temp = new int[2];
