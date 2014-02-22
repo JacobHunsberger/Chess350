@@ -78,18 +78,76 @@ public class ChessModel implements IChessModel {
 		}
 		int[] defPoint = pieceAtReverse(defending);
 		int[] takePoint = pieceAtReverse(taker);
+		// Make sure there is space between the two pieces to block each other
+		if (Math.abs(defPoint[0] - takePoint[0]) < 2 
+				|| Math.abs(defPoint[1] - takePoint[1]) < 2 ) {
+			return false;
+		}
 		// Is this a horozontal or vertial move
 		if (defPoint[0] == takePoint[0] || defPoint[1] == takePoint[1]) {
-			// Make sure there is space between the two pieces to block each other
-			if (Math.abs(defPoint[0] - takePoint[0]) > 1 
-					|| Math.abs(defPoint[1] - takePoint[1]) > 1 ) {
-				//TODO
+				if (defPoint[0] > takePoint[0] || defPoint[0] < takePoint[0]) {
+					return blockCheckmate1(defPoint[0],defPoint[1]);
+				}
+				if (defPoint[1] < takePoint[1] || defPoint[1] > takePoint[1]) {
+					return blockCheckmate1(defPoint[1],defPoint[0]);
+				}
 			}
-			return true;
-		}
 		// Now we know that the move is diagonal
-		//TODO
+		if (defPoint[0] > takePoint[0]) {
+			return blockCheckmate2(defPoint[0],defPoint[1],takePoint[0]);
+		}
+		if (defPoint[0] < takePoint[0]) {
+			return blockCheckmate2(takePoint[0],defPoint[1],defPoint[0]);
+		}
 		return true;
+	}
+	/**
+	 * 
+	 * @param point1
+	 * @param point2
+	 * @return
+	 */
+	private final boolean blockCheckmate2 (int point1, int point2, int point3) {
+		int dist = point1 - point3;
+		Move m;
+		for(int i = 0; i < 8; i++){
+			for(int k = 0; k < 8; k++){
+				while (dist > 0) {
+					m = new Move(i,k,point1 - dist,point2 - dist);
+					if (pieceAt(i,k).player() == currentPlayer()) {
+						if (pieceAt(i,k).isValidMove(m, board) == true) {
+							return true;
+						}
+					}
+					dist --;
+				}
+			}
+		}
+		return false;
+	}
+	/**
+	 * 
+	 * @param point1
+	 * @param point2
+	 * @return
+	 */
+	private final boolean blockCheckmate1 (int point1, int point2) {
+		int dist = point1 - point2;
+		Move m;
+		for(int i = 0; i < 8; i++){
+			for(int k = 0; k < 8; k++){
+				while (dist > 0) {
+					m = new Move(i,k,point1 - dist,point2);
+					if (pieceAt(i,k).player() == currentPlayer()) {
+						if (pieceAt(i,k).isValidMove(m, board) == true) {
+							return true;
+						}
+					}
+					dist --;
+				}
+			}
+		}
+		return false;
 	}
 	/**
 	 * Input the piece that can be taken. This could be used for the king 
