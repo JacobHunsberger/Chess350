@@ -9,7 +9,7 @@ public final class ChessModel implements IChessModel {
 	/**
 	 * A 2D array of IChessPieces to make up the board.
 	 */
-	private ChessBoard board = new ChessBoard();
+	private ChessBoard board;
 	/**
 	 * The currect player kept in the model.
 	 */
@@ -21,6 +21,7 @@ public final class ChessModel implements IChessModel {
 	public ChessModel() {
 		board.setBoard();
 		currentPlayer = Player.WHITE;
+		board = new ChessBoard();
 	}
 	
 	/**
