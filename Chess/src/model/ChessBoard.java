@@ -140,7 +140,6 @@ public class ChessBoard implements IChessBoard {
 			row = seven;
 			p = p.next();
 		}
-		p.next();
 		row = 1;
 		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < numColumns; j++) {

@@ -4,6 +4,7 @@ package modeltester;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import model.IChessModel;
 import model.ChessModel;
 import model.Player;
 import model.Move;
@@ -69,5 +70,20 @@ public class ChessModelTest {
 		chess.move(m); //move white queen to position checkmate.
 		m = new Move(six, five, seven, four);
 		assertTrue(chess.isComplete());
+	}
+	/**
+	 * Test pieceAt.
+	 */
+	@Test
+	public final void testPieceAt() {
+		IChessModel model = new ChessModel();
+		
+		final int six = 6;
+		
+		assertEquals("pawn", model.pieceAt(1, 0).type());
+		assertEquals(Player.WHITE, model.pieceAt(1, 0).player());
+		
+		assertEquals("pawn", model.pieceAt(six, 0).type());
+		assertEquals(Player.BLACK, model.pieceAt(six, 0).player());
 	}
 }
