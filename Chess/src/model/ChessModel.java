@@ -13,14 +13,14 @@ public final class ChessModel implements IChessModel {
 	/**
 	 * Set the board up.
 	 */
-	private ChessModel() {
+	public ChessModel() {
 		board.setBoard();
 	}
 	
 	/**
 	 * The currect player kept in the model.
 	 */
-	private Player currentPlayer;
+	private Player currentPlayer = Player.WHITE;
 	
 	/**
 	 * @return boolean true or false if the game is complete
@@ -32,23 +32,29 @@ public final class ChessModel implements IChessModel {
 		}
 		//First the king must be in check
 		int[] temp = findKing(currentPlayer());
-		if (!inCheck(board.getMove(board.getMoveLength() - 1))) {
+		Move m = new Move(board.getMove(board.getMoveLength() - 1).getToRow(), 
+				board.getMove(board.getMoveLength() - 1).getToColumn(), 
+				temp[1], temp[0]);
+		if (!inCheck(m)) {
 			return false;
 		}
 		//Can the king move out of check
 		final int bounds = 3;
 		for (int i = 0; i < bounds; i++) {
 			for (int k = 0; k < bounds; k++) {
-				if (pieceAt(temp[0], temp[1]).isValidMove(new Move(temp[0], 
-						temp[1], i, k), board)) {
-					ChessBoard tempBoard = board;
-					Move tempMove = new Move(temp[0], temp[1], i, k);
-					move(tempMove);
-					if (inCheck(tempMove)) {
+				try {
+					if (pieceAt(temp[1], temp[0]).isValidMove(new Move(temp[0], 
+							temp[1], i, k), board)) {
+						ChessBoard tempBoard = board;
+						Move tempMove = new Move(temp[0], temp[1], i, k);
+						move(tempMove);
+						if (inCheck(tempMove)) {
+							board = tempBoard;
+							return false;
+						}
 						board = tempBoard;
-						return false;
 					}
-					board = tempBoard;
+				} catch (NullPointerException e) {
 				}
 			}
 		}
@@ -173,8 +179,12 @@ public final class ChessModel implements IChessModel {
 		for (int i = 0; i < max; i++) {
 			for (int k = 0; k < max; k++) {
 				m = new Move(i, k, h[0] , h[1]);
-				if (pieceAt(i, k).isValidMove(m, board)) {
-					temp = pieceAt(i, k);
+				try {
+					if (pieceAt(i, k).isValidMove(m, board)) {
+						temp = pieceAt(i, k);
+					}
+				} catch (NullPointerException e) {
+					
 				}
 			}
 		}
@@ -200,9 +210,9 @@ public final class ChessModel implements IChessModel {
 	 */
 	public void move(final Move move) {
 		if (isValidMove(move)) {
-			board.set(board.pieceAt(move.getFromRow(), move.getFromColumn()), 
-					move.getToRow(), move.getToColumn());
-		}
+			board.move(move);
+			currentPlayer = currentPlayer.next();
+			}
 	}
 	/**
 	 * This method checks if the King is in check.
@@ -212,7 +222,7 @@ public final class ChessModel implements IChessModel {
 	public boolean inCheck(final Move move) {
 		int [] temp;
 		//First get the color of the piece that moved last.
-		if (pieceAt(move.getToRow(), move.getToColumn()).player() 
+		if (pieceAt(move.getFromRow(), move.getFromColumn()).player() 
 				== Player.WHITE) {
 			//Then use that to find the king of the opposite player.
 			temp = findKing(Player.BLACK);
@@ -256,9 +266,13 @@ public final class ChessModel implements IChessModel {
 		final int max = 8;
 		for (int i = 0; i < max; i++) {
 			for (int k = 0; k < max; k++) {
-				if (pieceAt(i, k).isValidMove(new Move(i, k, r, c), board) 
-						&& pieceAt(i, k).player() != p) {
-					return true;
+				try {
+					if (pieceAt(i, k).isValidMove(new Move(i, k, r, c), board) 
+							&& pieceAt(i, k).player() != p) {
+						return true;
+					}
+				} catch (NullPointerException e) {
+					
 				}
 			}
 		}
@@ -273,14 +287,18 @@ public final class ChessModel implements IChessModel {
 		final int max = 8;
 		for (int i = 0; i < max; i++) {
 			for (int k = 0; k < max; k++) {
-				if (pieceAt(i, k).type() == "king" 
-						&& pieceAt(i, k).player() == player) {
-					int[] t = new int[2]; 
-					t[0] = i;
-					t[1] = k;
-					System.out.println(i + " " + k); 
-					//Helps verify my row and column
-					return t;
+				try {
+					if (pieceAt(k, i).type() == "king" 
+							&& pieceAt(k, i).player() == player) {
+						int[] t = new int[2]; 
+						t[0] = i;
+						t[1] = k;
+						System.out.println(i + " " + k); 
+						//Helps verify my row and column
+						return t;
+					}
+				} catch (NullPointerException e) {
+					
 				}
 			}
 		}
@@ -321,9 +339,13 @@ public final class ChessModel implements IChessModel {
 		final int max = 8;
 		for (int i = 0; i < max; i++) {
 			for (int k = 0; k < max; k++) {
-				if (pieceAt(i, k).equals(p)) {
-					temp[0] = i;
-					temp[1] = k;
+				try {
+					if (pieceAt(i, k).equals(p)) {
+						temp[0] = i;
+						temp[1] = k;
+					}
+				} catch (NullPointerException e) {
+					
 				}
 			}
 		}

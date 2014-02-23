@@ -138,7 +138,7 @@ public class ChessBoard implements IChessBoard {
 			set(new Knight(p), row, six);
 			set(new Rook(p), row, seven);
 			row = seven;
-			p.next();
+			p = p.next();
 		}
 		p.next();
 		row = 1;
@@ -147,7 +147,7 @@ public class ChessBoard implements IChessBoard {
 				set(new Pawn(p), row, j);
 			}
 			row = six;
-			p.next();
+			p = p.next();
 		}
 		for (int i = 2; i <= five; i++) {
 			for (int j = 0; j < numColumns; j++) {
