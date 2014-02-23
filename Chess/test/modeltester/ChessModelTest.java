@@ -127,12 +127,15 @@ public class ChessModelTest {
 	public final void testPieceAt() {
 		IChessModel model = new ChessModel();
 		
-		final int six = 6;
+		final int six = 6, nine = 9;
 		
 		assertEquals("pawn", model.pieceAt(1, 0).type());
 		assertEquals(Player.WHITE, model.pieceAt(1, 0).player());
 		
 		assertEquals("pawn", model.pieceAt(six, 0).type());
 		assertEquals(Player.BLACK, model.pieceAt(six, 0).player());
+		
+		// Index out of bounds
+		model.pieceAt(-1, nine);
 	}
 }
