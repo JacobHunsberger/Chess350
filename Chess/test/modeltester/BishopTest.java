@@ -1,8 +1,15 @@
-package model;
+package modeltester;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
+import model.Bishop;
+import model.ChessBoard;
+import model.IChessBoard;
+import model.IChessPiece;
+import model.Move;
+import model.Pawn;
+import model.Player;
 
 import org.junit.Test;
 

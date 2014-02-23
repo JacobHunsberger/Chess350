@@ -10,7 +10,7 @@ public class Bishop extends ChessPiece {
 * Constructs a new Bishop object.
 * @param color the player that owns this piece
 */
-    protected Bishop(final Player color) {
+    public Bishop(final Player color) {
         super(color);
     }
 /**

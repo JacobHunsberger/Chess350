@@ -36,7 +36,7 @@ public class Pawn extends ChessPiece {
 	 * @return String "pawn"
 	 */
 	public final String type() {
-		return "Pawn";
+		return "pawn";
 	}
 	/**
 	 * @param move input the move of the pawn

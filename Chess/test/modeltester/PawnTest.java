@@ -1,4 +1,4 @@
-package model;
+package modeltester;
 
 import static org.junit.Assert.*;
 import model.ChessBoard;
@@ -16,7 +16,7 @@ public class PawnTest {
 	@Test
 	public void testType() {
 		IChessPiece pawn = new Pawn(Player.WHITE);
-		assertEquals("Pawn", pawn.type());
+		assertEquals("pawn", pawn.type());
 	}
 	
 	@Test

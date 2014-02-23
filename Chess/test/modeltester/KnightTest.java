@@ -1,4 +1,4 @@
-package model;
+package modeltester;
 
 import static org.junit.Assert.*;
 import model.ChessBoard;
@@ -15,7 +15,7 @@ public class KnightTest {
 	@Test
 	public void testType() {
 		IChessPiece piece = new Knight(Player.WHITE);
-		assertEquals("Knight", piece.type());
+		assertEquals("knight", piece.type());
 	}
 	
 	@Test

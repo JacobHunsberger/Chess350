@@ -16,7 +16,7 @@ public class King extends ChessPiece {
      *
      * @param color the player that owns this piece.
      */
-    protected King(final Player color) {
+    public King(final Player color) {
         super(color);
         firstMove = true;
     }
