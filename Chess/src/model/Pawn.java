@@ -54,12 +54,9 @@ public class Pawn extends ChessPiece {
 		if (firstMove) {
 			// On the first move, a pawn may move 2 spaces vertically
 			if (move.getToRow() == (startingRow + (2 * direction)) 
-					&& move.getFromColumn() == move.getToColumn()) {
-				// Both spaces must be empty
-				if (board.pieceAt(move.getToRow(), move.getToColumn()) 
-						== null && board.pieceAt(move.getToRow() - 1, 
-								move.getToColumn()) == null) {
-					
+					&& move.getFromColumn() == move.getToColumn()) {	
+				if (board.pieceAt(move.getToRow(),
+						move.getToColumn()) == null) {
 					firstMove = false;		// First move taken
 					return true;			// Special move was valid
 				}

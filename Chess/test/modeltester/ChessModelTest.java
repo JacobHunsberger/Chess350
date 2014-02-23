@@ -21,11 +21,12 @@ public class ChessModelTest {
 	@Test
 	public final void testPlayer() {
 		ChessModel chess = new ChessModel();
-		final Player p = Player.WHITE;
+		Player p = Player.WHITE;
 		assertEquals(p, chess.currentPlayer());
 		final Move m = new Move(1, 1, 2, 1);
 		chess.move(m);
-		assertFalse(p == chess.currentPlayer());
+		p = Player.BLACK;
+		assertEquals(p, chess.currentPlayer());
 	}
 	/**
 	 * Test the inCheck Method.
@@ -83,14 +84,14 @@ public class ChessModelTest {
 		// Move white pawn forward 2
 		Move move = new Move(1, 0, three, 0);
 		model.move(move);
-		assertTrue(null != model.pieceAt(three, 0));
-		assertTrue(null == model.pieceAt(1, 0));
+		assertEquals("pawn", model.pieceAt(three, 0).type());
+		assertEquals(null, model.pieceAt(1, 0));
 		
 		// Move black pawn forward 1
 		move = new Move(six, seven, five, seven);
 		model.move(move);
-		assertTrue(null != model.pieceAt(five, seven));
-		assertTrue(null == model.pieceAt(six, seven));
+		assertEquals("pawn", model.pieceAt(five, seven).type());
+		assertEquals(null, model.pieceAt(six, seven));
 	}
 	/**
 	 * Test isValidMove.

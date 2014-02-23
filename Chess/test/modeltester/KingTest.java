@@ -9,6 +9,7 @@ import model.IChessPiece;
 import model.King;
 import model.Move;
 import model.Player;
+import model.King;
 
 import org.junit.Test;
 /**
@@ -52,5 +53,25 @@ public class KingTest {
 				}
 			}
 		}
+		
+		// INDEX OUT OF BOUNDS
+		move = new Move(0, 0, -1, -1);
+		assertFalse(king.isValidMove(move, board));
+	}
+	/**
+	 * Test first move.
+	 */
+	@Test
+	public final void testFirstMove() {
+		IChessPiece king = new King(Player.WHITE);
+		IChessBoard board = new ChessBoard();
+		
+		assertTrue(((King) king).firstMove());
+		
+		board.set(king, 0, 0);
+		Move move = new Move(0, 0, 1, 0);
+		king.isValidMove(move, board);
+		
+		assertFalse(((King) king).firstMove());
 	}
 }

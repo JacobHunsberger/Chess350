@@ -53,17 +53,15 @@ public class Rook extends ChessPiece {
         	// Check empty spaces
         	for (int i = Math.min(fromCol, toCol) + 1;
         		     i < Math.max(fromCol, toCol); i++) {
-        		// TODO change check to match board model
         		if (board.pieceAt(fromRow, i) != null) {
         			return false;
         		}
         	}
-        } else if (fromCol == toCol) {
+        } else {
         	// Horizontal move
         	// Check empty spaces
         	for (int i = Math.min(fromRow, toRow) + 1;
         			 i < Math.max(fromRow, toRow); i++) {
-        		// TODO change check to match board model
         		if (board.pieceAt(i, fromCol) != null) {
         			return false;
         		}

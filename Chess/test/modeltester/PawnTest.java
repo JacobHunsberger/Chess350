@@ -40,8 +40,13 @@ public class PawnTest {
 		board.set(pawn, 1, c);
 		
 		// Test special move
+		board.set(new Pawn(Player.WHITE), r, c);
 		move = new Move(1, c, r, c);
+		assertFalse(pawn.isValidMove(move, board));
+		board.unset(r, c);
 		assertTrue(pawn.isValidMove(move, board));
+		move = new Move(1, c, r, c + 2);
+		assertFalse(pawn.isValidMove(move, board));
 		
 		// Test movement
 		for (int i = negtwo; i <= 2; i++) {

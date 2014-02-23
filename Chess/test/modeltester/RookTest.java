@@ -77,4 +77,20 @@ public class RookTest {
 		move = new Move(r, c, four, c);
 		assertTrue(rook.isValidMove(move, board));
 	}
+	/**
+	 * Test first move.
+	 */
+	@Test
+	public final void testFirstMove() {
+		IChessPiece rook = new Rook(Player.WHITE);
+		IChessBoard board = new ChessBoard();
+		
+		assertTrue(((Rook) rook).firstMove());
+		
+		board.set(rook, 0, 0);
+		Move move = new Move(0, 0, 2, 0);
+		rook.isValidMove(move, board);
+		
+		assertFalse(((Rook) rook).firstMove());
+	}
 }

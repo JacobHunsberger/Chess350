@@ -112,7 +112,6 @@ public class ChessBoardTest {
 		
 		// Overwrite piece
 		IChessPiece bishop = new Bishop(Player.WHITE);
-		assertTrue(board.pieceAt(0, 0) == pawn);
 		board.set(bishop, 0, 0);
 		assertEquals(bishop, board.pieceAt(0, 0));
 		assertEquals(rook, board.pieceAt(0, 1));
@@ -132,5 +131,15 @@ public class ChessBoardTest {
 				assertEquals(null, board.pieceAt(i, j));
 			}
 		}
+	}
+	/**
+	 * Test getBoard.
+	 */
+	@Test
+	public final void testGetBoard() {
+		IChessBoard board = new ChessBoard();
+		IChessPiece[][] get = ((ChessBoard) board).getBoard();
+		
+		assertEquals(get[0][1], board.pieceAt(0, 1));
 	}
 }
