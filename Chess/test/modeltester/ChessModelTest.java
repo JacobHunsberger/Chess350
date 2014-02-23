@@ -72,6 +72,33 @@ public class ChessModelTest {
 		assertTrue(chess.isComplete());
 	}
 	/**
+	 * Test isValidMove.
+	 */
+	@Test
+	public final void testIsValidMove() {
+		IChessModel model = new ChessModel();
+		
+		final int three = 3, five = 5, six = 6, seven = 7;
+		
+		// Attempt to move a white rook from start
+		Move move = new Move(0, 0, 0, three);
+		assertFalse(model.isValidMove(move));
+		
+		// Attempt to move a white knight from start
+		move = new Move(0, 1, 2, 2);
+		assertTrue(model.isValidMove(move));
+		
+		model.move(move);
+		
+		// Attempt to move a black bishop from start
+		move = new Move(seven, five, five, three);
+		assertFalse(model.isValidMove(move));
+		
+		// Attempt to move a black knight from start
+		move = new Move(seven, six, five, five);
+		assertTrue(model.isValidMove(move));	
+	}
+	/**
 	 * Test pieceAt.
 	 */
 	@Test
