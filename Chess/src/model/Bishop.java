@@ -19,7 +19,7 @@ public class Bishop extends ChessPiece {
  * @return String identifying the Bishop
  */
 	public final String type() {
-		return "Bishop";
+		return "bishop";
 	}
 /**
  * Method check if move is valid for Bishop.

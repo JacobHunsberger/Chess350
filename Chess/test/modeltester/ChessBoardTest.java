@@ -1,6 +1,8 @@
 package modeltester;
 
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import model.Bishop;
 import model.ChessBoard;
 import model.IChessBoard;
@@ -12,63 +14,78 @@ import model.Player;
 import model.Rook;
 
 import org.junit.Test;
-
+/**
+ * Test the class ChessBoard.
+ * @author Jonathan Powers, Jacob Hunsberger and Jared Thomas
+ */
 public class ChessBoardTest {
-
+	/**
+	 * Test numRows.
+	 */
 	@Test
-	public void testNumRows() {
+	public final void testNumRows() {
+		final int eight = 8;
 		IChessBoard board = new ChessBoard();
-		assertEquals(8, board.numRows());
+		assertEquals(eight, board.numRows());
 	}
-	
+	/**
+	 * Test numColumns.
+	 */
 	@Test
-	public void testNumColumns() {
+	public final void testNumColumns() {
+		final int eight = 8;
 		IChessBoard board = new ChessBoard();
-		assertEquals(8, board.numColumns());
+		assertEquals(eight, board.numColumns());
 	}
-
+	/**
+	 * Test pieceAt.
+	 */
 	@Test
-	public void testPieceAt() {
+	public final void testPieceAt() {
 		IChessBoard board = new ChessBoard();
 		((ChessBoard) board).setBoard();
-		
-		assertTrue(board.pieceAt(1, 0).type().equals("Pawn"));
-		assertTrue(board.pieceAt(6, 4).type().equals("Pawn"));
-		assertTrue(board.pieceAt(0, 0).type().equals("Rook"));
-		assertTrue(board.pieceAt(7, 1).type().equals("Knight"));
-		assertTrue(board.pieceAt(0, 5).type().equals("Bishop"));
-		assertTrue(board.pieceAt(7, 4).type().equals("King"));
-		assertTrue(board.pieceAt(0, 3).type().equals("Queen"));
+		final int six = 6, four = 4, five = 5, seven = 7, three = 3;
+		assertTrue(board.pieceAt(1, 0).type().equals("pawn"));
+		assertTrue(board.pieceAt(six, four).type().equals("pawn"));
+		assertTrue(board.pieceAt(0, 0).type().equals("rook"));
+		assertTrue(board.pieceAt(seven, 1).type().equals("knight"));
+		assertTrue(board.pieceAt(0, five).type().equals("bishop"));
+		assertTrue(board.pieceAt(seven, four).type().equals("king"));
+		assertTrue(board.pieceAt(0, three).type().equals("queen"));
 	}
-	
+	/**
+	 * Test move.
+	 */
 	@Test
-	public void testMove() {
+	public final void testMove() {
 		IChessBoard board = new ChessBoard();
-		
+		final int three = 3, four = 4, five = 5;
 		// Move to an empty space
 		IChessPiece piece = new Rook(Player.WHITE);
 		board.set(piece, 0, 0);
-		Move move = new Move(0, 0, 2, 3);
+		Move move = new Move(0, 0, 2, three);
 		board.move(move);
 		assertEquals(null, board.pieceAt(0, 0));
-		assertEquals(piece, board.pieceAt(2, 3));
+		assertEquals(piece, board.pieceAt(2, three));
 		
 		// Move back to the original space
-		move = new Move(2, 3, 0, 0);
+		move = new Move(2, three, 0, 0);
 		board.move(move);
-		assertEquals(null, board.pieceAt(2,3));
+		assertEquals(null, board.pieceAt(2, three));
 		assertEquals(piece, board.pieceAt(0, 0));
 		
 		// Move to an occupied space
 		IChessPiece piece2 = new Knight(Player.BLACK);
-		board.set(piece2, 4, 5);
-		move = new Move(0, 0, 4, 5);
+		board.set(piece2, four, five);
+		move = new Move(0, 0, four, five);
 		board.move(move);
-		assertEquals(piece, board.pieceAt(4, 5));
+		assertEquals(piece, board.pieceAt(four, five));
 	}
-	
+	/**
+	 * Test Set.
+	 */
 	@Test
-	public void testSet() {
+	public final void testSet() {
 		IChessBoard board = new ChessBoard();
 		
 		// Add first piece
@@ -86,12 +103,12 @@ public class ChessBoardTest {
 		// Add third piece in same column
 		IChessPiece knight = new Knight(Player.BLACK);
 		board.set(knight, 1, 1);
-		assertEquals(knight, board.pieceAt(1,1));
-		
+		assertEquals(knight, board.pieceAt(1, 1));
+		final int five = 5, six = 6;
 		// Add fourth piece in different row and column
 		IChessPiece king = new Bishop(Player.WHITE);
-		board.set(king, 5, 6);
-		assertEquals(king, board.pieceAt(5, 6));
+		board.set(king, five, six);
+		assertEquals(king, board.pieceAt(five, six));
 		
 		// Overwrite piece
 		IChessPiece bishop = new Bishop(Player.WHITE);
@@ -101,13 +118,16 @@ public class ChessBoardTest {
 		assertEquals(rook, board.pieceAt(0, 1));
 		assertEquals(knight, board.pieceAt(1, 1));
 	}
-	
-	public void testUnset() {
+	/**
+	 * Test unSet.
+	 */
+	@Test
+	public final void testUnset() {
 		IChessBoard board = new ChessBoard();
 		((ChessBoard) board).setBoard();
-		
-		for (int i = 0; i < 8; i++) {
-			for (int j = 0; j < 8; j++) {
+		final int eight = 8;
+		for (int i = 0; i < eight; i++) {
+			for (int j = 0; j < eight; j++) {
 				board.unset(i, j);
 				assertEquals(null, board.pieceAt(i, j));
 			}

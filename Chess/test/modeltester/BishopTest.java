@@ -24,7 +24,7 @@ public class BishopTest {
 	@Test
 	public final void testType() {
 		IChessPiece bishop = new Bishop(Player.WHITE);
-		assertEquals("Bishop", bishop.type());
+		assertEquals("bishop", bishop.type());
 	}
 	/**
 	 * Test the isValidMove.

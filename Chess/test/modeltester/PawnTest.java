@@ -1,6 +1,9 @@
 package modeltester;
 
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import model.ChessBoard;
 import model.IChessBoard;
 import model.IChessPiece;
@@ -10,22 +13,29 @@ import model.Player;
 import model.Rook;
 
 import org.junit.Test;
-
+/**
+ * Test the class Pawn.
+ * @author Jonathan Powers, Jacob Hunsberger and Jared Thomas
+ */
 public class PawnTest {
-
+	/**
+	 * Test the type.
+	 */
 	@Test
-	public void testType() {
+	public final void testType() {
 		IChessPiece pawn = new Pawn(Player.WHITE);
 		assertEquals("pawn", pawn.type());
 	}
-	
+	/**
+	 * Test isValidMove.
+	 */
 	@Test
-	public void testIsValidMove() {
+	public final void testIsValidMove() {
 		IChessPiece pawn = new Pawn(Player.WHITE);
 		IChessBoard board = new ChessBoard();
 		Move move = null;
-		
-		int r = 3, c = 3;
+		final int three = 3, negtwo = -2;
+		int r = three, c = three;
 		
 		board.set(pawn, 1, c);
 		
@@ -34,14 +44,13 @@ public class PawnTest {
 		assertTrue(pawn.isValidMove(move, board));
 		
 		// Test movement
-		for (int i = -2; i <= 2; i++) {
-			for (int j = -2; j <= 2; j++) {
+		for (int i = negtwo; i <= 2; i++) {
+			for (int j = negtwo; j <= 2; j++) {
 				move = new Move(r, c, r + i, c + j);
 				
 				if (i == 1 && j == 0) {
 					assertTrue(pawn.isValidMove(move, board));
-				}
-				else {
+				} else {
 					assertFalse(pawn.isValidMove(move, board));
 				}
 			}
@@ -66,24 +75,23 @@ public class PawnTest {
 		// BLACK
 		board = new ChessBoard();
 		pawn = new Pawn(Player.BLACK);
-		board.set(pawn, 6, c);
-		
-		r = 4;
-		c = 4;
+		final int six = 6, four = 4;
+		board.set(pawn, six, c);
+		r = four;
+		c = four;
 		
 		// Test special move
-		move = new Move(6, c, r, c);
+		move = new Move(six, c, r, c);
 		assertTrue(pawn.isValidMove(move, board));
 		
 		// Test movement
-		for (int i = -2; i <= 2; i++) {
-			for (int j = -2; j <= 2; j++) {
+		for (int i = negtwo; i <= 2; i++) {
+			for (int j = negtwo; j <= 2; j++) {
 				move = new Move(r, c, r + i, c + j);
 				
 				if (i == -1 && j == 0) {
 					assertTrue(pawn.isValidMove(move, board));
-				}
-				else {
+				} else {
 					assertFalse(pawn.isValidMove(move, board));
 				}
 			}

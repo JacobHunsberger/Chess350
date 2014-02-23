@@ -1,6 +1,9 @@
 package modeltester;
 
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import model.ChessBoard;
 import model.IChessBoard;
 import model.IChessPiece;
@@ -10,39 +13,43 @@ import model.Player;
 import model.Queen;
 
 import org.junit.Test;
-
+/**
+ * Test the class Queen.
+ * @author Jonathan Powers, Jacob Hunsberger and Jared Thomas
+ */
 public class QueenTest {
-
+	/**
+	 * Test the type.
+	 */
 	@Test
-	public void testType() {
+	public final void testType() {
 		IChessPiece queen = new Queen(Player.WHITE);
 		assertEquals("queen", queen.type());
 	}
-	
+	/**
+	 * Test isValidMove.
+	 */
 	@Test
-	public void testIsValidMove() {
+	public final void testIsValidMove() {
 		IChessPiece queen = new Queen(Player.WHITE);
 		IChessBoard board = new ChessBoard();
-		
-		int r = 3, c = 3;
+		final int three = 3, negtwo = -2;
+		int r = three, c = three;
 		Move move = null;
 		board.set(queen, r, c);
 		
 		// Test basic movement
-		for (int i = -2; i <= 2; i++) {
-			for (int j = -2; j <= 2; j++) {
+		for (int i = negtwo; i <= 2; i++) {
+			for (int j = negtwo; j <= 2; j++) {
 				move = new Move(r, c, r + i, c + j);
 				
 				if (i == 0 && j == 0) {
 					assertFalse(queen.isValidMove(move, board));
-				}
-				else if (i == 0 || j == 0) {
+				} else if (i == 0 || j == 0) {
 					assertTrue(queen.isValidMove(move, board));
-				}
-				else if (Math.abs(i) == Math.abs(j)) {
+				} else if (Math.abs(i) == Math.abs(j)) {
 					assertTrue(queen.isValidMove(move, board));
-				}
-				else {
+				} else {
 					assertFalse(queen.isValidMove(move, board));
 				}
 				
@@ -61,17 +68,17 @@ public class QueenTest {
 		assertFalse(queen.isValidMove(move, board));
 		move = new Move(r, c, 2, c);
 		assertTrue(queen.isValidMove(move, board));
-		
-		board.set(new Pawn(Player.BLACK), r, 5);
-		move = new Move(r, c, r, 6);
+		final int five = 5, six = 6, four = 4;
+		board.set(new Pawn(Player.BLACK), r, five);
+		move = new Move(r, c, r, six);
 		assertFalse(queen.isValidMove(move, board));
-		move = new Move(r, c, r, 4);
+		move = new Move(r, c, r, four);
 		assertTrue(queen.isValidMove(move, board));
 		
-		board.set(new Pawn(Player.WHITE), 5, c);
-		move = new Move(r, c, 6, c);
+		board.set(new Pawn(Player.WHITE), five, c);
+		move = new Move(r, c, six, c);
 		assertFalse(queen.isValidMove(move, board));
-		move = new Move(r, c, 4, c);
+		move = new Move(r, c, four, c);
 		assertTrue(queen.isValidMove(move, board));
 		
 		// Test diagonal jumping
@@ -81,22 +88,22 @@ public class QueenTest {
 		move = new Move(r, c, 2, 2);
 		assertTrue(queen.isValidMove(move, board));
 		
-		board.set(new Pawn(Player.WHITE), 1, 5);
-		move = new Move(r, c, 0, 6);
+		board.set(new Pawn(Player.WHITE), 1, five);
+		move = new Move(r, c, 0, six);
 		assertFalse(queen.isValidMove(move, board));
-		move = new Move(r, c, 2, 4);
+		move = new Move(r, c, 2, four);
 		assertTrue(queen.isValidMove(move, board));
 		
-		board.set(new Pawn(Player.BLACK), 5, 5);
-		move = new Move(r, c, 6, 6);
-		assertFalse(queen.isValidMove(move,board));
-		move = new Move(r, c, 4, 4);
+		board.set(new Pawn(Player.BLACK), five, five);
+		move = new Move(r, c, six, six);
+		assertFalse(queen.isValidMove(move, board));
+		move = new Move(r, c, four, four);
 		assertTrue(queen.isValidMove(move, board));
 		
-		board.set(new Pawn(Player.WHITE), 5, 1);
-		move = new Move(r, c, 6, 0);
+		board.set(new Pawn(Player.WHITE), five, 1);
+		move = new Move(r, c, six, 0);
 		assertFalse(queen.isValidMove(move, board));
-		move = new Move(r, c, 4, 2);
-		assertTrue(queen.isValidMove(move,board));
+		move = new Move(r, c, four, 2);
+		assertTrue(queen.isValidMove(move, board));
 	}
 }

@@ -1,6 +1,8 @@
 package modeltester;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import model.ChessBoard;
 import model.IChessBoard;
 import model.IChessPiece;
@@ -9,25 +11,32 @@ import model.Move;
 import model.Player;
 
 import org.junit.Test;
-
+/**
+ * Test the class King.
+ * @author Jonathan Powers, Jacob Hunsberger and Jared Thomas
+ */
 public class KingTest {
-
+	/**
+	 * Test isValidMove.
+	 */
 	@Test
-	public void testType() {
+	public final void testType() {
 		IChessPiece king = new King(Player.WHITE);
 		assertEquals("king", king.type());
 	}
-	
+	/**
+	 * Test isValidMove.
+	 */
 	@Test
-	public void testIsValidMove() {
+	public final void testIsValidMove() {
 		IChessPiece king = new King(Player.WHITE);
 		IChessBoard board = new ChessBoard();
-		
-		int r = 3, c = 3;
+		final int three = 3, negtwo = -2;
+		int r = three, c = three;
 		Move move = null;
 		
-		for (int i = -2; i <= 2; i++) {
-			for (int j = -2; j <= 2; j++) {
+		for (int i = negtwo; i <= 2; i++) {
+			for (int j = negtwo; j <= 2; j++) {
 				move = new Move(r, c, r + i, c + j);
 				
 				if (Math.abs(i) > 1 || Math.abs(j) > 1) {
