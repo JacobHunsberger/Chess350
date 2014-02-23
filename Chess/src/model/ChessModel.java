@@ -57,6 +57,7 @@ public final class ChessModel implements IChessModel {
 						board = tempBoard;
 					}
 				} catch (NullPointerException e) {
+					System.out.println(i + " " + k);
 				}
 			}
 		}
@@ -186,7 +187,7 @@ public final class ChessModel implements IChessModel {
 						temp = pieceAt(i, k);
 					}
 				} catch (NullPointerException e) {
-					
+					System.out.println(i + " " + k);
 				}
 			}
 		}
@@ -274,7 +275,7 @@ public final class ChessModel implements IChessModel {
 						return true;
 					}
 				} catch (NullPointerException e) {
-					
+					System.out.println(i + " " + k);
 				}
 			}
 		}
@@ -300,7 +301,7 @@ public final class ChessModel implements IChessModel {
 						return t;
 					}
 				} catch (NullPointerException e) {
-					
+					System.out.println(i + " " + k);
 				}
 			}
 		}
@@ -347,7 +348,7 @@ public final class ChessModel implements IChessModel {
 						temp[1] = k;
 					}
 				} catch (NullPointerException e) {
-					
+					System.out.println(i + " " + k);
 				}
 			}
 		}

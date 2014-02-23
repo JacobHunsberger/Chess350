@@ -9,7 +9,6 @@ import model.IChessPiece;
 import model.King;
 import model.Move;
 import model.Player;
-import model.King;
 
 import org.junit.Test;
 /**

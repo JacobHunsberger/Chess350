@@ -49,7 +49,7 @@ public abstract class ChessPiece implements IChessPiece {
      * @param board the chess board in which this piece resides.
      * @return true if the proposed move is valid, false otherwise.
      */
-    public boolean isValidMove(Move move, IChessBoard board) {
+    public boolean isValidMove(final Move move, final IChessBoard board) {
         // Cannot move to same space.
         if (move.getToRow() == move.getFromRow()
                 && move.getToColumn() == move.getFromColumn()) {
