@@ -57,8 +57,8 @@ public class Pawn extends ChessPiece {
 					&& move.getFromColumn() == move.getToColumn()) {
 				// Both spaces must be empty
 				if (board.pieceAt(move.getToRow(), move.getToColumn()) 
-						== null && board.pieceAt(move.getToRow(), 
-								move.getToColumn() - 1) == null) {
+						== null && board.pieceAt(move.getToRow() - 1, 
+								move.getToColumn()) == null) {
 					
 					firstMove = false;		// First move taken
 					return true;			// Special move was valid

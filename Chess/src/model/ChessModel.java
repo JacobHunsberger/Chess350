@@ -11,16 +11,17 @@ public final class ChessModel implements IChessModel {
 	 */
 	private ChessBoard board = new ChessBoard();
 	/**
+	 * The currect player kept in the model.
+	 */
+	private Player currentPlayer;
+	
+	/**
 	 * Set the board up.
 	 */
 	public ChessModel() {
 		board.setBoard();
+		currentPlayer = Player.WHITE;
 	}
-	
-	/**
-	 * The currect player kept in the model.
-	 */
-	private Player currentPlayer = Player.WHITE;
 	
 	/**
 	 * @return boolean true or false if the game is complete
