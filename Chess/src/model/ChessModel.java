@@ -19,9 +19,9 @@ public final class ChessModel implements IChessModel {
 	 * Set the board up.
 	 */
 	public ChessModel() {
+		board = new ChessBoard();
 		board.setBoard();
 		currentPlayer = Player.WHITE;
-		board = new ChessBoard();
 	}
 	
 	/**
