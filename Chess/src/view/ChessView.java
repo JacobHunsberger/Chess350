@@ -2,7 +2,7 @@ package view;
 
 import java.applet.Applet;
 
-import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 
 /**
  * The view class to build the view of the game.
@@ -15,7 +15,7 @@ public class ChessView extends Applet {
 	 * Starts the chess Gui in applet view.
 	 * @param frame the frame for the whole game of chess
 	 */
-	public ChessView(final JFrame frame) {
+	public ChessView(final JInternalFrame frame) {
 		ChessViewSide cvs = new ChessViewSide();
 		ChessViewBoard cvb = new ChessViewBoard();
 		frame.add(cvb);

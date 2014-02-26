@@ -3,6 +3,7 @@ package presenter;
 import java.applet.Applet;
 
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 
 import view.ChessView;
 
@@ -15,14 +16,14 @@ public class ChessPresenter {
 	/**
 	 * The JFrame for the whole chess game.
 	 */
-	private static JFrame frame = new JFrame("Chess Game");
+	private static JInternalFrame frame = new JInternalFrame("Chess Game");
 	
 	/**
 	 * The main method to call to start the view of the chess game.
 	 * @param args the default way to start the main method
 	 */
 	public static void main(final String[] args) {
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JInternalFrame.EXIT_ON_CLOSE);
 		ChessView panel = new ChessView(frame);
 		frame.getContentPane().add(panel);
 		frame.pack();
@@ -34,7 +35,7 @@ public class ChessPresenter {
 	protected static void reset() {
 		frame.setVisible(false);
 		frame.dispose();
-		frame = new JFrame("Chess Game");
+		frame = new JInternalFrame("Chess Game");
 	}
 	/**
 	 * This method closes the game of chess. 
