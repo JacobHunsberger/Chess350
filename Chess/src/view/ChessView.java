@@ -1,26 +1,28 @@
 package view;
-
-import java.applet.Applet;
-
-import javax.swing.JInternalFrame;
+import java.awt.Graphics;
+import javax.swing.JApplet;
 
 /**
  * The view class to build the view of the game.
  * @author Jonathan Powers, Jacob Hunsberger and Jared Thomas
  */
 @SuppressWarnings("serial")
-public class ChessView extends Applet {
+public class ChessView extends JApplet {
 
+	ChessViewSide cvs;
+	ChessViewBoard cvb;
+	public ChessView() {	
+		cvs = new ChessViewSide();
+		cvb = new ChessViewBoard();
+		getContentPane().add(cvb);
+		//getContentPane().add(cvs);
+		getContentPane().setVisible(true);
+	}	
+	
 	/**
 	 * Starts the chess Gui in applet view.
 	 * @param frame the frame for the whole game of chess
 	 */
-	public ChessView(final JInternalFrame frame) {
-		ChessViewSide cvs = new ChessViewSide();
-		ChessViewBoard cvb = new ChessViewBoard();
-		frame.add(cvb);
-		frame.add(cvs);
-		// TODO Auto-generated constructor stub, add formatting for frame
-	}
+		// add formatting for frame
 
 }

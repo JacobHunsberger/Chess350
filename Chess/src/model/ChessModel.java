@@ -239,22 +239,13 @@ public final class ChessModel implements IChessModel {
 			return true;
 		} else if (pieceAt(move.getToRow(), move.getToColumn())
 				.type() == "king") {
-			//This part checks if the king you moved is now in check.
-			if (boardCheckHelper(move.getToRow(), move.getToColumn(),
-					pieceAt(move.getToRow(), move.getToColumn()).player())) {
-				return true;
-			} else {
-				return false;
-			}
+				return boardCheckHelper(move.getToRow(), move.getToColumn(),
+						pieceAt(move.getToRow(), move.getToColumn()).player());
 		} else {
 			//This part checks if a piece moved and now a different 
 			//piece gets the other king in check.
-			if (boardCheckHelper(temp[0], temp[1], 
-					pieceAt(temp[0], temp[1]).player())) {
-				return true;
-			} else {
-				return false;
-			}
+				return boardCheckHelper(temp[0], temp[1], 
+						pieceAt(temp[0], temp[1]).player());
 		}
 	}
 

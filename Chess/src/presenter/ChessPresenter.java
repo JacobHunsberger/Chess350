@@ -1,8 +1,5 @@
 package presenter;
 
-import java.applet.Applet;
-
-import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 
 import view.ChessView;
@@ -24,7 +21,8 @@ public class ChessPresenter {
 	 */
 	public static void main(final String[] args) {
 		frame.setDefaultCloseOperation(JInternalFrame.EXIT_ON_CLOSE);
-		ChessView panel = new ChessView(frame);
+		ChessView panel = new ChessView();
+		frame.add(panel);
 		frame.getContentPane().add(panel);
 		frame.pack();
 		frame.setVisible(true);
