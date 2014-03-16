@@ -1,5 +1,4 @@
 package view;
-import java.awt.Graphics;
 import javax.swing.JApplet;
 
 /**
@@ -15,7 +14,6 @@ public class ChessView extends JApplet {
 		cvs = new ChessViewSide();
 		cvb = new ChessViewBoard();
 		getContentPane().add(cvb);
-		//getContentPane().add(cvs);
 		getContentPane().setVisible(true);
 	}	
 	

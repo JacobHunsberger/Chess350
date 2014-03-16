@@ -16,11 +16,7 @@ public enum Player {
    /**
     * White Player.
     */
-   WHITE,
-   /**
-    * Blank, (null) Player.
-    */
-   BLANK;
+   WHITE;
 
    /**
     * Return the Player whose turn is next.
