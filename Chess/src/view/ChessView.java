@@ -1,4 +1,6 @@
 package view;
+import java.awt.Dimension;
+
 import javax.swing.JApplet;
 
 /**
@@ -11,10 +13,12 @@ public class ChessView extends JApplet {
 	ChessViewSide cvs;
 	ChessViewBoard cvb;
 	public ChessView() {	
+		this.setSize(500, 500);
 		cvs = new ChessViewSide();
 		cvb = new ChessViewBoard();
 		getContentPane().add(cvb);
 		getContentPane().setVisible(true);
+		this.setPreferredSize(new Dimension(500,500));
 	}	
 	
 	/**

@@ -1,5 +1,7 @@
 package presenter;
 
+import java.awt.Dimension;
+
 import javax.swing.JInternalFrame;
 
 import view.ChessView;
@@ -26,6 +28,7 @@ public class ChessPresenter {
 		frame.getContentPane().add(panel);
 		frame.pack();
 		frame.setVisible(true);
+		
 	}
 	/**
 	 * This method resets the game of chess.
