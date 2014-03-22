@@ -107,8 +107,12 @@ public class ChessViewBoard extends JPanel {
 	private void updateBoard() {
 		ButtonListener buttonListener = new ButtonListener();
 		int count = 0;
+		
+		removeAll();
+		
 		for (int i = 0; i < 8; i++) {
 			for (int k = 0; k < 8; k++) {
+				
 				buttonBoard[i][k] = new JButton();
 				buttonBoard[i][k].addActionListener(buttonListener);
 				buttonBoard[i][k].setPreferredSize(new Dimension(50, 50));
@@ -119,13 +123,15 @@ public class ChessViewBoard extends JPanel {
 				else {
 					buttonBoard[i][k].setBackground(Color.white);
 				}
-				try{
+				try {
 					setImage(buttonBoard[i][k], i, k, model.pieceAt(i, k).player());
-				} catch (NullPointerException e) {}
+				} catch (NullPointerException e) { }
 				add(buttonBoard[i][k]);
 			}
 			count--;
 		}
+		revalidate();
+		repaint();
 	}
 	private void setImage(JButton b, int r, int c, Player p) {
 		try {
