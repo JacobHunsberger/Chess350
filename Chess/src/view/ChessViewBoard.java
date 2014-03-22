@@ -8,12 +8,14 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import model.ChessModel;
+import model.Move;
 import model.Player;
 /**
  * @author Jonathan Powers, Jacob Hunsberger and Jared Thomas
@@ -23,14 +25,75 @@ import model.Player;
 public class ChessViewBoard extends JPanel {
 
 	ChessModel model;
-	/**
-	 * 
-	 */
+	JButton[][] buttonBoard;
+	private Boolean select;
+	private ArrayList<Integer> moves = new ArrayList<Integer>();
+	
 	public ChessViewBoard() {
 		setLayout(new GridLayout(8,8));
-		JButton[][] buttonBoard = new JButton[8][8];
-		ButtonListener buttonListener = new ButtonListener();
+		buttonBoard = new JButton[8][8];
+		//ButtonListener buttonListener = new ButtonListener();
 		model = new ChessModel();
+		//int count = 0;
+		/*for (int i = 0; i < 8; i++) {
+			for (int k = 0; k < 8; k++) {
+				buttonBoard[i][k] = new JButton();
+				buttonBoard[i][k].addActionListener(buttonListener);
+				buttonBoard[i][k].setPreferredSize(new Dimension(50, 50));
+				if(((count++) % 2) == 1)
+				{
+					buttonBoard[i][k].setBackground(Color.getHSBColor(24.0f, 0.42f, 0.30f));
+				}
+				else {
+					buttonBoard[i][k].setBackground(Color.white);
+				}
+				try{
+					setImage(buttonBoard[i][k], i, k, model.pieceAt(i, k).player());
+				} catch (NullPointerException e) {}
+				add(buttonBoard[i][k]);
+			}
+			count--;
+		}*/
+		updateBoard();
+		select = false;
+	}
+	private class ButtonListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			JButton temp = (JButton) e.getSource();
+			// First select the button
+			if (select == false) {
+				for (int i = 0; i < 8; i++) {
+					for (int k = 0; k < 8; k++) {
+						if (buttonBoard[i][k] == temp && model.pieceAt(i, k).player().equals(model.currentPlayer())) {
+							select = true;
+							moves.add(i);
+							moves.add(k);
+							i = 8;
+							k = 8;
+						}
+					}
+				}
+			} else {
+				for (int i = 0; i < 8; i++) {
+					for (int k = 0; k < 8; k++) {
+						if (buttonBoard[i][k] == temp) {
+							select = false;
+							moves.add(i);
+							moves.add(k);
+							i = 8;
+							k = 8;
+						}
+					}
+				}
+				Move m = new Move(moves.get(moves.size() - 4), moves.get(moves.size() - 3), 
+						moves.get(moves.size() - 2), moves.get(moves.size() - 1));
+				model.move(m);
+				updateBoard();
+			}
+		}
+	}
+	private void updateBoard() {
+		ButtonListener buttonListener = new ButtonListener();
 		int count = 0;
 		for (int i = 0; i < 8; i++) {
 			for (int k = 0; k < 8; k++) {
@@ -50,11 +113,6 @@ public class ChessViewBoard extends JPanel {
 				add(buttonBoard[i][k]);
 			}
 			count--;
-		}
-	}
-	private class ButtonListener implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-		
 		}
 	}
 	private void setImage(JButton b, int r, int c, Player p) {
