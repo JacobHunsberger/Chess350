@@ -85,4 +85,24 @@ public class Pawn extends ChessPiece {
 		firstMove = false;
 		return true;
 	}
+	/**
+	 * This method returns true is the pawn can be promoted based on location.
+	 * This should be called after the move of the pawn.
+	 * @param row of the Pawn.
+	 * @return boolean depending on if the pawn can be promoted
+	 */
+	public final boolean isPromotion(final int row) {
+		if (this.player().equals(Player.WHITE)) {
+			if (row == 0) {
+				return true;
+			}
+			return false;
+		} else {
+			final int seven = 7;
+			if (row == seven) {
+				return true;
+			}
+			return false;
+		}
+	}
 }

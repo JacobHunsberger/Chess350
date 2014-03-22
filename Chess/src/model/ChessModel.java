@@ -1,5 +1,6 @@
 package model;
 
+import view.ChessViewSide;
 /**
  * Chess model for the game.
  * @author Jonathan Powers, Jacob Hunsberger and Jared Thomas
@@ -215,7 +216,22 @@ public final class ChessModel implements IChessModel {
 		if (isValidMove(move)) {
 			board.move(move);
 			currentPlayer = currentPlayer.next();
+			specialMove(move);
 			}
+	}
+	
+	private void specialMove(final Move move) {
+		if (pieceAt(move.getToRow(), move.getToColumn()).type().equals("pawn")) {
+			IChessPiece temp = new Pawn(pieceAt(move.getToRow(), move.getToColumn()).player());
+			if (((Pawn) temp).isPromotion(move.getToRow())) {
+				promotePawn(temp);
+			}
+		}
+	}
+	
+	private void promotePawn(IChessPiece p) {
+		ChessViewSide temp = new ChessViewSide();
+		p = temp.promotion(p.player());
 	}
 	/**
 	 * This method checks if the King is in check.
