@@ -3,6 +3,7 @@
  */
 package view;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -30,16 +31,25 @@ public class ChessViewBoard extends JPanel {
 		JButton[][] buttonBoard = new JButton[8][8];
 		ButtonListener buttonListener = new ButtonListener();
 		model = new ChessModel();
+		int count = 0;
 		for (int i = 0; i < 8; i++) {
 			for (int k = 0; k < 8; k++) {
 				buttonBoard[i][k] = new JButton();
 				buttonBoard[i][k].addActionListener(buttonListener);
 				buttonBoard[i][k].setPreferredSize(new Dimension(50, 50));
+				if(((count++) % 2) == 1)
+				{
+					buttonBoard[i][k].setBackground(Color.getHSBColor(24.0f, 0.42f, 0.30f));
+				}
+				else {
+					buttonBoard[i][k].setBackground(Color.white);
+				}
 				try{
 					setImage(buttonBoard[i][k], i, k, model.pieceAt(i, k).player());
 				} catch (NullPointerException e) {}
 				add(buttonBoard[i][k]);
 			}
+			count--;
 		}
 	}
 	private class ButtonListener implements ActionListener {
