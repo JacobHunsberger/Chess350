@@ -27,6 +27,12 @@ public class ChessViewBoard extends JPanel {
 	ChessModel model;
 	JButton[][] buttonBoard;
 	private Boolean select;
+	private JButton fromSpace;
+	private JButton toSpace;
+	private int fromRow;
+	private int toRow;
+	private int fromColumn;
+	private int toColumn;
 	private ArrayList<Integer> moves = new ArrayList<Integer>();
 	
 	public ChessViewBoard() {
@@ -59,34 +65,40 @@ public class ChessViewBoard extends JPanel {
 	}
 	private class ButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			JButton temp = (JButton) e.getSource();
-			// First select the button
 			if (select == false) {
+				fromSpace = (JButton) e.getSource();
 				for (int i = 0; i < 8; i++) {
-					for (int k = 0; k < 8; k++) {
-						if (buttonBoard[i][k] == temp && model.pieceAt(i, k).player().equals(model.currentPlayer())) {
-							select = true;
-							moves.add(i);
-							moves.add(k);
-							i = 8;
-							k = 8;
+					for (int j = 0; j < 8; j++) {
+						if (buttonBoard[i][j] == fromSpace) {
+							try {
+								if (model.pieceAt(i, j).player().
+										equals(model.currentPlayer())) {
+									select = true;
+									fromRow = i;
+									fromColumn = j;
+									i = 8;
+									j = 8;
+								}
+							} catch (NullPointerException npe) {
+								// Clicked an empty space
+							}
 						}
 					}
 				}
 			} else {
+				toSpace = (JButton) e.getSource();
 				for (int i = 0; i < 8; i++) {
-					for (int k = 0; k < 8; k++) {
-						if (buttonBoard[i][k] == temp) {
+					for (int j = 0; j < 8; j++) {
+						if (buttonBoard[i][j] == toSpace) {
 							select = false;
-							moves.add(i);
-							moves.add(k);
+							toRow = i;
+							toColumn = j;
 							i = 8;
-							k = 8;
+							j = 8;
 						}
 					}
 				}
-				Move m = new Move(moves.get(moves.size() - 4), moves.get(moves.size() - 3), 
-						moves.get(moves.size() - 2), moves.get(moves.size() - 1));
+				Move m = new Move(fromRow, fromColumn, toRow, toColumn);
 				model.move(m);
 				updateBoard();
 			}
