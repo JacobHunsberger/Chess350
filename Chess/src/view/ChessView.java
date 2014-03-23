@@ -12,11 +12,25 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class ChessView extends JApplet {
 
-	ChessViewSide cvs;
-	ChessViewBoard cvb;
-	JPanel panel;
+	/**
+	 * cvs View Side.
+	 */
+	private ChessViewSide cvs;
+	/**
+	 * cvb Chess Board.
+	 */
+	private ChessViewBoard cvb;
+	/**
+	 * panel Jpael.
+	 */
+	private JPanel panel;
+	
+	/**
+	 * Constructor.
+	 */
 	public ChessView() {
-		
+		final int fivehundy = 500;
+		final int sevenhundy = 700;
 		panel = new JPanel();
 		cvs = new ChessViewSide();
 		cvb = new ChessViewBoard();
@@ -24,7 +38,7 @@ public class ChessView extends JApplet {
 		panel.add(cvs, BorderLayout.EAST);
 		getContentPane().add(panel);
 		getContentPane().setVisible(true);
-		this.setSize(new Dimension(500,700));
+		this.setSize(new Dimension(fivehundy, sevenhundy));
 	}	
 	
 	/**

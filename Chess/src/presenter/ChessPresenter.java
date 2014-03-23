@@ -1,7 +1,5 @@
 package presenter;
 
-import java.awt.Dimension;
-
 import javax.swing.JInternalFrame;
 
 import view.ChessView;

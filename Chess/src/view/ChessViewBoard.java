@@ -14,7 +14,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import model.ChessBoard;
 import model.ChessModel;
 import model.Move;
 import model.Player;
@@ -28,11 +27,11 @@ public class ChessViewBoard extends JPanel {
 	/**
 	 * 
 	 */
-	ChessModel model;
+	private ChessModel model;
 	/**
 	 * 
 	 */
-	JButton[][] buttonBoard;
+	private JButton[][] buttonBoard;
 	/**
 	 * 
 	 */
@@ -69,9 +68,13 @@ public class ChessViewBoard extends JPanel {
 	 * 
 	 */
 	private Boolean localCheck;
+	/**
+	 * Constructor for ChessViewBoard.
+	 */
 	public ChessViewBoard() {
-		setLayout(new GridLayout(8,8));
-		buttonBoard = new JButton[8][8];
+		final int eight = 8;
+		setLayout(new GridLayout(eight, eight));
+		buttonBoard = new JButton[eight][eight];
 		model = new ChessModel();
 		updateBoard();
 		select = false;
@@ -81,14 +84,18 @@ public class ChessViewBoard extends JPanel {
 	 * 
 	 */
 	private class ButtonListener implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			int eight = 8;
+		/**
+		 * Method handles action.
+		 * @param e The Action.
+		 */
+		public void actionPerformed(final ActionEvent e) {
+			final int eight = 8;
 			if (!select) {
 				fromSpace = (JButton) e.getSource();
 				for (int i = 0; i < eight; i++) {
 					for (int j = 0; j < eight; j++) {
 						if (buttonBoard[i][j] == fromSpace) {
-							try {
+							if (model.pieceAt(i, j) != null) {
 								if (model.pieceAt(i, j).player().
 										equals(model.currentPlayer())) {
 									select = true;
@@ -97,8 +104,6 @@ public class ChessViewBoard extends JPanel {
 									i = eight;
 									j = eight;
 								}
-							} catch (NullPointerException npe) {
-								// Clicked an empty space
 							}
 						}
 					}
@@ -108,15 +113,12 @@ public class ChessViewBoard extends JPanel {
 				for (int i = 0; i < eight; i++) {
 					for (int j = 0; j < eight; j++) {
 						if (buttonBoard[i][j] == fromSpace) {
-							try {
 								select = true;
 								toRow = i;
 								toColumn = j;
 								i = eight;
 								j = eight;
-							} catch (NullPointerException npe) {
-								// Clicked an empty space
-							}
+
 						}
 					}
 				}
@@ -137,7 +139,12 @@ public class ChessViewBoard extends JPanel {
 			}
 		}
 	}
-	private void highlightCheck(int row, int col) {
+	/**
+	 * Highlights a check.
+	 * @param row Row to highlight.
+	 * @param col Column to highlight.
+	 */
+	private void highlightCheck(final int row, final int col) {
 		buttonBoard[row][col].setBackground(Color.yellow);
 		revalidate();
 		repaint();
@@ -146,26 +153,28 @@ public class ChessViewBoard extends JPanel {
 	 * 
 	 */
 	private void updateBoard() {
+		final int eight = 8;
+		final int fifty = 50;
+		final float hue = 24.0f;
+		final float sat = 0.42f;
+		final float bright = 0.30f;
 		ButtonListener buttonListener = new ButtonListener();
 		int count = 0;		
 		removeAll();
-		for (int i = 0; i < 8; i++) {
-			for (int k = 0; k < 8; k++) {
+		for (int i = 0; i < eight; i++) {
+			for (int k = 0; k < eight; k++) {
 				buttonBoard[i][k] = new JButton();
 				buttonBoard[i][k].addActionListener(buttonListener);
-				buttonBoard[i][k].setPreferredSize(new Dimension(50, 50));
+				buttonBoard[i][k].setPreferredSize(new Dimension(fifty, fifty));
 				if (((count++) % 2) == 1) {
 					buttonBoard[i][k].setBackground(Color.getHSBColor(
-							24.0f, 0.42f, 0.30f));
+							hue, sat, bright));
 				} else {
 					buttonBoard[i][k].setBackground(Color.white);
 				}
-				try {
+				if (model.pieceAt(i, k) != null) {
 					setImage(buttonBoard[i][k], i, k, model.pieceAt(
 							i, k).player());
-				} catch (NullPointerException e) {
-					//no piece at the spot.
-					//e.printStackTrace();
 				}
 				add(buttonBoard[i][k]);
 			}
@@ -181,7 +190,8 @@ public class ChessViewBoard extends JPanel {
 	 * @param c column
 	 * @param p player
 	 */
-	private void setImage(JButton b, int r, int c, Player p) {
+	private void setImage(final JButton b, final int r,
+			final int c, final Player p) {
 		try {
 			ImageIcon is = null;
 			if (model.pieceAt(r, c).player() == p) {

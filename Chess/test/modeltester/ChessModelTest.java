@@ -145,7 +145,8 @@ public class ChessModelTest {
 	public final void testisValidCastle() {
 		IChessModel model = new ChessModel();
 		
-		final int zero = 0, one = 1, two = 2, three = 3, four = 4, five = 5, six = 6, seven = 7;
+		final int zero = 0, one = 1, two = 2,
+				three = 3, four = 4, five = 5, six = 6, seven = 7;
 		
 		// Move white knight
 		Move move = new Move(zero, six, two, seven);
@@ -194,6 +195,18 @@ public class ChessModelTest {
 		model.move(move);
 		assertEquals("pawn", model.pieceAt(four, seven).type());
 		assertEquals(null, model.pieceAt(five, seven));
+		
+		move = new Move(zero, six, seven, six);
+		model.move(move);
+		move = new Move(zero, six, one, six);
+		model.move(move);
+		move = new Move(zero, six, zero, five);
+		model.move(move);
+		move = new Move(zero, six, zero, five);
+		model.move(move);
+		move = new Move(zero, five, zero, six);
+		model.move(move);
+
 		
 	}
 	/**

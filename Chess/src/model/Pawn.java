@@ -123,6 +123,10 @@ public class Pawn extends ChessPiece {
 			return false;
 		}
 	}
+	/**
+	 * Determines first move status.
+	 * @return True if first move.
+	 */
 	public final boolean firstMove() {
 		return firstMove;
 	}

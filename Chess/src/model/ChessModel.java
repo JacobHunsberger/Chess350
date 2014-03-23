@@ -225,32 +225,35 @@ public final class ChessModel implements IChessModel {
 				.isValidMove(move, board);
 	}
 
+	/**
+	 * Copies a board.
+	 * @return Chessboard
+	 */
 	private ChessBoard copyBoard() {
+		final int eight = 8;
 		ChessBoard temp = board;
 		board = new ChessBoard();
-		for (int i = 0; i < 8; i++) {
-			for (int k = 0; k < 8; k++) {
-				try{
-					if (temp.pieceAt(i,k).type() == "pawn") {
-						board.set(new Pawn(pieceAt(i,k).player()), i, k);
-					} else if (temp.pieceAt(i,k).type() == "rook") {
-						board.set(new Rook(pieceAt(i,k).player()), i, k);
-					} else if (temp.pieceAt(i,k).type() == "bishop") {
-						board.set(new Bishop(pieceAt(i,k).player()), i, k);
-					} else if (temp.pieceAt(i,k).type() == "queen") {
-						board.set(new Queen(pieceAt(i,k).player()), i, k);
-					} else if (temp.pieceAt(i,k).type() == "king") {
-						board.set(new King(pieceAt(i,k).player()), i, k);
-					} else if (temp.pieceAt(i,k).type() == "knight") {
-						board.set(new Knight(pieceAt(i,k).player()), i, k);
-					}
-				
+		for (int i = 0; i < eight; i++) {
+			for (int k = 0; k < eight; k++) {
+				try {
+					if (temp.pieceAt(i, k).type() == "pawn") {
+						board.set(new Pawn(pieceAt(i, k).player()), i, k);
+					} else if (temp.pieceAt(i, k).type() == "rook") {
+						board.set(new Rook(pieceAt(i, k).player()), i, k);
+					} else if (temp.pieceAt(i, k).type() == "bishop") {
+						board.set(new Bishop(pieceAt(i, k).player()), i, k);
+					} else if (temp.pieceAt(i, k).type() == "queen") {
+						board.set(new Queen(pieceAt(i, k).player()), i, k);
+					} else if (temp.pieceAt(i, k).type() == "king") {
+						board.set(new King(pieceAt(i, k).player()), i, k);
+					} else if (temp.pieceAt(i, k).type() == "knight") {
+						board.set(new Knight(pieceAt(i, k).player()), i, k);
+					}	
+				} catch(NullPointerException npe) {
 					
-					
-			} catch (NullPointerException e) {}
+				}
 			}
 		}
-		//board = temp;
 		return temp;
 	}
 	/**
@@ -357,14 +360,14 @@ public final class ChessModel implements IChessModel {
 			} else if (pieceAt(move.getToRow(), move.getToColumn())
 					.type() == "king") {
 					return boardCheckHelper(move.getToRow(), move.getToColumn(),
-							pieceAt(move.getToRow(), move.getToColumn()).player());
+						pieceAt(move.getToRow(), move.getToColumn()).player());
 			} else {
 				//This part checks if a piece moved and now a different 
 				//piece gets the other king in check.
 					return boardCheckHelper(temp[0], temp[1], 
 							pieceAt(temp[0], temp[1]).player());
 				}*/
-			} catch (NullPointerException e) {}
+			} catch (NullPointerException e) { }
 		board = tempBoard;
 		cyclePlayer();
 		return false;
@@ -423,6 +426,9 @@ public final class ChessModel implements IChessModel {
 	public Player currentPlayer() {
 		return this.currentPlayer;
 	}
+	/**
+	 * Cycles the player.
+	 */
 	private void cyclePlayer() {
 		currentPlayer = currentPlayer().next();
 	}
@@ -590,9 +596,9 @@ public final class ChessModel implements IChessModel {
 	}
 	/**
 	 * 
-	 * @return
+	 * @return Chessboard board returned.
 	 */
-	public ChessBoard getCopyBoard () {
+	public ChessBoard getCopyBoard() {
 		ChessBoard temp = board;
 		return temp;
 	}
