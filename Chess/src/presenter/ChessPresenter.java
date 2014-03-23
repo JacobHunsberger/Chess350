@@ -8,8 +8,14 @@ import view.ChessView;
  * The main class to start the game.
  * @author Jonathan Powers, Jacob Hunsberger and Jared Thomas
  */
-public class ChessPresenter {
+public final class ChessPresenter {
 
+	/**
+	 * Default private constructor.
+	 */
+	private ChessPresenter() {
+		
+	}
 	/**
 	 * The JFrame for the whole chess game.
 	 */
