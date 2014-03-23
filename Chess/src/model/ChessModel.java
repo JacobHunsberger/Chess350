@@ -23,6 +23,10 @@ public final class ChessModel implements IChessModel {
 	 * Valid column for en passant.
 	 */
 	private int enPassantColumn;
+	/**
+	 * Valide row for en passant.
+	 */
+	private int enPassantRow;
 	
 	/**
 	 * Set the board up.
@@ -256,6 +260,11 @@ public final class ChessModel implements IChessModel {
 		if (piece.type() == "pawn") {
 			enPassant = ((Pawn) piece).enPassant();
 			enPassantColumn = move.getToColumn();
+			if (piece.player() == Player.WHITE) {
+				enPassantRow = move.getToRow() - 1;
+			} else {
+				enPassantRow = move.getToRow() + 1;
+			}
 		}
 	}
 	
@@ -514,10 +523,11 @@ public final class ChessModel implements IChessModel {
 			return false;
 		}
 		
-		if (move.getToColumn() != enPassantColumn) {
-			return false;
+		if (move.getToRow() == enPassantRow
+				&& move.getToColumn() == enPassantColumn) {
+			return true;
 		}
 		
-		return true;
+		return false;
 	}
 }
