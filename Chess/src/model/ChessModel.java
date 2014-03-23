@@ -313,11 +313,12 @@ public final class ChessModel implements IChessModel {
 	}
 	/**
 	 * Method promotes pawn.
+	 * @return IChessPiece the piece that the pawn was promoted to.
 	 * @param p Piece to promote.
 	 */
-	private void promotePawn(IChessPiece p) {
+	private IChessPiece promotePawn(final IChessPiece p) {
 		ChessViewSide temp = new ChessViewSide();
-		p = temp.promotion(p.player());
+		return temp.promotion(p.player());
 	}
 	/**
 	 * This method checks if the King is in check.
