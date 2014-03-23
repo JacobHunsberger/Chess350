@@ -235,6 +235,7 @@ public final class ChessModel implements IChessModel {
 		// check for casteling
 		if (isValidCastle(move)) {
 			currentPlayer = currentPlayer.next();
+			return;
 		}
 		// add special move handler here for castling
 		// check first and second piece is rook and or king
@@ -281,15 +282,17 @@ public final class ChessModel implements IChessModel {
 	 * @param move input the last move made.
 	 */
 	public boolean inCheck(final Move move) {
-		int [] temp;
-		//First get the color of the piece that moved last.
-		if (pieceAt(move.getToRow(), move.getToColumn()).player() 
-				== Player.WHITE) {
-			//Then use that to find the king of the opposite player.
-			temp = findKing(Player.BLACK);
-		} else {
-			temp = findKing(Player.WHITE);
-		}
+		int [] temp = null;
+		try {
+			//First get the color of the piece that moved last.
+			if (pieceAt(move.getToRow(), move.getToColumn()).player() 
+					== Player.WHITE) {
+				//Then use that to find the king of the opposite player.
+				temp = findKing(Player.BLACK);
+			} else {
+				temp = findKing(Player.WHITE);
+			}
+		} catch (NullPointerException e) {}
 		//Now use isValidMove to try and move the piece to the king.
 		try {
 			if (pieceAt(move.getToRow(), move.getToColumn())
@@ -413,13 +416,16 @@ public final class ChessModel implements IChessModel {
 	 */
 	private boolean isValidCastle(final Move move) {
 		// check for rook and king pieces
-		IChessPiece piece1 = pieceAt(move.getFromRow(),move.getFromColumn());
-		IChessPiece piece2 = pieceAt(move.getToRow(),move.getToColumn());
+		IChessPiece piece1 = pieceAt(move.getFromRow(), move.getFromColumn());
+		IChessPiece piece2 = pieceAt(move.getToRow(), move.getToColumn());
+		
 		// either piece does not exist
 		if(piece1 == null || piece2 == null)
 		{
 			return false;
 		}
+		String s1 = piece1.type();
+		String s2 = piece2.type();
 		// pieces must be on the same team
 		if(piece1.player() != piece2.player())
 		{
