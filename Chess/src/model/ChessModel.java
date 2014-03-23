@@ -278,6 +278,7 @@ public final class ChessModel implements IChessModel {
 			currentPlayer = currentPlayer.next();
 		}
 	}
+	
 	/**
 	 * 
 	 * @param move
