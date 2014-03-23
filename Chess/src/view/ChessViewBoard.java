@@ -104,6 +104,22 @@ public class ChessViewBoard extends JPanel {
 					}
 				}
 			} else {
+				fromSpace = (JButton) e.getSource();
+				for (int i = 0; i < eight; i++) {
+					for (int j = 0; j < eight; j++) {
+						if (buttonBoard[i][j] == fromSpace) {
+							try {
+								select = true;
+								toRow = i;
+								toColumn = j;
+								i = eight;
+								j = eight;
+							} catch (NullPointerException npe) {
+								// Clicked an empty space
+							}
+						}
+					}
+				}
 				Move m = new Move(fromRow, fromColumn, toRow, toColumn);
 				if (!model.inCheck(m)) {
 					model.move(m);
