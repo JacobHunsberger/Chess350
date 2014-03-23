@@ -249,7 +249,9 @@ public final class ChessModel implements IChessModel {
 		}
 		
 		IChessPiece piece = pieceAt(move.getToRow(), move.getToColumn());
-		enPassant = ((Pawn) piece).enPassant();
+		if (piece.type() == "pawn") {
+			enPassant = ((Pawn) piece).enPassant();
+		}
 	}
 	
 	private void promotePawn(IChessPiece p) {
@@ -489,6 +491,10 @@ public final class ChessModel implements IChessModel {
 	 * @return True if en passant can be made on this turn.
 	 */
 	private boolean isValidEnPassant(final Move move) {
+		if (!enPassant) {
+			return false;
+		}
+		
 		IChessPiece neighbor = 
 				pieceAt(move.getFromRow(), move.getToColumn());
 		
@@ -503,7 +509,7 @@ public final class ChessModel implements IChessModel {
 			return false;
 		}
 		
-		if (!enPassant) {
+		if (!(((Pawn) neighbor).enPassant())) {
 			return false;
 		}
 		

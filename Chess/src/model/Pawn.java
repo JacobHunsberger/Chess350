@@ -17,7 +17,7 @@ public class Pawn extends ChessPiece {
 	 */
 	private boolean firstMove;
 	/**
-	 * Indicates that special move was taken.
+	 * Indicates that pawn may be taken en passant on the next turn.
 	 */
 	private boolean enPassant;
 	/**
