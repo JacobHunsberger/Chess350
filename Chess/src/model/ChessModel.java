@@ -260,13 +260,12 @@ public final class ChessModel implements IChessModel {
 	private void specialMove(final Move move) {
 		IChessPiece tempPiece = pieceAt(move.getToRow(), move.getToColumn());
         if (tempPiece != null) {
-        	if (tempPiece.type() != "pawn") {
+        	if (tempPiece.type() == "king") {
         		return;
         	}
         }
-        IChessPiece temp = (Pawn) tempPiece;
-		if (((Pawn) temp).isPromotion(move.getToRow())) {
-			promotePawn(temp);
+		if (((Pawn) tempPiece).isPromotion(move.getToRow())) {
+			promotePawn(tempPiece);
 		}
 		
 		IChessPiece piece = pieceAt(move.getToRow(), move.getToColumn());
