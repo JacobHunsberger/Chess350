@@ -3,6 +3,9 @@
  */
 package view;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
@@ -37,6 +40,10 @@ public class ChessViewSide extends JPanel {
 		top = new JPanel();
 		bottom = new JPanel();
 		promote = null;
+		this.setPreferredSize(new Dimension(200, 400));
+		this.setBackground(Color.gray);
+		revalidate();
+		repaint();
 	}
 	
 	public IChessPiece promotion(Player p) {
@@ -51,6 +58,11 @@ public class ChessViewSide extends JPanel {
 		radioButtons[2].addItemListener(item);
 		radioButtons[3].addItemListener(item);
 		tempPlayer = p;
+		setLayout(new GridLayout(2,2));
+		add(radioButtons[0]);
+		add(radioButtons[1]);
+		add(radioButtons[2]);
+		add(radioButtons[3]);
 		while (promote == null){
 			
 		}
@@ -74,6 +86,7 @@ public class ChessViewSide extends JPanel {
 	        		}
 	        	}
 	        }
+	        removeAll();
 	    }
 	    else if (e.getStateChange() == ItemEvent.DESELECTED) {
 	        // Your deselected code here.

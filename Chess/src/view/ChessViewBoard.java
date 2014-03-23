@@ -24,48 +24,62 @@ import model.Player;
 @SuppressWarnings("serial")
 public class ChessViewBoard extends JPanel {
 
+	/**
+	 * 
+	 */
 	ChessModel model;
+	/**
+	 * 
+	 */
 	JButton[][] buttonBoard;
+	/**
+	 * 
+	 */
 	private Boolean select;
+	/**
+	 * 
+	 */
 	private JButton fromSpace;
+	/**
+	 * 
+	 */
 	private JButton toSpace;
+	/**
+	 * 
+	 */
 	private int fromRow;
+	/**
+	 * 
+	 */
 	private int toRow;
+	/**
+	 * 
+	 */
 	private int fromColumn;
+	/**
+	 * 
+	 */
 	private int toColumn;
+	/**
+	 * 
+	 */
 	private ArrayList<Integer> moves = new ArrayList<Integer>();
-	
+	/**
+	 * 
+	 */
 	public ChessViewBoard() {
 		setLayout(new GridLayout(8,8));
 		buttonBoard = new JButton[8][8];
-		//ButtonListener buttonListener = new ButtonListener();
 		model = new ChessModel();
-		//int count = 0;
-		/*for (int i = 0; i < 8; i++) {
-			for (int k = 0; k < 8; k++) {
-				buttonBoard[i][k] = new JButton();
-				buttonBoard[i][k].addActionListener(buttonListener);
-				buttonBoard[i][k].setPreferredSize(new Dimension(50, 50));
-				if(((count++) % 2) == 1)
-				{
-					buttonBoard[i][k].setBackground(Color.getHSBColor(24.0f, 0.42f, 0.30f));
-				}
-				else {
-					buttonBoard[i][k].setBackground(Color.white);
-				}
-				try{
-					setImage(buttonBoard[i][k], i, k, model.pieceAt(i, k).player());
-				} catch (NullPointerException e) {}
-				add(buttonBoard[i][k]);
-			}
-			count--;
-		}*/
 		updateBoard();
 		select = false;
 	}
+	/**
+	 * 
+	 */
 	private class ButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			if (select == false) {
+			if (!select) {
 				fromSpace = (JButton) e.getSource();
 				for (int i = 0; i < 8; i++) {
 					for (int j = 0; j < 8; j++) {
@@ -100,32 +114,46 @@ public class ChessViewBoard extends JPanel {
 				}
 				Move m = new Move(fromRow, fromColumn, toRow, toColumn);
 				model.move(m);
-				updateBoard();
+				if (model.inCheck(m)) {
+					int[] temp = model.findKing(model.currentPlayer());
+					updateBoard();
+					highlightCheck(temp[1], temp[0]);
+				} else {
+					updateBoard();
+				}
 			}
 		}
 	}
+	private void highlightCheck(int row, int col) {
+		buttonBoard[row][col].setBackground(Color.yellow);
+		revalidate();
+		repaint();
+	}
+	/**
+	 * 
+	 */
 	private void updateBoard() {
 		ButtonListener buttonListener = new ButtonListener();
-		int count = 0;
-		
+		int count = 0;		
 		removeAll();
-		
 		for (int i = 0; i < 8; i++) {
 			for (int k = 0; k < 8; k++) {
-				
 				buttonBoard[i][k] = new JButton();
 				buttonBoard[i][k].addActionListener(buttonListener);
 				buttonBoard[i][k].setPreferredSize(new Dimension(50, 50));
-				if(((count++) % 2) == 1)
-				{
-					buttonBoard[i][k].setBackground(Color.getHSBColor(24.0f, 0.42f, 0.30f));
-				}
-				else {
+				if (((count++) % 2) == 1) {
+					buttonBoard[i][k].setBackground(Color.getHSBColor(
+							24.0f, 0.42f, 0.30f));
+				} else {
 					buttonBoard[i][k].setBackground(Color.white);
 				}
 				try {
-					setImage(buttonBoard[i][k], i, k, model.pieceAt(i, k).player());
-				} catch (NullPointerException e) { }
+					setImage(buttonBoard[i][k], i, k, model.pieceAt(
+							i, k).player());
+				} catch (NullPointerException e) {
+					//no piece at the spot.
+					//e.printStackTrace();
+				}
 				add(buttonBoard[i][k]);
 			}
 			count--;
@@ -133,28 +161,35 @@ public class ChessViewBoard extends JPanel {
 		revalidate();
 		repaint();
 	}
+	/**
+	 * 
+	 * @param b
+	 * @param r
+	 * @param c
+	 * @param p
+	 */
 	private void setImage(JButton b, int r, int c, Player p) {
 		try {
 			ImageIcon is = null;
 			if (model.pieceAt(r, c).player() == p) {
 				if (model.pieceAt(r, c).type() == "king") {
 					is = new ImageIcon(getClass().getResource(
-							"images/King/king" + p.toString() +".png"));
+							"images/King/king" + p.toString() + ".png"));
 				} else if (model.pieceAt(r, c).type() == "queen") {
 					is = new ImageIcon(getClass().getResource(
-							"images/Queen/queen" + p.toString() +".png"));
+							"images/Queen/queen" + p.toString() + ".png"));
 				} else if (model.pieceAt(r, c).type() == "bishop") {
 					is = new ImageIcon(getClass().getResource(
-							"images/Bishop/bishop" + p.toString() +".png"));
+							"images/Bishop/bishop" + p.toString() + ".png"));
 				} else if (model.pieceAt(r, c).type() == "rook") {
 					is = new ImageIcon(getClass().getResource(
-							"images/Rook/rook" + p.toString() +".png"));
+							"images/Rook/rook" + p.toString() + ".png"));
 				} else if (model.pieceAt(r, c).type() == "knight") {
 					is = new ImageIcon(getClass().getResource(
-							"images/Knight/knight" + p.toString() +".png"));
+							"images/Knight/knight" + p.toString() + ".png"));
 				} else if (model.pieceAt(r, c).type() == "pawn") {
 					is = new ImageIcon(getClass().getResource(
-							"images/Pawn/pawn" + p.toString() +".png"));
+							"images/Pawn/pawn" + p.toString() + ".png"));
 				}
 			}
 			b.setIcon(is);

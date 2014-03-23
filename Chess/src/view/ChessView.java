@@ -1,7 +1,9 @@
 package view;
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 
 import javax.swing.JApplet;
+import javax.swing.JPanel;
 
 /**
  * The view class to build the view of the game.
@@ -12,13 +14,17 @@ public class ChessView extends JApplet {
 
 	ChessViewSide cvs;
 	ChessViewBoard cvb;
-	public ChessView() {	
-		this.setSize(500, 500);
+	JPanel panel;
+	public ChessView() {
+		
+		panel = new JPanel();
 		cvs = new ChessViewSide();
 		cvb = new ChessViewBoard();
-		getContentPane().add(cvb);
+		panel.add(cvb, BorderLayout.WEST);
+		panel.add(cvs, BorderLayout.EAST);
+		getContentPane().add(panel);
 		getContentPane().setVisible(true);
-		this.setPreferredSize(new Dimension(500,500));
+		this.setSize(new Dimension(500,700));
 	}	
 	
 	/**

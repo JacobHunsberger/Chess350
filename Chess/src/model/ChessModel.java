@@ -233,7 +233,7 @@ public final class ChessModel implements IChessModel {
 			specialMove(move);
 		}
 		// check for casteling
-		if(isValidCastle(move)) {
+		if (isValidCastle(move)) {
 			currentPlayer = currentPlayer.next();
 		}
 		// add special move handler here for castling
@@ -248,7 +248,10 @@ public final class ChessModel implements IChessModel {
 			currentPlayer = currentPlayer.next();
 		}
 	}
-	
+	/**
+	 * 
+	 * @param move
+	 */
 	private void specialMove(final Move move) {
         IChessPiece temp = new Pawn(pieceAt(move.getToRow(), 
         		move.getToColumn()).player());
@@ -280,7 +283,7 @@ public final class ChessModel implements IChessModel {
 	public boolean inCheck(final Move move) {
 		int [] temp;
 		//First get the color of the piece that moved last.
-		if (pieceAt(move.getFromRow(), move.getFromColumn()).player() 
+		if (pieceAt(move.getToRow(), move.getToColumn()).player() 
 				== Player.WHITE) {
 			//Then use that to find the king of the opposite player.
 			temp = findKing(Player.BLACK);
@@ -288,20 +291,23 @@ public final class ChessModel implements IChessModel {
 			temp = findKing(Player.WHITE);
 		}
 		//Now use isValidMove to try and move the piece to the king.
-		if (pieceAt(move.getToRow(), move.getToColumn())
-				.isValidMove(new Move(move.getToRow(), 
-				move.getToColumn(), temp[0], temp[1]), board)) {
-			return true;
-		} else if (pieceAt(move.getToRow(), move.getToColumn())
-				.type() == "king") {
-				return boardCheckHelper(move.getToRow(), move.getToColumn(),
-						pieceAt(move.getToRow(), move.getToColumn()).player());
-		} else {
-			//This part checks if a piece moved and now a different 
-			//piece gets the other king in check.
-				return boardCheckHelper(temp[0], temp[1], 
-						pieceAt(temp[0], temp[1]).player());
-		}
+		try {
+			if (pieceAt(move.getToRow(), move.getToColumn())
+					.isValidMove(new Move(move.getToRow(), 
+							move.getToColumn(), temp[1], temp[0]), board)) {
+				return true;
+			} else if (pieceAt(move.getToRow(), move.getToColumn())
+					.type() == "king") {
+					return boardCheckHelper(move.getToRow(), move.getToColumn(),
+							pieceAt(move.getToRow(), move.getToColumn()).player());
+			} else {
+				//This part checks if a piece moved and now a different 
+				//piece gets the other king in check.
+					return boardCheckHelper(temp[0], temp[1], 
+							pieceAt(temp[0], temp[1]).player());
+				}
+			} catch (NullPointerException e) {}
+		return false;
 	}
 
 	/**
@@ -332,7 +338,7 @@ public final class ChessModel implements IChessModel {
 	 * @return int[] an array with the values of row and column of the king
 	 * @param player input the player
 	 */
-	private int[] findKing(final Player player) {
+	public int[] findKing(final Player player) {
 		final int max = 8;
 		for (int i = 0; i < max; i++) {
 			for (int k = 0; k < max; k++) {

@@ -117,7 +117,7 @@ public class Pawn extends ChessPiece {
 	 * Returns true if pawn has just moved forward two spaces.
 	 * @return True if pawn can be removed by en passant rule.
 	 */
-	public boolean enPassant() {
+	public final boolean enPassant() {
 		return enPassant;
 	}
 }
