@@ -313,8 +313,11 @@ public final class ChessModel implements IChessModel {
 		} catch (NullPointerException e) {}
 		//Now use isValidMove to try and move any piece to the king.
 		ChessBoard tempBoard = copyBoard();
-		move(m);
-		cyclePlayer();
+		if (isValidMove(m)) {
+			move(m);
+		} else {
+			cyclePlayer();
+		}
 		try {
 			for (int i = 0; i < eight; i++) {
 				for (int k = 0; k < eight; k++) {
@@ -364,7 +367,6 @@ public final class ChessModel implements IChessModel {
 						return true;
 					}
 				} catch (NullPointerException e) {
-					System.out.println(i + " " + k);
 				}
 			}
 		}
@@ -385,12 +387,10 @@ public final class ChessModel implements IChessModel {
 						int[] t = new int[2]; 
 						t[0] = i;
 						t[1] = k;
-						System.out.println(i + " " + k); 
 						//Helps verify my row and column
 						return t;
 					}
 				} catch (NullPointerException e) {
-					System.out.println(i + " " + k);
 				}
 			}
 		}
