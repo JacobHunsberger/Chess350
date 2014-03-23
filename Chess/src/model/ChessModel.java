@@ -16,9 +16,13 @@ public final class ChessModel implements IChessModel {
 	 */
 	private Player currentPlayer;
 	/**
-	 * Indicates that en passant may be taken on this turn.
+	 * Indicates that en passant may be taken.
 	 */
 	private boolean enPassant;
+	/**
+	 * Valid column for en passant.
+	 */
+	private int enPassantColumn;
 	
 	/**
 	 * Set the board up.
@@ -251,6 +255,7 @@ public final class ChessModel implements IChessModel {
 		IChessPiece piece = pieceAt(move.getToRow(), move.getToColumn());
 		if (piece.type() == "pawn") {
 			enPassant = ((Pawn) piece).enPassant();
+			enPassantColumn = move.getToColumn();
 		}
 	}
 	
@@ -509,7 +514,7 @@ public final class ChessModel implements IChessModel {
 			return false;
 		}
 		
-		if (!(((Pawn) neighbor).enPassant())) {
+		if (move.getToColumn() != enPassantColumn) {
 			return false;
 		}
 		
