@@ -74,7 +74,8 @@ public class Queen extends ChessPiece {
 						/ Math.abs(toColumn - fromColumn);
 				int dy = (toRow - fromRow) / Math.abs(toRow - fromRow);
 				// check equal distance in rows and columns
-				if (Math.abs(toColumn - fromColumn) != Math.abs(toRow - fromRow)) {
+				if (Math.abs(toColumn - fromColumn) 
+						!= Math.abs(toRow - fromRow)) {
 					return false;
 				}
 				for (int i = 1; i < Math.abs(toColumn - fromColumn); i++) {
