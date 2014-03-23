@@ -13,6 +13,14 @@ public class Bishop extends ChessPiece {
     public Bishop(final Player color) {
         super(color);
     }
+    
+    /**
+     * Copy constructor.
+     * @param aBishop Bishop to copy.
+     */
+    public Bishop(final Bishop aBishop) {
+    	this(aBishop.player());
+    }
 /**
  * A Bishop has the type String.
  * Used for identification.

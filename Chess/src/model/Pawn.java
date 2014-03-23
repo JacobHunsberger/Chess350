@@ -38,6 +38,16 @@ public class Pawn extends ChessPiece {
 		enPassant = false;
 	}
 	/**
+	 * Copy constructor.
+	 * @param aPawn Pawn to copy.
+	 */
+	public Pawn(final Pawn aPawn) {
+		this(aPawn.player());
+		
+		firstMove = aPawn.firstMove();
+		enPassant = aPawn.enPassant();
+	}
+	/**
 	 * @return String "pawn"
 	 */
 	public final String type() {
@@ -112,6 +122,9 @@ public class Pawn extends ChessPiece {
 			}
 			return false;
 		}
+	}
+	public final boolean firstMove() {
+		return firstMove;
 	}
 	/**
 	 * Returns true if pawn has just moved forward two spaces.

@@ -13,6 +13,14 @@ public class Knight extends ChessPiece {
 	public Knight(final Player color) {
 		super(color);
 	}
+	
+	/**
+	 * Copy constructor.
+	 * @param aKnight Knight to copy.
+	 */
+	public Knight(final Knight aKnight) {
+		this(aKnight.player());
+	}
 
 	/**
 	 * Returns string for th class knight.

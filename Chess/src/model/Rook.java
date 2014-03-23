@@ -20,6 +20,16 @@ public class Rook extends ChessPiece {
         super(color);
         firstMove = true;
     }
+    
+    /**
+     * Copy constructor.
+     * 
+     * @param aRook Rook to copy.
+     */
+    public Rook(final Rook aRook) {
+    	this(aRook.player());
+    	firstMove = aRook.firstMove();
+    }
 
     /**
      * @return String 'rook'

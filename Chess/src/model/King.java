@@ -20,7 +20,17 @@ public class King extends ChessPiece {
         super(color);
         firstMove = true;
     }
-
+    
+    /**
+     * Copy constructor.
+     * 
+     * @param aKing King to copy.
+     */
+    public King(final King aKing) {
+    	this(aKing.player());
+    	firstMove = aKing.firstMove();
+    }
+    
     /**
      * This class returns a string for the king piece.
      * @return String 'king'

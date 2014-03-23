@@ -18,6 +18,14 @@ public abstract class ChessPiece implements IChessPiece {
     protected ChessPiece(final Player color) {
         this.owner = color;
     }
+    
+    /**
+     * Copy constructor.
+     * @param aPiece ChessPiece to copy.
+     */
+    protected ChessPiece(final ChessPiece aPiece) {
+    	this(aPiece.player());
+    }
 
     /**
      * Returns the owner of this piece.
