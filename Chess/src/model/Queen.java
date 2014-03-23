@@ -73,6 +73,10 @@ public class Queen extends ChessPiece {
 				int dx = (toColumn - fromColumn) 
 						/ Math.abs(toColumn - fromColumn);
 				int dy = (toRow - fromRow) / Math.abs(toRow - fromRow);
+				// check equal distance in rows and columns
+				if (Math.abs(toColumn - fromColumn) != Math.abs(toRow - fromRow)) {
+					return false;
+				}
 				for (int i = 1; i < Math.abs(toColumn - fromColumn); i++) {
 					// verify no pieces at point
 					if (board.pieceAt(fromRow + i * dy, fromColumn + i * dx) 
