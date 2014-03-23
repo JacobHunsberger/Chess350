@@ -51,7 +51,7 @@ public final class ChessModel implements IChessModel {
 		Move m = new Move(board.getMove(board.getMoveLength() - 1).getToRow(), 
 				board.getMove(board.getMoveLength() - 1).getToColumn(), 
 				temp[1], temp[0]);
-		if (!inCheck(currentPlayer())) {
+		if (!inCheck(m)) {
 			return false;
 		}
 		//Can the king move out of check
@@ -64,7 +64,7 @@ public final class ChessModel implements IChessModel {
 						ChessBoard tempBoard = board;
 						Move tempMove = new Move(temp[0], temp[1], i, k);
 						move(tempMove);
-						if (inCheck(currentPlayer())) {
+						if (inCheck(m)) {
 							board = tempBoard;
 							return false;
 						}
@@ -225,6 +225,19 @@ public final class ChessModel implements IChessModel {
 				.isValidMove(move, board);
 	}
 
+	private ChessBoard copyBoard() {
+		ChessBoard temp = board;
+		board = new ChessBoard();
+		for (int i = 0; i < 8; i++) {
+			for (int k = 0; k < 8; k++) {
+				try{
+					board.set(temp.pieceAt(i,k), i, k);
+				} catch (NullPointerException e) {}
+			}
+		}
+		//board = temp;
+		return temp;
+	}
 	/**
 	 * This method moves the piece if it is valid.
 	 * @param move input the move of the piece
@@ -288,24 +301,24 @@ public final class ChessModel implements IChessModel {
 	 * @return boolean true or false if the king is in check.
 	 * @param p The player for the king you want to check is in check.
 	 */
-	public boolean inCheck(final Player p) {
+	public boolean inCheck(Move m) {
 		int [] temp = null;
 		int eight = 8;
 		try {
-				temp = findKing(p);
+				temp = findKing(currentPlayer());
 		} catch (NullPointerException e) {}
 		//Now use isValidMove to try and move any piece to the king.
+		ChessBoard tempBoard = copyBoard();
+		move(m);
+		cyclePlayer();
 		try {
 			for (int i = 0; i < eight; i++) {
 				for (int k = 0; k < eight; k++) {
-					ChessModel tempModel = this;
-					tempModel.cyclePlayer();
-					if (tempModel.isValidMove(new Move(i, 
+					if (isValidMove(new Move(i, 
 									k, temp[1], temp[0]))) {
-						tempModel.cyclePlayer();
+						board = tempBoard;
+						cyclePlayer();
 						return true;
-					} else {
-						tempModel.cyclePlayer();
 					}
 				}
 			}
@@ -324,6 +337,8 @@ public final class ChessModel implements IChessModel {
 							pieceAt(temp[0], temp[1]).player());
 				}*/
 			} catch (NullPointerException e) {}
+		board = tempBoard;
+		cyclePlayer();
 		return false;
 	}
 	

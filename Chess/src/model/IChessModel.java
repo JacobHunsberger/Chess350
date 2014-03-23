@@ -35,9 +35,9 @@ public interface IChessModel {
    /**
     * Report whether the current player is in check.
     * @return true if the current player is in check, false otherwise.
-    * @param p input the player you want to check for check.
+    * @param m input the move that the player makes.
     */
-   boolean inCheck(Player p);
+   boolean inCheck(Move m);
 
    /**
     * Return the current player.

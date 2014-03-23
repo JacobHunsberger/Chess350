@@ -85,8 +85,8 @@ public class ChessViewBoard extends JPanel {
 			int eight = 8;
 			if (!select) {
 				fromSpace = (JButton) e.getSource();
-				for (int i = 0; i < 8; i++) {
-					for (int j = 0; j < 8; j++) {
+				for (int i = 0; i < eight; i++) {
+					for (int j = 0; j < eight; j++) {
 						if (buttonBoard[i][j] == fromSpace) {
 							try {
 								if (model.pieceAt(i, j).player().
@@ -94,8 +94,8 @@ public class ChessViewBoard extends JPanel {
 									select = true;
 									fromRow = i;
 									fromColumn = j;
-									i = 8;
-									j = 8;
+									i = eight;
+									j = eight;
 								}
 							} catch (NullPointerException npe) {
 								// Clicked an empty space
@@ -104,32 +104,10 @@ public class ChessViewBoard extends JPanel {
 					}
 				}
 			} else {
-				toSpace = (JButton) e.getSource();
-				for (int i = 0; i < eight; i++) {
-					for (int j = 0; j < eight; j++) {
-						if (buttonBoard[i][j] == toSpace) {
-							select = false;
-							toRow = i;
-							toColumn = j;
-							i = eight;
-							j = eight;
-						}
-					}
-				}
 				Move m = new Move(fromRow, fromColumn, toRow, toColumn);
-				if (localCheck) {
-					ChessModel temp = model;
-					temp.move(m);
-					//ChessBoard tempBoard = model.getCopyBoard();
-					if (!temp.inCheck(temp.currentPlayer())) {
-						model.move(m);
-						updateBoard();
-						localCheck = false;
-					}
-					
-				} else {
+				if (!model.inCheck(m)) {
 					model.move(m);
-					if (model.inCheck(model.currentPlayer())) {
+					if (model.inCheck(m)) {
 						int[] temp = model.findKing(model.currentPlayer());
 						updateBoard();
 						highlightCheck(temp[1], temp[0]);
