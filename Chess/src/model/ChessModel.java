@@ -213,6 +213,10 @@ public final class ChessModel implements IChessModel {
 	 */
 	public boolean isValidMove(final Move move) {
 		//Make sure the piece you move is your piece.
+		IChessPiece piece = pieceAt(move.getFromRow(), move.getFromColumn());
+		if (piece == null) {
+			return false;
+		}
 		if (pieceAt(move.getFromRow(), move.getFromColumn()).player()
 				!= currentPlayer()) {
 			return false;
