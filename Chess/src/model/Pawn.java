@@ -17,6 +17,10 @@ public class Pawn extends ChessPiece {
 	 */
 	private boolean firstMove;
 	/**
+	 * Indicates that special move was taken.
+	 */
+	private boolean enPassant;
+	/**
 	 * Constructs a new Pawn object.
 	 * @param color the player that owns this piece.
 	 */
@@ -31,6 +35,7 @@ public class Pawn extends ChessPiece {
 			startingRow = blackStart;
 		}
 		firstMove = true;
+		enPassant = false;
 	}
 	/**
 	 * @return String "pawn"
@@ -58,6 +63,7 @@ public class Pawn extends ChessPiece {
 				if (board.pieceAt(move.getToRow(),
 						move.getToColumn()) == null) {
 					firstMove = false;		// First move taken
+					enPassant = true;
 					return true;			// Special move was valid
 				}
 			}
@@ -82,6 +88,8 @@ public class Pawn extends ChessPiece {
     		// If pawn moved diagonally, space cannot be empty or occupied
     	    // by the same color (already checked in super)
     	}
+	    
+	    enPassant = false;
 		firstMove = false;
 		return true;
 	}
@@ -104,5 +112,12 @@ public class Pawn extends ChessPiece {
 			}
 			return false;
 		}
+	}
+	/**
+	 * Returns true if pawn has just moved forward two spaces.
+	 * @return True if pawn can be removed by en passant rule.
+	 */
+	public boolean enPassant() {
+		return enPassant;
 	}
 }

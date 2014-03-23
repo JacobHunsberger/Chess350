@@ -15,6 +15,10 @@ public final class ChessModel implements IChessModel {
 	 * The currect player kept in the model.
 	 */
 	private Player currentPlayer;
+	/**
+	 * Indicates that en passant may be taken on this turn.
+	 */
+	private boolean enPassant;
 	
 	/**
 	 * Set the board up.
@@ -23,6 +27,7 @@ public final class ChessModel implements IChessModel {
 		board = new ChessBoard();
 		board.setBoard();
 		currentPlayer = Player.WHITE;
+		enPassant = false;
 	}
 	
 	/**
@@ -199,7 +204,7 @@ public final class ChessModel implements IChessModel {
 	 * @return boolean true or false if the move is valid
 	 */
 	public boolean isValidMove(final Move move) {
-		//Make sure the peice you move is your piece.
+		//Make sure the piece you move is your piece.
 		if (pieceAt(move.getFromRow(), move.getFromColumn()).player()
 				!= currentPlayer()) {
 			return false;
@@ -216,26 +221,35 @@ public final class ChessModel implements IChessModel {
 		if (isValidMove(move)) {
 			board.move(move);
 			currentPlayer = currentPlayer.next();
+			enPassant = false;
 			specialMove(move);
-			}
+		}
 		// check for casteling
-		if(isValidCastle(move))
-		{
+		if(isValidCastle(move)) {
 			currentPlayer = currentPlayer.next();
 		}
 		// add special move handler here for castling
 		// check first and second piece is rook and or king
 		// verify spaces king moves are check free
 		// move rook to position
+		
+		if (isValidEnPassant(move)) {
+			board.move(move);
+			// Remove opponent piece
+			board.unset(move.getFromRow(), move.getToColumn());
+			currentPlayer = currentPlayer.next();
+		}
 	}
 	
 	private void specialMove(final Move move) {
-		if (pieceAt(move.getToRow(), move.getToColumn()).type().equals("pawn")) {
-			IChessPiece temp = new Pawn(pieceAt(move.getToRow(), move.getToColumn()).player());
-			if (((Pawn) temp).isPromotion(move.getToRow())) {
-				promotePawn(temp);
-			}
+        IChessPiece temp = new Pawn(pieceAt(move.getToRow(), 
+        		move.getToColumn()).player());
+		if (((Pawn) temp).isPromotion(move.getToRow())) {
+			promotePawn(temp);
 		}
+		
+		IChessPiece piece = pieceAt(move.getToRow(), move.getToColumn());
+		enPassant = ((Pawn) piece).enPassant();
 	}
 	
 	private void promotePawn(IChessPiece p) {
@@ -461,7 +475,38 @@ public final class ChessModel implements IChessModel {
 		board.move(m2);
 
 		return true;
-
 	}
 	
+	/**
+	 * Determines if en passant can be used to capture a pawn.
+	 * 
+	 * Rules: If a pawn moves 2 spaces on its first move,
+	 * 		  an opponent pawn may capture it as if it had only
+	 *        moved 1 space and was in that space.  This may
+	 *        only be done on the next move.
+	 *        
+	 * @param move Move to make en passant.
+	 * @return True if en passant can be made on this turn.
+	 */
+	private boolean isValidEnPassant(final Move move) {
+		IChessPiece neighbor = 
+				pieceAt(move.getFromRow(), move.getToColumn());
+		
+		IChessPiece piece = 
+				pieceAt(move.getFromRow(), move.getFromColumn());
+		
+		if (piece == null || neighbor == null) {
+			return false;
+		}
+		
+		if (piece.type() != "pawn" || neighbor.type() != "pawn") {
+			return false;
+		}
+		
+		if (!enPassant) {
+			return false;
+		}
+		
+		return true;
+	}
 }
