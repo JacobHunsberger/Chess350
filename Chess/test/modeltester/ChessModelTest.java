@@ -138,4 +138,38 @@ public class ChessModelTest {
 		// Index out of bounds
 		model.pieceAt(-1, nine);
 	}
+	/**
+	 * Test enPassant.
+	 */
+	@Test
+	public final void testEnPassant() {
+		IChessModel chess = new ChessModel();
+		final int three = 3, four = 4, five = 5, six = 6, seven = 7;
+		
+		Move m = new Move(1, five, three, five);
+		chess.move(m); //move white pawn down 2.
+		m = new Move(six, six, four, six);
+		chess.move(m); //move black pawn up 2.
+		m = new Move(1, 0, 2, 0);
+		chess.move(m); //move a white pawn.
+		m = new Move(four, six, three, six);
+		chess.move(m); //move black pawn up 1.
+		m = new Move(1, seven, three, seven);
+		chess.move(m); //move white pawn down 2.
+		
+		// En passant should be valid for the right white pawn.
+		m = new Move(three, six, 2, five);
+		chess.move(m); //invalid
+		m = new Move(three, six, four, five);
+		chess.move(m); //invalid
+		m = new Move(three, six, four, seven);
+		chess.move(m); //invalid
+		m = new Move(three, six, 2, seven);
+		chess.move(m); //valid
+		
+		assertEquals(null, chess.pieceAt(three, six));
+		assertEquals(null, chess.pieceAt(three, seven));
+		assertEquals("pawn", chess.pieceAt(three, five).type());
+		assertEquals("pawn", chess.pieceAt(2, seven).type());		
+	}
 }
