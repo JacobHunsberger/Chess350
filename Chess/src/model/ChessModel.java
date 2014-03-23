@@ -260,7 +260,7 @@ public final class ChessModel implements IChessModel {
 	private void specialMove(final Move move) {
 		IChessPiece tempPiece = pieceAt(move.getToRow(), move.getToColumn());
         if (tempPiece != null) {
-        	if (tempPiece.type() == "king") {
+        	if (tempPiece.type() != "pawn") {
         		return;
         	}
         }
