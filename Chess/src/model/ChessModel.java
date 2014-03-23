@@ -426,6 +426,7 @@ public final class ChessModel implements IChessModel {
 	/**
 	 * This method moves the piece if it is valid.
 	 * @param move input the move of the piece
+	 * @return boolean True if move is valid castle move.
 	 */
 	private boolean isValidCastle(final Move move) {
 		// check for rook and king pieces
@@ -433,21 +434,18 @@ public final class ChessModel implements IChessModel {
 		IChessPiece piece2 = pieceAt(move.getToRow(), move.getToColumn());
 		
 		// either piece does not exist
-		if(piece1 == null || piece2 == null)
-		{
+		if (piece1 == null || piece2 == null) {
 			return false;
 		}
 		String s1 = piece1.type();
 		String s2 = piece2.type();
 		// pieces must be on the same team
-		if(piece1.player() != piece2.player())
-		{
+		if (piece1.player() != piece2.player()) {
 			return false;
 		}
 		// check king and rook
-		if(!(piece1.type() == "king" && piece2.type() == "rook" || 
-				piece1.type() == "rook" && piece2.type() == "king"))
-		{
+		if (!(piece1.type() == "king" && piece2.type() == "rook" 
+				|| piece1.type() == "rook" && piece2.type() == "king")) {
 			return false;
 		}
 		// check no pieces in between
@@ -455,11 +453,9 @@ public final class ChessModel implements IChessModel {
 		int stop = move.getToColumn();
 		int dx = (stop - start) / Math.abs(stop - start);
 		int checkPosition = start + dx;
-		for(int i = 1; i < Math.abs(stop - start); i++)
-		{
+		for (int i = 1; i < Math.abs(stop - start); i++) {
 			// no pieces between rook and king
-			if(pieceAt(move.getToRow(),checkPosition) != null)
-			{
+			if (pieceAt(move.getToRow(), checkPosition) != null) {
 				return false;
 			}
 			checkPosition += dx;
@@ -467,49 +463,48 @@ public final class ChessModel implements IChessModel {
 		// check first move
 		King king;
 		Rook rook;
-		if(piece1.type() == "king")
-		{
-			king = (King)piece1;
-			rook = (Rook)piece2;
+		if (piece1.type() == "king") {
+			king = (King) piece1;
+			rook = (Rook) piece2;
 		}
-		else
-		{
-			rook = (Rook)piece1;
-			king = (King)piece2;
+		else {
+			rook = (Rook) piece1;
+			king = (King) piece2;
 		}
-		if(!(king.firstMove() && rook.firstMove()))
-		{
+		if (!(king.firstMove() && rook.firstMove())) {
 			return false;
 		}
 		
 		// move pieces
 		Move m1;
 		Move m2;
-		if(start > 0 && start < 7)
-		{
-			if(stop < start)
-			{
+		if (start > 0 && start < 7) {
+			if (stop < start) {
 
-			    m1 = new Move(move.getFromRow(),start,move.getFromRow(),start - 2);
-			    m2 = new Move(move.getFromRow(),stop,move.getFromRow(),start - 1);
+			    m1 = new Move(move.getFromRow(), start, move.getFromRow(),
+			    		start - 2);
+			    m2 = new Move(move.getFromRow(), stop, move.getFromRow(),
+			    		start - 1);
 			}
-			else
-			{
-				m1 = new Move(move.getFromRow(),start,move.getFromRow(),start + 2);
-			    m2 = new Move(move.getFromRow(),stop,move.getFromRow(),start + 1);
+			else {
+				m1 = new Move(move.getFromRow(), start, move.getFromRow(),
+						start + 2);
+			    m2 = new Move(move.getFromRow(), stop, move.getFromRow(),
+			    		start + 1);
 			}
 		}
-		else
-		{
-			if(start < stop)
-			{
-				m1 = new Move(move.getFromRow(),stop,move.getFromRow(),stop - 2);
-			    m2 = new Move(move.getFromRow(),start,move.getFromRow(),stop - 1);
+		else {
+			if (start < stop) {
+				m1 = new Move(move.getFromRow(), stop,
+						move.getFromRow(), stop - 2);
+			    m2 = new Move(move.getFromRow(), start,
+			    		move.getFromRow(), stop - 1);
 			}
-			else
-			{
-				m1 = new Move(move.getFromRow(),stop,move.getFromRow(),stop + 2);
-			    m2 = new Move(move.getFromRow(),start,move.getFromRow(),stop + 1);
+			else {
+				m1 = new Move(move.getFromRow(), stop,
+						move.getFromRow(), stop + 2);
+			    m2 = new Move(move.getFromRow(), start,
+			    		move.getFromRow(), stop + 1);
 			}
 		}
 		board.move(m1);
