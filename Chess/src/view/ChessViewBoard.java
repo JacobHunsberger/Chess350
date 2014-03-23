@@ -8,7 +8,6 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -43,10 +42,6 @@ public class ChessViewBoard extends JPanel {
 	/**
 	 * 
 	 */
-	private JButton toSpace;
-	/**
-	 * 
-	 */
 	private int fromRow;
 	/**
 	 * 
@@ -61,14 +56,6 @@ public class ChessViewBoard extends JPanel {
 	 */
 	private int toColumn;
 	/**
-	 * 
-	 */
-	private ArrayList<Integer> moves = new ArrayList<Integer>();
-	/**
-	 * 
-	 */
-	private Boolean localCheck;
-	/**
 	 * Constructor for ChessViewBoard.
 	 */
 	public ChessViewBoard() {
@@ -78,7 +65,7 @@ public class ChessViewBoard extends JPanel {
 		model = new ChessModel();
 		updateBoard();
 		select = false;
-		localCheck = false;
+		//localCheck = false;
 	}
 	/**
 	 * 
@@ -129,7 +116,6 @@ public class ChessViewBoard extends JPanel {
 						int[] temp = model.findKing(model.currentPlayer());
 						updateBoard();
 						highlightCheck(temp[1], temp[0]);
-						localCheck = true;
 					} else {
 						updateBoard();
 					}

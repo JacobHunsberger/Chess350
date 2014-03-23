@@ -249,8 +249,8 @@ public final class ChessModel implements IChessModel {
 					} else if (temp.pieceAt(i, k).type() == "knight") {
 						board.set(new Knight(pieceAt(i, k).player()), i, k);
 					}	
-				} catch(NullPointerException npe) {
-					
+				} catch (NullPointerException npe) {
+					npe.printStackTrace();
 				}
 			}
 		}
@@ -367,7 +367,9 @@ public final class ChessModel implements IChessModel {
 					return boardCheckHelper(temp[0], temp[1], 
 							pieceAt(temp[0], temp[1]).player());
 				}*/
-			} catch (NullPointerException e) { }
+			} catch (NullPointerException e) {
+				e.printStackTrace();
+			}
 		board = tempBoard;
 		cyclePlayer();
 		return false;

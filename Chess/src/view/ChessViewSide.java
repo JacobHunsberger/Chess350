@@ -27,10 +27,6 @@ import model.Rook;
 public class ChessViewSide extends JPanel {
 
 	/**
-	 * The message.
-	 */
-	private String message;
-	/**
 	 * number of buttons.
 	 */
 	private final int numButtons = 4;
@@ -38,14 +34,6 @@ public class ChessViewSide extends JPanel {
 	 * List of radiobuttons.
 	 */
     private JRadioButton[] radioButtons = new JRadioButton[numButtons];
-	/**
-	 * Jpanel for top.
-	 */
-    private JPanel top;
-    /**
-     * Jpanel for bottom.
-     */
-    private JPanel bottom;
 	/**
 	 * Chesspiece to promote.
 	 */
@@ -62,8 +50,6 @@ public class ChessViewSide extends JPanel {
 	public ChessViewSide() {
 		final int twohundy = 200;
 		final int fourhundy = 400;
-		top = new JPanel();
-		bottom = new JPanel();
 		promote = null;
 		this.setPreferredSize(new Dimension(twohundy, fourhundy));
 		this.setBackground(Color.gray);
@@ -76,13 +62,12 @@ public class ChessViewSide extends JPanel {
 	 * @param p Player to promote piece of.
 	 * @return IChessPiece piece to promote to.
 	 */
-	public IChessPiece promotion(final Player p) {
+	public final IChessPiece promotion(final Player p) {
 		final int zero = 0;
 		final int one = 1;
 		final int two = 2;
 		final int three = 3;
 		ItemListener item = null;
-		message = "What would you like your Pawn promotion to be?";
 		radioButtons[zero] = new JRadioButton("Queen");
 		radioButtons[one] = new JRadioButton("Rook");
 		radioButtons[two] = new JRadioButton("Bishop");
@@ -97,20 +82,13 @@ public class ChessViewSide extends JPanel {
 		add(radioButtons[one]);
 		add(radioButtons[two]);
 		add(radioButtons[three]);
-		while (promote == null) { }
 		return promote;
-	}
-	/**
-	 * Update the side.
-	 */
-	private void updateSide() {
-		//top
 	}
 	/**
 	 * Item state changed.
 	 * @param e item event.
 	 */
-	public void itemStateChanged(final ItemEvent e) {
+	public final void itemStateChanged(final ItemEvent e) {
 		final int four = 4;
 	    if (e.getStateChange() == ItemEvent.SELECTED) {
 	        for (int i = 0; i < four; i++) {
