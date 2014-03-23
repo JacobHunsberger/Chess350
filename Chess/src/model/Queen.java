@@ -13,6 +13,14 @@ public class Queen extends ChessPiece {
 	public Queen(final Player color) {
 		super(color);
 	}
+	
+	/**
+	 * Copy constructor.
+	 * @param aQueen Queen to copy
+	 */
+	public Queen(final Queen aQueen) {
+		this(aQueen.player());
+	}
 
 	/**
 	 * Method is to identify the queen class.
