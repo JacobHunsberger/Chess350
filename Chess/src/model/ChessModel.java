@@ -230,7 +230,7 @@ public final class ChessModel implements IChessModel {
 		board = new ChessBoard();
 		for (int i = 0; i < 8; i++) {
 			for (int k = 0; k < 8; k++) {
-				try{
+				try {
 					board.set(temp.pieceAt(i,k), i, k);
 				} catch (NullPointerException e) {}
 			}
@@ -267,8 +267,8 @@ public final class ChessModel implements IChessModel {
 		}
 	}
 	/**
-	 * 
-	 * @param move
+	 * Method handles special move.
+	 * @param move Move to test for special move.
 	 */
 	private void specialMove(final Move move) {
 		IChessPiece tempPiece = pieceAt(move.getToRow(), move.getToColumn());
@@ -292,7 +292,10 @@ public final class ChessModel implements IChessModel {
 			}
 		}
 	}
-	
+	/**
+	 * Method promotes pawn.
+	 * @param p Piece to promote.
+	 */
 	private void promotePawn(IChessPiece p) {
 		ChessViewSide temp = new ChessViewSide();
 		p = temp.promotion(p.player());
@@ -302,15 +305,17 @@ public final class ChessModel implements IChessModel {
 	 * This has been modified to simply check if the king is in check for the
 	 * player specified.  It is assumed that you call this method after the 
 	 * move has been made. 
+	 * @param m The player for the king you want to check is in check.
 	 * @return boolean true or false if the king is in check.
-	 * @param p The player for the king you want to check is in check.
 	 */
-	public boolean inCheck(Move m) {
+	public boolean inCheck(final Move m) {
 		int [] temp = null;
-		int eight = 8;
+		final int eight = 8;
 		try {
 				temp = findKing(currentPlayer());
-		} catch (NullPointerException e) {}
+		} catch (NullPointerException e) {
+			return false;
+		}
 		//Now use isValidMove to try and move any piece to the king.
 		ChessBoard tempBoard = copyBoard();
 		if (isValidMove(m)) {
@@ -361,12 +366,11 @@ public final class ChessModel implements IChessModel {
 		final int max = 8;
 		for (int i = 0; i < max; i++) {
 			for (int k = 0; k < max; k++) {
-				try {
+				if (pieceAt(i, k) != null) {
 					if (pieceAt(i, k).isValidMove(new Move(i, k, r, c), board) 
 							&& pieceAt(i, k).player() != p) {
 						return true;
 					}
-				} catch (NullPointerException e) {
 				}
 			}
 		}
@@ -381,7 +385,7 @@ public final class ChessModel implements IChessModel {
 		final int max = 8;
 		for (int i = 0; i < max; i++) {
 			for (int k = 0; k < max; k++) {
-				try {
+				if (pieceAt(k, i) != null) {
 					if (pieceAt(k, i).type() == "king" 
 							&& pieceAt(k, i).player() == player) {
 						int[] t = new int[2]; 
@@ -390,7 +394,6 @@ public final class ChessModel implements IChessModel {
 						//Helps verify my row and column
 						return t;
 					}
-				} catch (NullPointerException e) {
 				}
 			}
 		}
@@ -461,8 +464,6 @@ public final class ChessModel implements IChessModel {
 		if (piece1 == null || piece2 == null) {
 			return false;
 		}
-		String s1 = piece1.type();
-		String s2 = piece2.type();
 		// pieces must be on the same team
 		if (piece1.player() != piece2.player()) {
 			return false;
@@ -490,8 +491,7 @@ public final class ChessModel implements IChessModel {
 		if (piece1.type() == "king") {
 			king = (King) piece1;
 			rook = (Rook) piece2;
-		}
-		else {
+		} else {
 			rook = (Rook) piece1;
 			king = (King) piece2;
 		}
@@ -502,29 +502,27 @@ public final class ChessModel implements IChessModel {
 		// move pieces
 		Move m1;
 		Move m2;
-		if (start > 0 && start < 7) {
+		final int seven = 7;
+		if (start > 0 && start < seven) {
 			if (stop < start) {
 
 			    m1 = new Move(move.getFromRow(), start, move.getFromRow(),
 			    		start - 2);
 			    m2 = new Move(move.getFromRow(), stop, move.getFromRow(),
 			    		start - 1);
-			}
-			else {
+			} else {
 				m1 = new Move(move.getFromRow(), start, move.getFromRow(),
 						start + 2);
 			    m2 = new Move(move.getFromRow(), stop, move.getFromRow(),
 			    		start + 1);
 			}
-		}
-		else {
+		} else {
 			if (start < stop) {
 				m1 = new Move(move.getFromRow(), stop,
 						move.getFromRow(), stop - 2);
 			    m2 = new Move(move.getFromRow(), start,
 			    		move.getFromRow(), stop - 1);
-			}
-			else {
+			} else {
 				m1 = new Move(move.getFromRow(), stop,
 						move.getFromRow(), stop + 2);
 			    m2 = new Move(move.getFromRow(), start,

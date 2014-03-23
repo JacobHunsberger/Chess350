@@ -173,11 +173,11 @@ public class ChessViewBoard extends JPanel {
 		repaint();
 	}
 	/**
-	 * 
-	 * @param b
-	 * @param r
-	 * @param c
-	 * @param p
+	 * Sets the image.
+	 * @param b button
+	 * @param r row
+	 * @param c column
+	 * @param p player
 	 */
 	private void setImage(JButton b, int r, int c, Player p) {
 		try {
