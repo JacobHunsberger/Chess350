@@ -51,7 +51,7 @@ public final class ChessModel implements IChessModel {
 		Move m = new Move(board.getMove(board.getMoveLength() - 1).getToRow(), 
 				board.getMove(board.getMoveLength() - 1).getToColumn(), 
 				temp[1], temp[0]);
-		if (!inCheck(m)) {
+		if (!inCheck(currentPlayer())) {
 			return false;
 		}
 		//Can the king move out of check
@@ -64,7 +64,7 @@ public final class ChessModel implements IChessModel {
 						ChessBoard tempBoard = board;
 						Move tempMove = new Move(temp[0], temp[1], i, k);
 						move(tempMove);
-						if (inCheck(tempMove)) {
+						if (inCheck(currentPlayer())) {
 							board = tempBoard;
 							return false;
 						}
@@ -278,24 +278,34 @@ public final class ChessModel implements IChessModel {
 	}
 	/**
 	 * This method checks if the King is in check.
+	 * This has been modified to simply check if the king is in check for the
+	 * player specified.  It is assumed that you call this method after the 
+	 * move has been made. 
 	 * @return boolean true or false if the king is in check.
-	 * @param move input the last move made.
+	 * @param p The player for the king you want to check is in check.
 	 */
-	public boolean inCheck(final Move move) {
+	public boolean inCheck(final Player p) {
 		int [] temp = null;
+		int eight = 8;
 		try {
-			//First get the color of the piece that moved last.
-			if (pieceAt(move.getToRow(), move.getToColumn()).player() 
-					== Player.WHITE) {
-				//Then use that to find the king of the opposite player.
-				temp = findKing(Player.BLACK);
-			} else {
-				temp = findKing(Player.WHITE);
-			}
+				temp = findKing(p);
 		} catch (NullPointerException e) {}
-		//Now use isValidMove to try and move the piece to the king.
+		//Now use isValidMove to try and move any piece to the king.
 		try {
-			if (pieceAt(move.getToRow(), move.getToColumn())
+			for (int i = 0; i < eight; i++) {
+				for (int k = 0; k < eight; k++) {
+					ChessModel tempModel = this;
+					tempModel.cyclePlayer();
+					if (tempModel.isValidMove(new Move(i, 
+									k, temp[0], temp[1]))) {
+						tempModel.cyclePlayer();
+						return true;
+					} else {
+						tempModel.cyclePlayer();
+					}
+				}
+			}
+			/*if (pieceAt(move.getToRow(), move.getToColumn())
 					.isValidMove(new Move(move.getToRow(), 
 							move.getToColumn(), temp[1], temp[0]), board)) {
 				return true;
@@ -308,11 +318,11 @@ public final class ChessModel implements IChessModel {
 				//piece gets the other king in check.
 					return boardCheckHelper(temp[0], temp[1], 
 							pieceAt(temp[0], temp[1]).player());
-				}
+				}*/
 			} catch (NullPointerException e) {}
 		return false;
 	}
-
+	
 	/**
 	 * Method is used for instance that the king was tha last piece moved.
 	 * @param r the row of the King.
@@ -369,6 +379,9 @@ public final class ChessModel implements IChessModel {
 	 */
 	public Player currentPlayer() {
 		return this.currentPlayer;
+	}
+	private void cyclePlayer() {
+		currentPlayer = currentPlayer().next();
 	}
 
 	/**
@@ -541,5 +554,13 @@ public final class ChessModel implements IChessModel {
 		}
 		
 		return false;
+	}
+	/**
+	 * 
+	 * @return
+	 */
+	public ChessBoard getCopyBoard () {
+		ChessBoard temp = board;
+		return temp;
 	}
 }
