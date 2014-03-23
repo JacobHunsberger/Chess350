@@ -132,6 +132,7 @@ public class ChessViewBoard extends JPanel {
 						updateBoard();
 					}
 					select = false;
+					
 				}
 			}
 		}
