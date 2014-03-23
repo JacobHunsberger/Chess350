@@ -344,6 +344,7 @@ public final class ChessModel implements IChessModel {
 		board = tempBoard;
 		cyclePlayer();
 		return false;
+		
 	}
 	
 	/**
