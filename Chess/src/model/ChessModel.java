@@ -231,7 +231,19 @@ public final class ChessModel implements IChessModel {
 		for (int i = 0; i < 8; i++) {
 			for (int k = 0; k < 8; k++) {
 				try{
-					board.set(temp.pieceAt(i,k), i, k);
+					if (temp.pieceAt(i,k).type() == "pawn") {
+						board.set(new Pawn(pieceAt(i,k).player()), i, k);
+					} else if (temp.pieceAt(i,k).type() == "rook") {
+						board.set(new Rook(pieceAt(i,k).player()), i, k);
+					} else if (temp.pieceAt(i,k).type() == "bishop") {
+						board.set(new Bishop(pieceAt(i,k).player()), i, k);
+					} else if (temp.pieceAt(i,k).type() == "queen") {
+						board.set(new Queen(pieceAt(i,k).player()), i, k);
+					} else if (temp.pieceAt(i,k).type() == "king") {
+						board.set(new King(pieceAt(i,k).player()), i, k);
+					} else if (temp.pieceAt(i,k).type() == "knight") {
+						board.set(new Knight(pieceAt(i,k).player()), i, k);
+					}
 				} catch (NullPointerException e) {}
 			}
 		}
