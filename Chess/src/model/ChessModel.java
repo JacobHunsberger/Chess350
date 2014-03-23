@@ -301,7 +301,7 @@ public final class ChessModel implements IChessModel {
 					ChessModel tempModel = this;
 					tempModel.cyclePlayer();
 					if (tempModel.isValidMove(new Move(i, 
-									k, temp[0], temp[1]))) {
+									k, temp[1], temp[0]))) {
 						tempModel.cyclePlayer();
 						return true;
 					} else {
