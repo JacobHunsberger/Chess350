@@ -24,35 +24,35 @@ import model.Player;
 public class ChessPresenterBoard extends JPanel {
 
 	/**
-	 * 
+	 *  Create model for the board.
 	 */
 	private ChessModel model;
 	/**
-	 * 
+	 * 2D array of Jbuttons for the board.
 	 */
 	private JButton[][] buttonBoard;
 	/**
-	 * 
+	 * For the select or the place phase of the pieces.
 	 */
 	private Boolean select;
 	/**
-	 * 
+	 *  Local from space int.
 	 */
 	private JButton fromSpace;
 	/**
-	 * 
+	 *  Local from row int.
 	 */
 	private int fromRow;
 	/**
-	 * 
+	 *  Local to row int.
 	 */
 	private int toRow;
 	/**
-	 * 
+	 *  Local from column int.
 	 */
 	private int fromColumn;
 	/**
-	 * 
+	 *  Local to column int.
 	 */
 	private int toColumn;
 	/**
@@ -68,7 +68,7 @@ public class ChessPresenterBoard extends JPanel {
 		//localCheck = false;
 	}
 	/**
-	 * 
+	 *  Local class buttonListener implements Actionlistener for all JButtons.
 	 */
 	private class ButtonListener implements ActionListener {
 		/**
@@ -136,7 +136,7 @@ public class ChessPresenterBoard extends JPanel {
 		repaint();
 	}
 	/**
-	 * 
+	 *  Refreshes the board with new graphics for JButtons.
 	 */
 	private void updateBoard() {
 		final int eight = 8;
