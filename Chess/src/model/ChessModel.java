@@ -217,12 +217,11 @@ public final class ChessModel implements IChessModel {
 		if (piece == null) {
 			return false;
 		}
-		if (pieceAt(move.getFromRow(), move.getFromColumn()).player()
+		if (piece.player()
 				!= currentPlayer()) {
 			return false;
 		}
-		return pieceAt(move.getFromRow(), move.getFromColumn())
-				.isValidMove(move, board);
+		return piece.isValidMove(move, board);
 	}
 
 	/**
@@ -237,20 +236,20 @@ public final class ChessModel implements IChessModel {
 			for (int k = 0; k < eight; k++) {
 				try {
 					if (temp.pieceAt(i, k).type() == "pawn") {
-						board.set(new Pawn(pieceAt(i, k).player()), i, k);
+						board.set(new Pawn((Pawn) temp.pieceAt(i, k)), i, k);
 					} else if (temp.pieceAt(i, k).type() == "rook") {
-						board.set(new Rook(pieceAt(i, k).player()), i, k);
+						board.set(new Rook((Rook) temp.pieceAt(i, k)), i, k);
 					} else if (temp.pieceAt(i, k).type() == "bishop") {
-						board.set(new Bishop(pieceAt(i, k).player()), i, k);
+						board.set(new Bishop((Bishop) temp.pieceAt(i, k)), i, k);
 					} else if (temp.pieceAt(i, k).type() == "queen") {
-						board.set(new Queen(pieceAt(i, k).player()), i, k);
+						board.set(new Queen((Queen) temp.pieceAt(i, k)), i, k);
 					} else if (temp.pieceAt(i, k).type() == "king") {
-						board.set(new King(pieceAt(i, k).player()), i, k);
+						board.set(new King((King) temp.pieceAt(i, k)), i, k);
 					} else if (temp.pieceAt(i, k).type() == "knight") {
-						board.set(new Knight(pieceAt(i, k).player()), i, k);
+						board.set(new Knight((Knight) temp.pieceAt(i, k)), i, k);
 					}	
 				} catch (NullPointerException npe) {
-					npe.printStackTrace();
+					board.set(null, i, k);
 				}
 			}
 		}
@@ -332,24 +331,27 @@ public final class ChessModel implements IChessModel {
 		int [] temp = null;
 		final int eight = 8;
 		try {
-				temp = findKing(currentPlayer());
+			temp = findKing(currentPlayer());
 		} catch (NullPointerException e) {
 			return false;
 		}
 		//Now use isValidMove to try and move any piece to the king.
 		ChessBoard tempBoard = copyBoard();
-		if (isValidMove(m)) {
-			move(m);
-		} else {
-			cyclePlayer();
+//		printBoard();
+		
+		Player tempPlayer = currentPlayer;
+		move(m);
+		// Flip the colors and check if opponent can move to king
+		if (tempPlayer == currentPlayer) {
+			currentPlayer = currentPlayer.next();
 		}
 		try {
 			for (int i = 0; i < eight; i++) {
 				for (int k = 0; k < eight; k++) {
 					if (isValidMove(new Move(i, 
 									k, temp[1], temp[0]))) {
+						currentPlayer = tempPlayer;
 						board = tempBoard;
-						cyclePlayer();
 						return true;
 					}
 				}
@@ -371,8 +373,8 @@ public final class ChessModel implements IChessModel {
 			} catch (NullPointerException e) {
 				e.printStackTrace();
 			}
+		currentPlayer = tempPlayer;
 		board = tempBoard;
-		cyclePlayer();
 		return false;
 		
 	}
@@ -604,5 +606,18 @@ public final class ChessModel implements IChessModel {
 	public ChessBoard getCopyBoard() {
 		ChessBoard temp = board;
 		return temp;
+	}
+	
+	public void printBoard() {
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				try {
+					System.out.print(board.pieceAt(i, j).type().substring(0,4) + " ");
+				} catch (NullPointerException e) {
+					System.out.print("      ");
+				}
+			}
+			System.out.println();
+		}
 	}
 }

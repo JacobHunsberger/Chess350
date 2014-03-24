@@ -112,16 +112,16 @@ public class ChessPresenterBoard extends JPanel {
 				Move m = new Move(fromRow, fromColumn, toRow, toColumn);
 				if (!model.inCheck(m)) {
 					model.move(m);
-					if (model.inCheck(m)) {
-						int[] temp = model.findKing(model.currentPlayer());
-						updateBoard();
-						highlightCheck(temp[1], temp[0]);
-					} else {
-						updateBoard();
-					}
-					select = false;
-					
+//					if (model.inCheck(m)) {
+//						int[] temp = model.findKing(model.currentPlayer());
+//						updateBoard();
+//						highlightCheck(temp[1], temp[0]);
+//					} else {
+//						updateBoard();
+//					}
+					updateBoard();		
 				}
+				select = false;	
 			}
 		}
 	}
