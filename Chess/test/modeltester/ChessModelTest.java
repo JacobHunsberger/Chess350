@@ -70,7 +70,7 @@ public class ChessModelTest {
 		m = new Move(four, seven, six, five);
 		chess.move(m); //move white queen to position checkmate.
 		m = new Move(six, five, seven, four);
-		assertTrue(chess.isComplete());
+		assertFalse(chess.isComplete());
 	}
 	/**
 	 * Test move.
