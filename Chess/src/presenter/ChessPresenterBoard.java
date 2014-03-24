@@ -1,7 +1,7 @@
 /**
  * 
  */
-package view;
+package presenter;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -21,7 +21,7 @@ import model.Player;
  *
  */
 @SuppressWarnings("serial")
-public class ChessViewBoard extends JPanel {
+public class ChessPresenterBoard extends JPanel {
 
 	/**
 	 * 
@@ -58,7 +58,7 @@ public class ChessViewBoard extends JPanel {
 	/**
 	 * Constructor for ChessViewBoard.
 	 */
-	public ChessViewBoard() {
+	public ChessPresenterBoard() {
 		final int eight = 8;
 		setLayout(new GridLayout(eight, eight));
 		buttonBoard = new JButton[eight][eight];

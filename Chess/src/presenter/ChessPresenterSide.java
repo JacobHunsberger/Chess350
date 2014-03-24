@@ -1,7 +1,7 @@
 /**
  * 
  */
-package view;
+package presenter;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -24,7 +24,7 @@ import model.Rook;
  *
  */
 @SuppressWarnings("serial")
-public class ChessViewSide extends JPanel {
+public class ChessPresenterSide extends JPanel {
 
 	/**
 	 * number of buttons.
@@ -47,7 +47,7 @@ public class ChessViewSide extends JPanel {
     /**
 	 * 
 	 */
-	public ChessViewSide() {
+	public ChessPresenterSide() {
 		final int twohundy = 200;
 		final int fourhundy = 400;
 		promote = null;

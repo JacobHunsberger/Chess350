@@ -1,50 +1,52 @@
 package view;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
 
-import javax.swing.JApplet;
-import javax.swing.JPanel;
+import javax.swing.JInternalFrame;
+
+import presenter.ChessPresenter;
 
 /**
- * The view class to build the view of the game.
+ * The main class to start the game.
  * @author Jonathan Powers, Jacob Hunsberger and Jared Thomas
  */
-@SuppressWarnings("serial")
-public class ChessView extends JApplet {
+public final class ChessView {
 
 	/**
-	 * cvs View Side.
+	 * Default private constructor.
 	 */
-	private ChessViewSide cvs;
+	private ChessView() {
+		
+	}
 	/**
-	 * cvb Chess Board.
+	 * The JFrame for the whole chess game.
 	 */
-	private ChessViewBoard cvb;
-	/**
-	 * panel Jpael.
-	 */
-	private JPanel panel;
+	private static JInternalFrame frame = new JInternalFrame("Chess Game");
 	
 	/**
-	 * Constructor.
+	 * The main method to call to start the view of the chess game.
+	 * @param args the default way to start the main method
 	 */
-	public ChessView() {
-		final int fivehundy = 500;
-		final int sevenhundy = 700;
-		panel = new JPanel();
-		cvs = new ChessViewSide();
-		cvb = new ChessViewBoard();
-		panel.add(cvb, BorderLayout.WEST);
-		panel.add(cvs, BorderLayout.EAST);
-		getContentPane().add(panel);
-		getContentPane().setVisible(true);
-		this.setSize(new Dimension(fivehundy, sevenhundy));
-	}	
-	
+	public static void main(final String[] args) {
+		frame.setDefaultCloseOperation(JInternalFrame.EXIT_ON_CLOSE);
+		ChessPresenter panel = new ChessPresenter();
+		frame.add(panel);
+		frame.getContentPane().add(panel);
+		frame.pack();
+		frame.setVisible(true);
+		
+	}
 	/**
-	 * Starts the chess Gui in applet view.
-	 * @param frame the frame for the whole game of chess
+	 * This method resets the game of chess.
 	 */
-		// add formatting for frame
-
+	protected static void reset() {
+		frame.setVisible(false);
+		frame.dispose();
+		frame = new JInternalFrame("Chess Game");
+	}
+	/**
+	 * This method closes the game of chess. 
+	 */
+	protected static void exit() {
+		frame.dispose();
+		frame.getDefaultCloseOperation();
+	}
 }

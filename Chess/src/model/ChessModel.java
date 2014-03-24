@@ -1,6 +1,6 @@
 package model;
 
-import view.ChessViewSide;
+import presenter.ChessPresenterSide;
 /**
  * Chess model for the game.
  * @author Jonathan Powers, Jacob Hunsberger and Jared Thomas
@@ -317,7 +317,7 @@ public final class ChessModel implements IChessModel {
 	 * @param p Piece to promote.
 	 */
 	private IChessPiece promotePawn(final IChessPiece p) {
-		ChessViewSide temp = new ChessViewSide();
+		ChessPresenterSide temp = new ChessPresenterSide();
 		return temp.promotion(p.player());
 	}
 	/**

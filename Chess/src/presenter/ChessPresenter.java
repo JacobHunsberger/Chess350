@@ -1,52 +1,50 @@
 package presenter;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 
-import javax.swing.JInternalFrame;
-
-import view.ChessView;
+import javax.swing.JApplet;
+import javax.swing.JPanel;
 
 /**
- * The main class to start the game.
+ * The view class to build the view of the game.
  * @author Jonathan Powers, Jacob Hunsberger and Jared Thomas
  */
-public final class ChessPresenter {
+@SuppressWarnings("serial")
+public class ChessPresenter extends JApplet {
 
 	/**
-	 * Default private constructor.
+	 * cvs View Side.
 	 */
-	private ChessPresenter() {
-		
-	}
+	private ChessPresenterSide cvs;
 	/**
-	 * The JFrame for the whole chess game.
+	 * cvb Chess Board.
 	 */
-	private static JInternalFrame frame = new JInternalFrame("Chess Game");
+	private ChessPresenterBoard cvb;
+	/**
+	 * panel Jpael.
+	 */
+	private JPanel panel;
 	
 	/**
-	 * The main method to call to start the view of the chess game.
-	 * @param args the default way to start the main method
+	 * Constructor.
 	 */
-	public static void main(final String[] args) {
-		frame.setDefaultCloseOperation(JInternalFrame.EXIT_ON_CLOSE);
-		ChessView panel = new ChessView();
-		frame.add(panel);
-		frame.getContentPane().add(panel);
-		frame.pack();
-		frame.setVisible(true);
-		
-	}
+	public ChessPresenter() {
+		final int fivehundy = 500;
+		final int sevenhundy = 700;
+		panel = new JPanel();
+		cvs = new ChessPresenterSide();
+		cvb = new ChessPresenterBoard();
+		panel.add(cvb, BorderLayout.WEST);
+		panel.add(cvs, BorderLayout.EAST);
+		getContentPane().add(panel);
+		getContentPane().setVisible(true);
+		this.setSize(new Dimension(fivehundy, sevenhundy));
+	}	
+	
 	/**
-	 * This method resets the game of chess.
+	 * Starts the chess Gui in applet view.
+	 * @param frame the frame for the whole game of chess
 	 */
-	protected static void reset() {
-		frame.setVisible(false);
-		frame.dispose();
-		frame = new JInternalFrame("Chess Game");
-	}
-	/**
-	 * This method closes the game of chess. 
-	 */
-	protected static void exit() {
-		frame.dispose();
-		frame.getDefaultCloseOperation();
-	}
+		// add formatting for frame
+
 }
