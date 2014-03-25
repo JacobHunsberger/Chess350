@@ -217,8 +217,7 @@ public final class ChessModel implements IChessModel {
 		if (piece == null) {
 			return false;
 		}
-		if (piece.player()
-				!= currentPlayer()) {
+		if (piece.player() != currentPlayer()) {
 			return false;
 		}
 		return piece.isValidMove(move, board);
@@ -330,51 +329,52 @@ public final class ChessModel implements IChessModel {
 	public boolean inCheck(final Move m) {
 		int [] temp = null;
 		final int eight = 8;
+		
+		// Save everything from the real model.
+		ChessBoard tempBoard    = copyBoard();
+		boolean tempEnPassant   = enPassant;
+		int tempEnPassantColumn = enPassantColumn;
+		int tempEnPassantRow    = enPassantRow;
+		
+		// Store the color of the player trying to move
+		Player tempPlayer = currentPlayer;	
+		
+		move(m);
+		
+		// Find the king of the correct color
+		if (tempPlayer != currentPlayer) {
+			currentPlayer = currentPlayer.next();
+		}
 		try {
 			temp = findKing(currentPlayer());
 		} catch (NullPointerException e) {
 			return false;
 		}
-		//Now use isValidMove to try and move any piece to the king.
-		ChessBoard tempBoard = copyBoard();
-//		printBoard();
 		
-		Player tempPlayer = currentPlayer;
-		move(m);
-		// Flip the colors and check if opponent can move to king
+		// Check if opposite color can move to king
 		if (tempPlayer == currentPlayer) {
 			currentPlayer = currentPlayer.next();
 		}
 		try {
 			for (int i = 0; i < eight; i++) {
 				for (int k = 0; k < eight; k++) {
-					if (isValidMove(new Move(i, 
-									k, temp[1], temp[0]))) {
+					if (isValidMove(new Move(i, k, temp[1], temp[0]))) {
 						currentPlayer = tempPlayer;
 						board = tempBoard;
 						return true;
 					}
 				}
 			}
-			/*if (pieceAt(move.getToRow(), move.getToColumn())
-					.isValidMove(new Move(move.getToRow(), 
-							move.getToColumn(), temp[1], temp[0]), board)) {
-				return true;
-			} else if (pieceAt(move.getToRow(), move.getToColumn())
-					.type() == "king") {
-					return boardCheckHelper(move.getToRow(), move.getToColumn(),
-						pieceAt(move.getToRow(), move.getToColumn()).player());
-			} else {
-				//This part checks if a piece moved and now a different 
-				//piece gets the other king in check.
-					return boardCheckHelper(temp[0], temp[1], 
-							pieceAt(temp[0], temp[1]).player());
-				}*/
-			} catch (NullPointerException e) {
-				e.printStackTrace();
-			}
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		}
+		
+		// Restore the real model
 		currentPlayer = tempPlayer;
 		board = tempBoard;
+		enPassant = tempEnPassant;
+		enPassantRow = tempEnPassantRow;
+		enPassantColumn = tempEnPassantColumn;
 		return false;
 		
 	}
@@ -614,10 +614,11 @@ public final class ChessModel implements IChessModel {
 				try {
 					System.out.print(board.pieceAt(i, j).type().substring(0,4) + " ");
 				} catch (NullPointerException e) {
-					System.out.print("      ");
+					System.out.print("     ");
 				}
 			}
 			System.out.println();
 		}
+		System.out.println();
 	}
 }

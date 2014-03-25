@@ -85,7 +85,7 @@ public class Pawn extends ChessPiece {
 	    	return false;
 	    }
 	    // Pawn may only move 1 space diagonally
-	    if (Math.abs(move.getToRow() - move.getFromRow()) > 1) {
+	    if (Math.abs(move.getToColumn() - move.getFromColumn()) > 1) {
 	    	return false;
 	    }
 	    // When moving straight forward, space must be empty
