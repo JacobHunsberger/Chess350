@@ -3,6 +3,7 @@
  */
 package presenter;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -45,14 +46,27 @@ public class ChessPresenterSide extends JPanel {
     private Player tempPlayer;
     
     /**
-	 * 
+     * Internal JPanels to the side.
+     */
+    private JPanel top, bottom;
+    
+    /**
+	 * Constructor for ChessPresenterSide.
 	 */
 	public ChessPresenterSide() {
+		setLayout(new BorderLayout());
 		final int twohundy = 200;
 		final int fourhundy = 400;
 		promote = null;
-		this.setPreferredSize(new Dimension(twohundy, fourhundy));
-		this.setBackground(Color.gray);
+		top = new JPanel();
+		bottom = new JPanel();
+		top.setPreferredSize(new Dimension(twohundy, twohundy));
+		top.setBackground(Color.blue);
+		bottom.setPreferredSize(new Dimension(twohundy, twohundy));
+		bottom.setBackground(Color.green);
+		setPreferredSize(new Dimension(twohundy, fourhundy));
+		add(top, BorderLayout.NORTH);
+		add(bottom, BorderLayout.SOUTH);
 		revalidate();
 		repaint();
 	}
@@ -78,10 +92,10 @@ public class ChessPresenterSide extends JPanel {
 		radioButtons[three].addItemListener(item);
 		tempPlayer = p;
 		setLayout(new GridLayout(two, two));
-		add(radioButtons[zero]);
-		add(radioButtons[one]);
-		add(radioButtons[two]);
-		add(radioButtons[three]);
+		top.add(radioButtons[zero]);
+		top.add(radioButtons[one]);
+		top.add(radioButtons[two]);
+		top.add(radioButtons[three]);
 		return promote;
 	}
 	/**
@@ -104,7 +118,7 @@ public class ChessPresenterSide extends JPanel {
 	        		}
 	        	}
 	        }
-	        removeAll();
+	        top.removeAll();
 	    } /* else if (e.getStateChange() == ItemEvent.DESELECTED) {
 	        // Your deselected code here.
 	    }*/
