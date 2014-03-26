@@ -9,6 +9,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -49,11 +50,28 @@ public class ChessPresenterSide extends JPanel {
      * Internal JPanels to the side.
      */
     private JPanel top, bottom;
-    
     /**
-	 * Constructor for ChessPresenterSide.
+     * 
+     */
+    private boolean tempBoolean = false;
+    /**
+	 * Main constructor for ChessPresenterSide.
 	 */
 	public ChessPresenterSide() {
+		tempBoolean = true;
+		setUpPanel();
+	}
+	/**
+	 * 
+	 */
+	private void updateSide() {
+		revalidate();
+		repaint();
+	}
+	/**
+	 * 
+	 */
+	private void setUpPanel() {
 		setLayout(new BorderLayout());
 		final int twohundy = 200;
 		final int fourhundy = 400;
@@ -67,36 +85,68 @@ public class ChessPresenterSide extends JPanel {
 		setPreferredSize(new Dimension(twohundy, fourhundy));
 		add(top, BorderLayout.NORTH);
 		add(bottom, BorderLayout.SOUTH);
-		revalidate();
-		repaint();
+		updateSide();
 	}
-	
+	/**
+	 * Constructor to setup the pawn Promotion selection.
+	 * @param temp determines how the contructor functions.
+	 */
+	public ChessPresenterSide(final int temp) {
+		if (temp == 0) {
+			setUpPanel();
+			final int zero = 0;
+			final int one = 1;
+			final int two = 2;
+			final int three = 3;
+			ItemListener item = null;
+			radioButtons[zero] = new JRadioButton("Queen");
+			radioButtons[one] = new JRadioButton("Rook");
+			radioButtons[two] = new JRadioButton("Bishop");
+			radioButtons[three] = new JRadioButton("Knight");
+			radioButtons[zero].addItemListener(item);
+			radioButtons[one].addItemListener(item);
+			radioButtons[two].addItemListener(item);
+			radioButtons[three].addItemListener(item);
+			top.setLayout(new GridLayout(two, two));
+			top.add(radioButtons[zero]);
+			top.add(radioButtons[one]);
+			top.add(radioButtons[two]);
+			top.add(radioButtons[three]);
+			remove(top);
+			add(top, BorderLayout.NORTH);
+			updateSide();
+		}
+	}
 	/**
 	 * Piece to promote.
 	 * @param p Player to promote piece of.
 	 * @return IChessPiece piece to promote to.
 	 */
 	public final IChessPiece promotion(final Player p) {
-		final int zero = 0;
-		final int one = 1;
-		final int two = 2;
-		final int three = 3;
-		ItemListener item = null;
-		radioButtons[zero] = new JRadioButton("Queen");
-		radioButtons[one] = new JRadioButton("Rook");
-		radioButtons[two] = new JRadioButton("Bishop");
-		radioButtons[three] = new JRadioButton("Knight");
-		radioButtons[zero].addItemListener(item);
-		radioButtons[one].addItemListener(item);
-		radioButtons[two].addItemListener(item);
-		radioButtons[three].addItemListener(item);
+		//final int zero = 0;
+		//final int one = 1;
+		//final int two = 2;
+		//final int three = 3;
+		//ItemListener item = null;
+		//radioButtons[zero] = new JRadioButton("Queen");
+		//radioButtons[one] = new JRadioButton("Rook");
+		//radioButtons[two] = new JRadioButton("Bishop");
+		//radioButtons[three] = new JRadioButton("Knight");
+		//radioButtons[zero].addItemListener(item);
+		//radioButtons[one].addItemListener(item);
+		//radioButtons[two].addItemListener(item);
+		//radioButtons[three].addItemListener(item);
 		tempPlayer = p;
-		setLayout(new GridLayout(two, two));
-		top.add(radioButtons[zero]);
-		top.add(radioButtons[one]);
-		top.add(radioButtons[two]);
-		top.add(radioButtons[three]);
-		return promote;
+		//setLayout(new GridLayout(two, two));
+		//top.add(radioButtons[zero]);
+		//top.add(radioButtons[one]);
+		//top.add(radioButtons[two]);
+		//top.add(radioButtons[three]);
+		updateSide();
+		//while (radioButtons[0].getI) {
+		//	System.out.println("waiting");
+		//}
+		return promote = new Queen(tempPlayer);
 	}
 	/**
 	 * Item state changed.
@@ -119,6 +169,28 @@ public class ChessPresenterSide extends JPanel {
 	        	}
 	        }
 	        top.removeAll();
+	        try {
+				getClass().getConstructor().newInstance();
+			} catch (InstantiationException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IllegalAccessException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IllegalArgumentException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (InvocationTargetException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (NoSuchMethodException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (SecurityException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+	        tempBoolean = true;
 	    } /* else if (e.getStateChange() == ItemEvent.DESELECTED) {
 	        // Your deselected code here.
 	    }*/

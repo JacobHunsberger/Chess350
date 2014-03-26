@@ -110,14 +110,14 @@ public class Pawn extends ChessPiece {
 	 * @return boolean depending on if the pawn can be promoted
 	 */
 	public final boolean isPromotion(final int row) {
+		final int seven = 7;
 		if (this.player().equals(Player.WHITE)) {
-			if (row == 0) {
+			if (row == seven) {
 				return true;
 			}
 			return false;
 		} else {
-			final int seven = 7;
-			if (row == seven) {
+			if (row == 0) {
 				return true;
 			}
 			return false;

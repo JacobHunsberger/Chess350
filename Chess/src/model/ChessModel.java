@@ -295,7 +295,9 @@ public final class ChessModel implements IChessModel {
         	}
         }
 		if (((Pawn) tempPiece).isPromotion(move.getToRow())) {
-			promotePawn(tempPiece);
+			tempPiece = promotePawn(tempPiece);
+			board.unset(move.getToRow(), move.getToColumn());
+			board.set(tempPiece, move.getToRow(), move.getToColumn());
 		}
 		
 		IChessPiece piece = pieceAt(move.getToRow(), move.getToColumn());
@@ -315,7 +317,7 @@ public final class ChessModel implements IChessModel {
 	 * @param p Piece to promote.
 	 */
 	private IChessPiece promotePawn(final IChessPiece p) {
-		ChessPresenterSide temp = new ChessPresenterSide();
+		ChessPresenterSide temp = new ChessPresenterSide(0);
 		return temp.promotion(p.player());
 	}
 	/**
