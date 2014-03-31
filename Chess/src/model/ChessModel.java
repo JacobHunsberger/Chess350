@@ -436,7 +436,7 @@ public final class ChessModel implements IChessModel {
 	/**
 	 * Cycles the player.
 	 */
-	private void cyclePlayer() {
+	public void cyclePlayer() {
 		currentPlayer = currentPlayer().next();
 	}
 

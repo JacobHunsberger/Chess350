@@ -112,6 +112,15 @@ public class ChessPresenterBoard extends JPanel {
 				Move m = new Move(fromRow, fromColumn, toRow, toColumn);
 				if (!model.inCheck(m)) {
 					model.move(m);
+					int[] temp = model.findKing(model.currentPlayer());
+					Move tempMove = new Move(m.getToRow(), m.getToColumn(), 
+							temp[1], temp[0]);
+					model.cyclePlayer();
+					updateBoard();
+					if (model.isValidMove(tempMove)) {
+						highlightCheck(temp[1], temp[0]);
+					}
+					model.cyclePlayer();
 //					if (model.inCheck(m)) {
 //						int[] temp = model.findKing(model.currentPlayer());
 //						updateBoard();
@@ -119,7 +128,7 @@ public class ChessPresenterBoard extends JPanel {
 //					} else {
 //						updateBoard();
 //					}
-					updateBoard();		
+					//updateBoard();		
 				}
 				select = false;	
 			}
