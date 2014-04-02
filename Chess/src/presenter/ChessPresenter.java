@@ -40,7 +40,6 @@ public class ChessPresenter extends JApplet {
 		getContentPane().setVisible(true);
 		this.setSize(new Dimension(fivehundy, sevenhundy));
 	}	
-	
 	/**
 	 * Starts the chess Gui in applet view.
 	 * @param frame the frame for the whole game of chess
