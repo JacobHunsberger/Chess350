@@ -1,6 +1,6 @@
 package view;
 
-import javax.swing.JInternalFrame;
+import javax.swing.JFrame;
 
 import presenter.ChessPresenter;
 
@@ -19,16 +19,16 @@ public final class ChessView {
 	/**
 	 * The JFrame for the whole chess game.
 	 */
-	private static JInternalFrame frame = new JInternalFrame("Chess Game");
+	private static JFrame frame = new JFrame("Chess Game");
 	
 	/**
 	 * The main method to call to start the view of the chess game.
 	 * @param args the default way to start the main method
 	 */
 	public static void main(final String[] args) {
-		frame.setDefaultCloseOperation(JInternalFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		ChessPresenter panel = new ChessPresenter();
-		frame.add(panel);
+		frame.getContentPane().add(panel);
 		frame.getContentPane().add(panel);
 		frame.pack();
 		frame.setVisible(true);
@@ -40,7 +40,7 @@ public final class ChessView {
 	protected static void reset() {
 		frame.setVisible(false);
 		frame.dispose();
-		frame = new JInternalFrame("Chess Game");
+		frame = new JFrame("Chess Game");
 	}
 	/**
 	 * This method closes the game of chess. 
