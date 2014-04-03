@@ -1,5 +1,7 @@
 package view;
 
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import presenter.ChessPresenter;
 
@@ -7,43 +9,43 @@ import presenter.ChessPresenter;
  * The main class to start the game.
  * @author Jonathan Powers, Jacob Hunsberger and Jared Thomas
  */
-public final class ChessView {
+@SuppressWarnings("serial")
+public final class ChessView extends JFrame {
 	/**
-	 * Default private constructor.
+	 * The menu bar.
 	 */
+	private ChessMenu menu;
+	
+	private ChessViewBoard board;
+	
 	/**
-	 * The JFrame for the whole chess game.
+	 * Constructor for ChessView Class.
 	 */
-	private static JFrame frame = new JFrame("Chess Game");
-	private static ChessMenu menu = new ChessMenu();
-	private ChessView() {
-	}
-	/**
-	 * The main method to call to start the view of the chess game.
-	 * @param args the default way to start the main method
-	 */
-	public static void main(final String[] args) {
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		ChessPresenter panel = new ChessPresenter();
-		frame.getContentPane().add(panel);
-		frame.setJMenuBar(menu);
-		frame.pack();
-		frame.setVisible(true);
+	public ChessView() {
+		menu = new ChessMenu();
+		board = new ChessViewBoard();
 		
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setJMenuBar(menu);
+		getContentPane().add(board);
+		pack();
+		setSize(500,500);
+		setVisible(true);
 	}
-	/**
-	 * This method resets the game of chess.
-	 */
-	protected static void reset(){
-		frame.dispose();
-		frame.removeAll();
-		frame = new JFrame("Chess Game");
+	
+	public void setPieceButton(JButton button, int row, int column) {
+		board.setPieceButton(button,  row, column);
 	}
+	
+	public JButton getPieceButton(int row, int column) {
+		return board.getPieceButton(row, column);
+	}
+	
 	/**
-	 * This method closes the game of chess. 
+	 * Call after setting pieces.
 	 */
-	protected static void exit() {
-		frame.dispose();
-		frame.getDefaultCloseOperation();
+	public void refresh() {
+		board.revalidate();
+		board.repaint();
 	}
 }
