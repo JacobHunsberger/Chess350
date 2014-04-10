@@ -1,19 +1,20 @@
 package presenter;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.ImageIcon;
-import javax.swing.JApplet;
 import javax.swing.JButton;
-import javax.swing.JPanel;
 
 import view.ChessView;
 import model.ChessModel;
 import model.Move;
 import model.Player;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 
 /**
  * The view class to build the view of the game.
@@ -25,7 +26,7 @@ public class ChessPresenter {
 	
 	private ChessView view;
 	
-	private ChessModel model;
+	private ChessModel model, tempModel;
 	
 	private boolean select;
 	
@@ -55,11 +56,67 @@ public class ChessPresenter {
 	 */
 	public ChessPresenter(ChessModel m, ChessView v) {
 		model = m;
+		tempModel = model;
 		view = v;
 		updateBoard();
 		select = false;
 	}
 
+	private class MyMouseListener implements MouseListener {
+		private int tempRow = 0, tempCol = 0;
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			tempModel = model;
+			JButton temp = (JButton) e.getSource();
+			for (int i = 0; i < 8; i++) {
+				for (int k = 0; k < 8; k++) {
+					if (view.getPieceButton(i, k).equals(temp)) {
+						tempRow = i;
+						tempCol = k;
+					}
+				}
+			}
+			for (int i = 0; i < 8; i++) {
+				for (int k = 0; k < 8; k++) {
+					if (model.isValidMove(new Move(tempRow, tempCol, i, k))) {
+						Border thickBorder = new LineBorder(Color.green, 12);
+						view.getPieceButton(i, k).setBorder(thickBorder);
+					}
+				}
+			}
+			model = tempModel;
+		}
+		@Override
+		public void mouseExited(MouseEvent e) {
+			tempModel = model;
+			JButton temp = (JButton) e.getSource();
+			for (int i = 0; i < 8; i++) {
+				for (int k = 0; k < 8; k++) {
+					if (view.getPieceButton(i, k).equals(temp)) {
+						tempRow = i;
+						tempCol = k;
+					}
+				}
+			}
+			for (int i = 0; i < 8; i++) {
+				for (int k = 0; k < 8; k++) {
+					if (model.isValidMove(new Move(tempRow, tempCol, i, k))) {
+						view.getPieceButton(i, k).setBorder(null);
+					}
+				}
+			}
+			model = tempModel;
+		}
+		@Override
+		public void mousePressed(MouseEvent e) {
+		}
+		@Override
+		public void mouseReleased(MouseEvent e) {
+		}
+		@Override
+		public void mouseClicked(MouseEvent e) {
+		}
+	}
 	private class ButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -105,15 +162,7 @@ public class ChessPresenter {
 					if (model.isValidMove(tempMove)) {
 						highlightCheck(temp[1], temp[0]);
 					}
-					model.cyclePlayer();
-//					if (model.inCheck(m)) {
-//						int[] temp = model.findKing(model.currentPlayer());
-//						updateBoard();
-//						highlightCheck(temp[1], temp[0]);
-//					} else {
-//						updateBoard();
-//					}
-					//updateBoard();		
+					model.cyclePlayer();		
 				}
 				select = false;	
 			}
@@ -126,11 +175,13 @@ public class ChessPresenter {
 		final float bright = 0.30f;
 		
 		ButtonListener buttonListener = new ButtonListener();
+		MyMouseListener mouseListener = new MyMouseListener();
 		
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
 				space = new JButton();
 				space.addActionListener(buttonListener);
+				space.addMouseListener(mouseListener);
 				space.setPreferredSize(new Dimension(50, 50));
 				
 				if ((j % 2) == (i % 2)) {

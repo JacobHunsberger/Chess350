@@ -264,6 +264,9 @@ public final class ChessModel implements IChessModel {
 			currentPlayer = currentPlayer.next();
 			enPassant = false;
 			specialMove(move);
+			//if(pieceAt(move.getToRow(),move.getToColumn()).type().equals("pawn")) {
+			//	((Pawn) pieceAt(move.getToRow(),move.getToColumn())).setFirstMove(false);
+			//}
 		}
 		// check for casteling
 		if (isValidCastle(move)) {

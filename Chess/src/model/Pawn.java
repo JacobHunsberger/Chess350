@@ -130,6 +130,9 @@ public class Pawn extends ChessPiece {
 	public final boolean firstMove() {
 		return firstMove;
 	}
+	public void setFirstMove(boolean f) {
+		firstMove = f;
+	}
 	/**
 	 * Returns true if pawn has just moved forward two spaces.
 	 * @return True if pawn can be removed by en passant rule.
