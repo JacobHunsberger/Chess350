@@ -186,9 +186,9 @@ public class ChessPresenter {
 	}
 	
 	private void updateBoard() {
-		final float hue = 24.0f;
-		final float sat = 0.42f;
-		final float bright = 0.30f;
+		final float hue = 4.0f;
+		final float sat = 0.25f;
+		final float bright = 0.40f;
 		
 		ButtonListener buttonListener = new ButtonListener();
 		MyMouseListener mouseListener = new MyMouseListener();
