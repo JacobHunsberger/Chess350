@@ -14,7 +14,7 @@ public class ChessViewTaken extends JPanel {
 	private TakenPiecesPanel black;
 	
 	public ChessViewTaken() {
-		setLayout(new GridLayout(2, 0));
+		setLayout(new GridLayout(2, 1));
 		white = new TakenPiecesPanel();
 		black = new TakenPiecesPanel();
 	}

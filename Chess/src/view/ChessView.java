@@ -1,8 +1,11 @@
 package view;
 
 import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import java.awt.BorderLayout;
+
 import presenter.ChessPresenter;
 
 /**
@@ -30,8 +33,9 @@ public final class ChessView extends JFrame {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setJMenuBar(menu);
-		getContentPane().add(board);
-		getContentPane().add(taken);
+		setLayout(new BorderLayout());
+		getContentPane().add(board, BorderLayout.WEST);
+		getContentPane().add(taken, BorderLayout.EAST);
 		pack();
 		setSize(500,500);
 		setVisible(true);
