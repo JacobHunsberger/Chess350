@@ -23,8 +23,12 @@ public class RookTest {
 	 */
 	@Test
 	public final void testType() {
-		IChessPiece rook = new Rook(Player.WHITE);
+		Rook rook = new Rook(Player.WHITE);
 		assertEquals("rook", rook.type());
+		rook.setFirstMove(false);
+		assertFalse(rook.firstMove());
+		Rook rookCopy = new Rook((Rook) rook);
+		assertEquals(rook.player(), rookCopy.player());
 	}
 	/**
 	 * Test isValidMove.
@@ -76,21 +80,5 @@ public class RookTest {
 		assertFalse(rook.isValidMove(move, board));
 		move = new Move(r, c, four, c);
 		assertTrue(rook.isValidMove(move, board));
-	}
-	/**
-	 * Test first move.
-	 */
-	@Test
-	public final void testFirstMove() {
-		IChessPiece rook = new Rook(Player.WHITE);
-		IChessBoard board = new ChessBoard();
-		
-		assertTrue(((Rook) rook).firstMove());
-		
-		board.set(rook, 0, 0);
-		Move move = new Move(0, 0, 2, 0);
-		rook.isValidMove(move, board);
-		
-		assertFalse(((Rook) rook).firstMove());
 	}
 }
