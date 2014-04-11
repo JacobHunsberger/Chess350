@@ -419,7 +419,6 @@ public final class ChessModel implements IChessModel {
 		} else if (piece.type().equals("rook")) {
 			((Rook) piece).setFirstMove(false);
 		}
-		System.out.println(piece.type());
 	}
 	/**
 	 * Method promotes pawn.
