@@ -72,52 +72,47 @@ public final class ChessModel implements IChessModel {
 	 * @return boolean true or false if the game is complete
 	 */
 	public boolean isComplete() {
-		final int shortest = 7;
-		if (board.getMoveLength() < shortest) {
-			return false; //Shortest checkmate is 4 move checkmate
+		ChessPiece piece = null;
+		
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < size; j++) {
+				piece = (ChessPiece) pieceAt(i, j);
+				
+				if (piece != null) {
+					if (moveOutOfCheck(piece, i, j)) {
+						return false;
+					}
+				}
+				
+			}
 		}
-		//First the king must be in check
-		int[] temp = findKing(currentPlayer());
-		Move m = new Move(board.getMove(board.getMoveLength() - 1).getToRow(), 
-				board.getMove(board.getMoveLength() - 1).getToColumn(), 
-				temp[1], temp[0]);
-		if (!inCheck(m)) {
+		
+		// TODO Castle out of check.
+		// Check if castling is valid move,
+		// then check if castling is out of check.
+		
+		return true;
+	}
+	
+	private boolean moveOutOfCheck(ChessPiece piece,
+			int fromRow, int fromColumn) {
+		if (piece.player() != currentPlayer()) {
 			return false;
 		}
-		//Can the king move out of check
-		final int bounds = 3;
-		for (int i = 0; i < bounds; i++) {
-			for (int k = 0; k < bounds; k++) {
-				try {
-					if (pieceAt(temp[1], temp[0]).isValidMove(new Move(temp[0], 
-							temp[1], i, k), board)) {
-						ChessBoard tempBoard = board;
-						Move tempMove = new Move(temp[0], temp[1], i, k);
-						move(tempMove);
-						if (inCheck(m)) {
-							board = tempBoard;
-							return false;
-						}
-						board = tempBoard;
+		
+		Move m = null;
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < size; j++) {
+				m = new Move(fromRow, fromColumn, i, j);
+				if (isValidMove(m)) {
+					if (!inCheck(m)) {
+						return true;
 					}
-				} catch (NullPointerException e) {
-					System.out.println(i + " " + k);
 				}
 			}
 		}
-		//Can a piece take the checkMaker
-		IChessPiece checkMakers = pieceTakePiece(temp);
-		int[] foundPiece = pieceAtReverse(checkMakers);
-		if (boardCheckHelper(foundPiece[0], foundPiece[1], 
-				checkMakers.player())) {
-			return false;
-		}
-		//Can we block the checkMaker
-		if (canBlock(pieceAt(temp[0], temp[1]), checkMakers)) {
-			return false;
-		}
-		//If all the fails then we have checkmate
-		return true;
+		
+		return false;
 	}
 
 	/**
@@ -549,7 +544,7 @@ public final class ChessModel implements IChessModel {
 	}
 
 	/**
-	 * This method tells you if there is a piece at a spot you specify.
+	 * Returns the chess piece at this part of the board.
 	 * @param column an int representing the column
 	 * @param row an int representing the row
 	 * @return IChessPiece Piece at the spot

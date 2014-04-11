@@ -9,6 +9,7 @@ import java.util.Iterator;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 import view.ChessView;
 import model.ChessModel;
@@ -54,6 +55,8 @@ public class ChessPresenter {
 	 */
 	private int toColumn;
 	
+	private boolean inCheck;
+	
 	/**
 	 * Constructor for ChessPresenter Class.
 	 */
@@ -63,6 +66,7 @@ public class ChessPresenter {
 		view = v;
 		updateBoard();
 		select = false;
+		inCheck = false;
 	}
 
 	private class MyMouseListener implements MouseListener {
@@ -163,9 +167,18 @@ public class ChessPresenter {
 					model.cyclePlayer();
 					updateBoard();
 					if (model.isValidMove(tempMove)) {
-						highlightCheck(temp[1], temp[0]);
+						inCheck = true;
+					} else {
+						inCheck = false;
 					}
-					model.cyclePlayer();		
+					model.cyclePlayer();
+					if (inCheck) {
+						highlightCheck(temp[1], temp[0]);
+						if (model.isComplete()) {
+							JOptionPane.showMessageDialog(null,
+									"Checkmate!");
+						}
+					}
 				}
 				select = false;	
 			}
