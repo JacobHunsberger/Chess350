@@ -1,5 +1,8 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import presenter.ChessPresenterSide;
 /**
  * Chess model for the game.
@@ -27,6 +30,26 @@ public final class ChessModel implements IChessModel {
 	 * Valide row for en passant.
 	 */
 	private int enPassantRow;
+	/**
+	 * Dimension of board.
+	 */
+	private final int size = 8;
+	/**
+	 * White pieces.
+	 */
+	private ArrayList<IChessPiece> whitePieces;
+	/**
+	 * Black pieces.
+	 */
+	private ArrayList<IChessPiece> blackPieces;
+	/**
+	 * White taken pieces.
+	 */
+	private ArrayList<IChessPiece> whiteTaken;
+	/**
+	 * Black taken pieces.
+	 */
+	private ArrayList<IChessPiece> blackTaken;
 	
 	/**
 	 * Set the board up.
@@ -36,6 +59,13 @@ public final class ChessModel implements IChessModel {
 		board.setBoard();
 		currentPlayer = Player.WHITE;
 		enPassant = false;
+		
+		whitePieces = new ArrayList<IChessPiece>();
+		blackPieces = new ArrayList<IChessPiece>();
+		whiteTaken = new ArrayList<IChessPiece>();
+		blackTaken = new ArrayList<IChessPiece>();
+		
+		recordPieces();		// Start of game.
 	}
 	
 	/**
@@ -185,9 +215,9 @@ public final class ChessModel implements IChessModel {
 	}
 	/**
 	 * Input the piece that can be taken. This could be used for the king 
-	 * or for stategy for the A.I.
+	 * or for strategy for the A.I.
 	 * @param h row and column array
-	 * @return int[] the piece that can take another piece
+	 * @return the piece that can take another piece
 	 */
 	private IChessPiece pieceTakePiece(final int[] h) {
 		IChessPiece temp = null;
@@ -268,7 +298,7 @@ public final class ChessModel implements IChessModel {
 			//	((Pawn) pieceAt(move.getToRow(),move.getToColumn())).setFirstMove(false);
 			//}
 		}
-		// check for casteling
+		// check for castling
 		if (isValidCastle(move)) {
 			currentPlayer = currentPlayer.next();
 			return;
@@ -284,6 +314,81 @@ public final class ChessModel implements IChessModel {
 			board.unset(move.getFromRow(), move.getToColumn());
 			currentPlayer = currentPlayer.next();
 		}
+		
+		recordTakenPieces();
+	}
+	
+	/**
+	 * Records what pieces were taken since the last time
+	 * recordPieces() was called.
+	 */
+	private void recordTakenPieces() {
+		IChessPiece piece = null;
+		whiteTaken.clear();
+		blackTaken.clear();
+		
+		for (int i = 0; i < whitePieces.size(); i++) {
+			piece = whitePieces.get(i);
+			if (!contains(piece)) {
+				whiteTaken.add(piece);
+			}
+		}
+		
+		for (int i = 0; i < blackPieces.size(); i++) {
+			piece = blackPieces.get(i);
+			if (!contains(piece)) {
+				blackTaken.add(piece);
+			}
+		}
+	}
+	
+	/**
+	 * Records what pieces are currently on the board.
+	 */
+	private void recordPieces() {
+		ChessPiece piece = null;
+		whitePieces.clear();
+		blackPieces.clear();
+		
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < size; j++) {
+				piece = (ChessPiece) board.pieceAt(i, j);
+				if (piece != null) {
+					if (piece.player() == Player.WHITE) {
+						whitePieces.add(piece);
+					} else {
+						blackPieces.add(piece);
+					}
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Determines if a piece is on the board.
+	 * 
+	 * @return true if piece is on the board, otherwise false.
+	 */
+	private boolean contains(IChessPiece piece) {
+		IChessPiece temp = null;
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < size; j++) {
+				temp = board.pieceAt(i, j);
+				if (piece == temp) {
+					return true;
+				}
+			}
+		}
+		
+		return false;
+	}
+	
+	public Iterator<IChessPiece> getWhiteTaken() {
+		return whiteTaken.iterator();
+	}
+	
+	public Iterator<IChessPiece> getBlackTaken() {
+		return blackTaken.iterator();
 	}
 	
 	/**
@@ -606,7 +711,7 @@ public final class ChessModel implements IChessModel {
 	}
 	/**
 	 * 
-	 * @return Chessboard board returned.
+	 * @return board returned.
 	 */
 	public ChessBoard getCopyBoard() {
 		ChessBoard temp = board;

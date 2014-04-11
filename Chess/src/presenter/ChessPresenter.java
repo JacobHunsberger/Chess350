@@ -5,14 +5,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Iterator;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 import view.ChessView;
 import model.ChessModel;
+import model.IChessPiece;
 import model.Move;
 import model.Player;
+
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
@@ -191,14 +194,78 @@ public class ChessPresenter {
 					space.setBackground(Color.white);
 				}
 				
-				if (model.pieceAt(i,  j) != null) {
+				if (model.pieceAt(i,j) != null) {
 					setImage(space, i, j, model.pieceAt(
 							i, j).player());
 				}
 				view.setPieceButton(space, i, j);
 			}
 		}
+		
+		Iterator<IChessPiece> taken = model.getWhiteTaken();
+		outerLoopWhite:
+		for (int i = 0; i < size/2; i++) {
+			for (int j = 0; j < size/2; j++) {
+				if (!taken.hasNext()) {
+					break outerLoopWhite;
+				}
+
+				space = new JButton();
+				space.setPreferredSize(new Dimension(50, 50));
+				
+				setImageTaken(space, taken.next());
+				view.setWhiteTaken(space, i, j);
+			}
+		}
+		
+		taken = model.getBlackTaken();
+		outerLoopBlack:
+		for (int i = 0; i < size/2; i++) {
+			for (int j = 0; j < size/2; j++) {
+				if (!taken.hasNext()) {
+					break outerLoopBlack;
+				}
+
+				space = new JButton();
+				space.setPreferredSize(new Dimension(50, 50));
+				
+				setImageTaken(space, taken.next());
+				view.setBlackTaken(space, i, j);
+			}
+		}
+		
 		view.refresh();
+	}
+	
+	private void setImageTaken(final JButton b, 
+			final IChessPiece piece) {
+		Player p = piece.player();
+		try {
+			ImageIcon is = null;
+			if (piece.type() == "king") {
+				is = new ImageIcon(getClass().getResource(
+						"images/King/king" + p.toString() + ".png"));
+			} else if (piece.type() == "queen") {
+				is = new ImageIcon(getClass().getResource(
+						"images/Queen/queen" + p.toString() + ".png"));
+			} else if (piece.type() == "bishop") {
+				is = new ImageIcon(getClass().getResource(
+						"images/Bishop/bishop" + p.toString() + ".png"));
+			} else if (piece.type() == "rook") {
+				is = new ImageIcon(getClass().getResource(
+						"images/Rook/rook" + p.toString() + ".png"));
+			} else if (piece.type() == "knight") {
+				is = new ImageIcon(getClass().getResource(
+						"images/Knight/knight" + p.toString() + ".png"));
+			} else if (piece.type() == "pawn") {
+				is = new ImageIcon(getClass().getResource(
+						"images/Pawn/pawn" + p.toString() + ".png"));
+			}
+			b.setBackground(Color.WHITE);
+			b.setIcon(is);
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**

@@ -4,7 +4,9 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
 
 import presenter.ChessPresenter;
 
@@ -34,11 +36,12 @@ public final class ChessView extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setJMenuBar(menu);
 		setLayout(new BorderLayout());
-		getContentPane().add(board, BorderLayout.WEST);
+		getContentPane().add(board, BorderLayout.CENTER);
 		getContentPane().add(taken, BorderLayout.EAST);
 		pack();
-		setSize(500,500);
+		setSize(700,500);
 		setVisible(true);
+		taken.refresh();
 	}
 	
 	public void setPieceButton(JButton button, int row, int column) {
@@ -49,9 +52,12 @@ public final class ChessView extends JFrame {
 		return board.getPieceButton(row, column);
 	}
 	
-	public void setPieceTaken(JButton piece, int row, int column,
-			int select) {
-		taken.setPiece(piece, row, column, select);
+	public void setWhiteTaken(JButton piece, int row, int column) {
+		taken.setWhiteTaken(piece, row, column);
+	}
+	
+	public void setBlackTaken(JButton piece, int row, int column) {
+		taken.setBlackTaken(piece, row, column);
 	}
 	
 	/**
@@ -60,7 +66,6 @@ public final class ChessView extends JFrame {
 	public void refresh() {
 		board.revalidate();
 		board.repaint();
-		taken.revalidate();
-		taken.repaint();
+		taken.refresh();
 	}
 }
