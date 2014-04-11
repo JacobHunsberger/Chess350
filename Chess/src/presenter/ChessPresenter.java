@@ -201,10 +201,10 @@ public class ChessPresenter {
 				space.setPreferredSize(new Dimension(50, 50));
 				
 				if ((j % 2) == (i % 2)) {
+					space.setBackground(Color.white);
+				} else {
 					space.setBackground(Color.getHSBColor(
 							hue, sat, bright));
-				} else {
-					space.setBackground(Color.white);
 				}
 				
 				if (model.pieceAt(i,j) != null) {

@@ -132,8 +132,8 @@ public class ChessBoard implements IChessBoard {
 			set(new Rook(p), row, 0);
 			set(new Knight(p), row, 1);
 			set(new Bishop(p), row, 2);
-			set(new Queen(p), row, three);
-			set(new King(p), row, four);
+			set(new King(p), row, three);
+			set(new Queen(p), row, four);
 			set(new Bishop(p), row, five);
 			set(new Knight(p), row, six);
 			set(new Rook(p), row, seven);
