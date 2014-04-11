@@ -61,14 +61,20 @@ public class King extends ChessPiece {
             return false;
         }
 
-        firstMove = false;
         return true;
     }
     /**
-     * Is the piece on the first move or not.
-     * @return boolean first move true or false
+     * Determines if this King has moved.
+     * @return true if king has not moved.
      */
     public final boolean firstMove() {
     	return firstMove;
+    }
+    /**
+     * Set status that this King has moved.
+     * @param f Status of this King.
+     */
+    public void setFirstMove(boolean f) {
+    	firstMove = f;
     }
 }

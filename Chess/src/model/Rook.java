@@ -77,8 +77,7 @@ public class Rook extends ChessPiece {
         		}
         	}
         }
-
-        firstMove = false;
+        
         return true;
     }
     /**
@@ -87,5 +86,12 @@ public class Rook extends ChessPiece {
      */
     public final boolean firstMove() {
     	return firstMove;
+    }
+    /**
+     * Sets status that this Rook has moved.
+     * @param f Status of this Rook.
+     */
+    public void setFirstMove(boolean f) {
+    	firstMove = f;
     }
 }

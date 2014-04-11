@@ -283,34 +283,27 @@ public final class ChessModel implements IChessModel {
 	 * This method moves the piece if it is valid.
 	 * @param move input the move of the piece
 	 */
-	public void move(final Move move) {
+	public void move(final Move move) {	
 		if (isValidMove(move)) {
 			board.move(move);
 			currentPlayer = currentPlayer.next();
-			enPassant = false;
 			specialMove(move);
-			//if(pieceAt(move.getToRow(),move.getToColumn()).type().equals("pawn")) {
-			//	((Pawn) pieceAt(move.getToRow(),move.getToColumn())).setFirstMove(false);
-			//}
 		}
-		// check for castling
+		
 		if (isValidCastle(move)) {
 			currentPlayer = currentPlayer.next();
 			return;
 		}
-		// add special move handler here for castling
-		// check first and second piece is rook and or king
-		// verify spaces king moves are check free
-		// move rook to position
 		
 		if (isValidEnPassant(move)) {
 			board.move(move);
 			// Remove opponent piece
 			board.unset(move.getFromRow(), move.getToColumn());
 			currentPlayer = currentPlayer.next();
+			enPassant = false;
 		}
 		
-		recordTakenPieces();
+		recordTakenPieces();		// Check which pieces are missing.
 	}
 	
 	/**
@@ -391,27 +384,41 @@ public final class ChessModel implements IChessModel {
 	 * @param move Move to test for special move.
 	 */
 	private void specialMove(final Move move) {
-		IChessPiece tempPiece = pieceAt(move.getToRow(), move.getToColumn());
-        if (tempPiece != null) {
-        	if (tempPiece.type() != "pawn") {
+		IChessPiece piece = pieceAt(move.getToRow(), move.getToColumn());
+		
+        if (piece != null) {
+        	if (piece.type() != "pawn") {
         		return;
         	}
         }
-		if (((Pawn) tempPiece).isPromotion(move.getToRow())) {
-			tempPiece = promotePawn(tempPiece);
-			board.unset(move.getToRow(), move.getToColumn());
-			board.set(tempPiece, move.getToRow(), move.getToColumn());
-		}
-		
-		IChessPiece piece = pieceAt(move.getToRow(), move.getToColumn());
-		if (piece.type() == "pawn") {
-			enPassant = ((Pawn) piece).enPassant();
-			enPassantColumn = move.getToColumn();
-			if (piece.player() == Player.WHITE) {
-				enPassantRow = move.getToRow() - 1;
-			} else {
-				enPassantRow = move.getToRow() + 1;
+        enPassant = false;
+		if (piece.type().equals("pawn")) {
+			Pawn pawn = (Pawn) piece;
+			
+			if (pawn.isPromotion(move.getToRow())) {
+				piece = promotePawn(piece);
+				board.unset(move.getToRow(), move.getToColumn());
+				board.set(piece, move.getToRow(), move.getToColumn());
 			}
+	
+			if (pawn.firstMove()) {
+				if (pawn.enPassant()) {
+					enPassant = true;	// Next move may be en passant
+				}
+				
+				pawn.setFirstMove(false);		// This pawn has moved
+				
+				enPassantColumn = move.getToColumn();
+				if (pawn.player() == Player.WHITE) {
+					enPassantRow = move.getToRow() - 1;
+				} else {
+					enPassantRow = move.getToRow() + 1;
+				}
+			}
+		} else if (piece.type().equals("king")) {
+			((King) piece).setFirstMove(false);
+		} else if (piece.type().equals("rook")) {
+			((Rook) piece).setFirstMove(false);
 		}
 	}
 	/**
@@ -629,6 +636,9 @@ public final class ChessModel implements IChessModel {
 		}
 		if (!(king.firstMove() && rook.firstMove())) {
 			return false;
+		} else {
+			king.setFirstMove(false);
+			rook.setFirstMove(false);
 		}
 		
 		// move pieces
@@ -679,6 +689,7 @@ public final class ChessModel implements IChessModel {
 	 * @return True if en passant can be made on this turn.
 	 */
 	private boolean isValidEnPassant(final Move move) {
+		// true if the last pawn moved had moved two spaces.
 		if (!enPassant) {
 			return false;
 		}
@@ -689,14 +700,17 @@ public final class ChessModel implements IChessModel {
 		IChessPiece piece = 
 				pieceAt(move.getFromRow(), move.getFromColumn());
 		
+		// Both pieces must exist
 		if (piece == null || neighbor == null) {
 			return false;
 		}
 		
+		// Both pieces must be pawns.
 		if (piece.type() != "pawn" || neighbor.type() != "pawn") {
 			return false;
 		}
 		
+		// Pawn must move to correct location
 		if (move.getToRow() == enPassantRow
 				&& move.getToColumn() == enPassantColumn) {
 			return true;

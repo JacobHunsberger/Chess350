@@ -5,21 +5,29 @@ package model;
  */
 public class Pawn extends ChessPiece {
 	/**
-	 * int recording the direction of the piece.
+	 * Direction of the piece.
 	 */
 	private int direction;
 	/**
-	 * int recording the starting row of the piece.
+	 * Starting row of the piece.
 	 */
 	private int startingRow;
 	/**
-	 * boolean recording the first move, true or false. 
+	 * True if pawn has not been moved yet.
+	 * Should be flagged as false after actually moving the pawn.
 	 */
 	private boolean firstMove;
 	/**
-	 * Indicates that pawn may be taken en passant on the next turn.
+	 * Indicates that this pawn made the special first move.
+	 * Status depends on validation of moves, but should only
+	 * be relevant after actually moving the pawn.
 	 */
 	private boolean enPassant;
+	/**
+	 * Starting row of black pawns;
+	 */
+	final int blackStart = 6;
+	
 	/**
 	 * Constructs a new Pawn object.
 	 * @param color the player that owns this piece.
@@ -31,7 +39,6 @@ public class Pawn extends ChessPiece {
 			startingRow = 1;
 		} else {
 			direction = -1;
-			final int blackStart = 6;
 			startingRow = blackStart;
 		}
 		firstMove = true;
@@ -72,7 +79,6 @@ public class Pawn extends ChessPiece {
 					&& move.getFromColumn() == move.getToColumn()) {	
 				if (board.pieceAt(move.getToRow(),
 						move.getToColumn()) == null) {
-					firstMove = false;		// First move taken
 					enPassant = true;
 					return true;			// Special move was valid
 				}
@@ -98,9 +104,8 @@ public class Pawn extends ChessPiece {
     		// If pawn moved diagonally, space cannot be empty or occupied
     	    // by the same color (already checked in super)
     	}
-	    
+	   
 	    enPassant = false;
-		firstMove = false;
 		return true;
 	}
 	/**
@@ -124,18 +129,22 @@ public class Pawn extends ChessPiece {
 		}
 	}
 	/**
-	 * Determines first move status.
-	 * @return True if first move.
+	 * Indicates whether this pawn has been moved.
+	 * @return true if has not been moved, otherwise false.
 	 */
 	public final boolean firstMove() {
 		return firstMove;
 	}
+	/** 
+	 * Sets first move.
+	 * @param f status of first move.
+	 */
 	public void setFirstMove(boolean f) {
 		firstMove = f;
 	}
 	/**
-	 * Returns true if pawn has just moved forward two spaces.
-	 * @return True if pawn can be removed by en passant rule.
+	 * Indicates special move status.
+	 * @return true if this pawn was validated for first move.
 	 */
 	public final boolean enPassant() {
 		return enPassant;

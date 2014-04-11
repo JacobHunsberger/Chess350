@@ -30,7 +30,7 @@ public class ChessPresenter {
 	
 	private ChessView view;
 	
-	private ChessModel model, tempModel;
+	private ChessModel model;
 	
 	private boolean select;
 	
@@ -62,7 +62,6 @@ public class ChessPresenter {
 	 */
 	public ChessPresenter(ChessModel m, ChessView v) {
 		model = m;
-		tempModel = model;
 		view = v;
 		updateBoard();
 		select = false;
@@ -73,7 +72,6 @@ public class ChessPresenter {
 		private int tempRow = 0, tempCol = 0;
 		@Override
 		public void mouseEntered(MouseEvent e) {
-			tempModel = model;
 			JButton temp = (JButton) e.getSource();
 			for (int i = 0; i < 8; i++) {
 				for (int k = 0; k < 8; k++) {
@@ -91,11 +89,9 @@ public class ChessPresenter {
 					}
 				}
 			}
-			model = tempModel;
 		}
 		@Override
 		public void mouseExited(MouseEvent e) {
-			tempModel = model;
 			JButton temp = (JButton) e.getSource();
 			for (int i = 0; i < 8; i++) {
 				for (int k = 0; k < 8; k++) {
@@ -112,7 +108,6 @@ public class ChessPresenter {
 					}
 				}
 			}
-			model = tempModel;
 		}
 		@Override
 		public void mousePressed(MouseEvent e) {
