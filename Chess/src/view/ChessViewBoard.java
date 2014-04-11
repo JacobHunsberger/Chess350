@@ -3,17 +3,15 @@ package view;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import java.awt.GridLayout;
-import java.awt.event.ActionListener;
 
 public class ChessViewBoard extends JPanel {
 	
-	final static int size = 8;
+	final int size = 8;
 	
 	private JButton[][] board;
 	
 	public ChessViewBoard() {
 		setLayout(new GridLayout(size, size));
-		setSize(500, 500);
 		board = new JButton[size][size];
 	}
 	

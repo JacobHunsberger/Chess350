@@ -18,27 +18,36 @@ public final class ChessView extends JFrame {
 	
 	private ChessViewBoard board;
 	
+	private ChessViewTaken taken;
+	
 	/**
 	 * Constructor for ChessView Class.
 	 */
 	public ChessView() {
 		menu = new ChessMenu();
 		board = new ChessViewBoard();
+		taken = new ChessViewTaken();
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setJMenuBar(menu);
 		getContentPane().add(board);
+		getContentPane().add(taken);
 		pack();
 		setSize(500,500);
 		setVisible(true);
 	}
 	
 	public void setPieceButton(JButton button, int row, int column) {
-		board.setPieceButton(button,  row, column);
+		board.setPieceButton(button, row, column);
 	}
 	
 	public JButton getPieceButton(int row, int column) {
 		return board.getPieceButton(row, column);
+	}
+	
+	public void setPieceTaken(JButton piece, int row, int column,
+			int select) {
+		taken.setPiece(piece, row, column, select);
 	}
 	
 	/**
@@ -47,5 +56,7 @@ public final class ChessView extends JFrame {
 	public void refresh() {
 		board.revalidate();
 		board.repaint();
+		taken.revalidate();
+		taken.repaint();
 	}
 }
