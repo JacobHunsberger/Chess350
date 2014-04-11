@@ -28,4 +28,9 @@ public class ChessViewBoard extends JPanel {
 	public JButton getPieceButton(int row, int column) {
 		return board[row][column];
 	}
+	
+	public void refresh() {
+		revalidate();
+		repaint();
+	}
 }

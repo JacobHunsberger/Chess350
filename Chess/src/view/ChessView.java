@@ -1,14 +1,10 @@
 package view;
 
-import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 import java.awt.BorderLayout;
-import java.awt.GridLayout;
-
-import presenter.ChessPresenter;
 
 /**
  * The main class to start the game.
@@ -40,8 +36,6 @@ public final class ChessView extends JFrame {
 		getContentPane().add(taken, BorderLayout.EAST);
 		pack();
 		setSize(700,500);
-		setVisible(true);
-		taken.refresh();
 	}
 	
 	public void setPieceButton(JButton button, int row, int column) {
@@ -52,20 +46,27 @@ public final class ChessView extends JFrame {
 		return board.getPieceButton(row, column);
 	}
 	
-	public void setWhiteTaken(JButton piece, int row, int column) {
+	public void setWhiteLabel(JLabel piece, int row, int column) {
 		taken.setWhiteTaken(piece, row, column);
 	}
 	
-	public void setBlackTaken(JButton piece, int row, int column) {
+	public JLabel getWhiteLabel(int row, int column) {
+		return taken.getWhiteTaken(row, column);
+	}
+	
+	public void setBlackLabel(JLabel piece, int row, int column) {
 		taken.setBlackTaken(piece, row, column);
+	}
+	
+	public JLabel getBlackLabel(int row, int column) {
+		return taken.getBlackTaken(row, column);
 	}
 	
 	/**
 	 * Call after setting pieces.
 	 */
 	public void refresh() {
-		board.revalidate();
-		board.repaint();
+		board.refresh();
 		taken.refresh();
 	}
 }

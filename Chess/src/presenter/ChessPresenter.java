@@ -9,6 +9,7 @@ import java.util.Iterator;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import view.ChessView;
@@ -66,6 +67,30 @@ public class ChessPresenter {
 		updateBoard();
 		select = false;
 		inCheck = false;
+		setTaken();
+		view.refresh();
+		view.setVisible(true);
+	}
+	
+	/**
+	 * Initializes the taken space labels.
+	 */
+	private void setTaken() {
+		for (int i = 0; i < size/2; i++) {
+			for (int j = 0; j < size/2; j++) {
+				JLabel whiteLabel = new JLabel();
+				whiteLabel.setPreferredSize(new Dimension(50, 50));
+				whiteLabel.setBackground(Color.WHITE);
+				whiteLabel.setOpaque(true);
+				view.setWhiteLabel(whiteLabel, i, j);
+				
+				JLabel blackLabel = new JLabel();
+				blackLabel.setPreferredSize(new Dimension(50, 50));
+				blackLabel.setBackground(Color.WHITE);
+				blackLabel.setOpaque(true);
+				view.setBlackLabel(blackLabel, i, j);
+			}
+		}
 	}
 
 	private class MyMouseListener implements MouseListener {
@@ -210,6 +235,7 @@ public class ChessPresenter {
 			}
 		}
 		
+		JLabel label = null;
 		Iterator<IChessPiece> taken = model.getWhiteTaken();
 		outerLoopWhite:
 		for (int i = 0; i < size/2; i++) {
@@ -218,11 +244,9 @@ public class ChessPresenter {
 					break outerLoopWhite;
 				}
 
-				space = new JButton();
-				space.setPreferredSize(new Dimension(50, 50));
-				
-				setImageTaken(space, taken.next());
-				view.setWhiteTaken(space, i, j);
+				label = view.getWhiteLabel(i, j);
+				setImageTaken(label, taken.next());
+				view.setWhiteLabel(label, i, j);
 			}
 		}
 		
@@ -234,18 +258,16 @@ public class ChessPresenter {
 					break outerLoopBlack;
 				}
 
-				space = new JButton();
-				space.setPreferredSize(new Dimension(50, 50));
-				
-				setImageTaken(space, taken.next());
-				view.setBlackTaken(space, i, j);
+				label = view.getBlackLabel(i,  j);
+				setImageTaken(label, taken.next());
+				view.setBlackLabel(label, i, j);
 			}
 		}
 		
 		view.refresh();
 	}
 	
-	private void setImageTaken(final JButton b, 
+	private void setImageTaken(final JLabel label, 
 			final IChessPiece piece) {
 		Player p = piece.player();
 		try {
@@ -269,8 +291,9 @@ public class ChessPresenter {
 				is = new ImageIcon(getClass().getResource(
 						"images/Pawn/pawn" + p.toString() + ".png"));
 			}
-			b.setBackground(Color.WHITE);
-			b.setIcon(is);
+			label.setBackground(Color.WHITE);
+			label.setOpaque(true);
+			label.setIcon(is);
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 		}

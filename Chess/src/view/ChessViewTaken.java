@@ -1,7 +1,8 @@
 package view;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JButton;
+
 import java.awt.GridLayout;
 
 @SuppressWarnings("serial")
@@ -21,7 +22,7 @@ public class ChessViewTaken extends JPanel {
 		add(black);
 	}
 	
-	public void setWhiteTaken(JButton piece, int row, int column) {
+	public void setWhiteTaken(JLabel piece, int row, int column) {
 		try {
 			remove(white);
 			remove(black);
@@ -31,10 +32,9 @@ public class ChessViewTaken extends JPanel {
 		white.setPiece(piece, row, column);
 		add(white);
 		add(black);
-		refresh();
 	}
 	
-	public void setBlackTaken(JButton piece, int row, int column) {
+	public void setBlackTaken(JLabel piece, int row, int column) {
 		try {
 			remove(white);
 			remove(black);
@@ -44,7 +44,14 @@ public class ChessViewTaken extends JPanel {
 		black.setPiece(piece, row, column);
 		add(white);
 		add(black);
-		refresh();
+	}
+	
+	public JLabel getWhiteTaken(int row, int column) {
+		return white.getPiece(row, column);
+	}
+	
+	public JLabel getBlackTaken(int row, int column) {
+		return black.getPiece(row, column);
 	}
 	
 	public void refresh() {

@@ -1,7 +1,7 @@
 package view;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JButton;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -11,24 +11,14 @@ public class TakenPiecesPanel extends JPanel {
 	
 	private final int size = 4;
 	
-	private JButton[][] takenPieces;
+	private JLabel[][] takenPieces;
 	
 	public TakenPiecesPanel () {
 		setLayout(new GridLayout(size, size));
-		takenPieces = new JButton[size][size];
-		
-		for (int i = 0; i < size; i++) {
-			for (int j = 0; j < size; j++) {
-				JButton temp = new JButton();
-				temp.setPreferredSize(new Dimension(50, 50));
-				temp.setBackground(Color.WHITE);
-				setPiece(temp, i, j);
-			}
-		}
-		refresh();
+		takenPieces = new JLabel[size][size];
 	}
 	
-	public void setPiece (JButton piece, int row, int column) {
+	public void setPiece (JLabel piece, int row, int column) {
 		try {
 			remove(takenPieces[row][column]);
 		} catch (NullPointerException e) {
@@ -37,6 +27,10 @@ public class TakenPiecesPanel extends JPanel {
 		
 		takenPieces[row][column] = piece;
 		add(takenPieces[row][column]);
+	}
+	
+	public JLabel getPiece (int row, int column) {
+		return takenPieces[row][column];
 	}
 	
 	public void refresh() {

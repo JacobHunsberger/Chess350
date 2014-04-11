@@ -67,7 +67,7 @@ public class ChessBoard implements IChessBoard {
 	}
 
 	/**
-	 * Actually moves the chesspiece.
+	 * Moves the chess piece on the board.
 	 * @param move the move of the piece
 	 */
 	public final void move(final Move move) {
