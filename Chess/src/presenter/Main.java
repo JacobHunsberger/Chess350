@@ -10,5 +10,4 @@ public class Main {
 		ChessModel model = new ChessModel();
 		new ChessPresenter(model, view);
 	}
-
 }

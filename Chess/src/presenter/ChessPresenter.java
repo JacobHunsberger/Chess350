@@ -109,8 +109,14 @@ public class ChessPresenter {
 			for (int i = 0; i < 8; i++) {
 				for (int k = 0; k < 8; k++) {
 					if (model.isValidMove(new Move(tempRow, tempCol, i, k))) {
-						Border thickBorder = new LineBorder(Color.green, 12);
-						view.getPieceButton(i, k).setBorder(thickBorder);
+						Border thickBorder;
+						if (model.pieceAt(i, k) != null) {
+							thickBorder = new LineBorder(Color.red, 12);
+							view.getPieceButton(i, k).setBorder(thickBorder);
+						} else {
+							thickBorder = new LineBorder(Color.green, 12);
+							view.getPieceButton(i, k).setBorder(thickBorder);
+						}
 					}
 				}
 			}

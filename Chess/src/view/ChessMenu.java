@@ -38,9 +38,7 @@ public class ChessMenu extends JMenuBar{
 			if (source.equals(exit)) {
 				System.exit(0);
 			} else if (source.equals(newGame)) {
-//				ChessView.reset();
-//				String[] temp = new String[0];
-//				ChessView.main(temp);
+				
 			} else if (source.equals(rules)) {
 				//TODO needs to be implemented.
 			} else if (source.equals(about)) {
