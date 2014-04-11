@@ -78,7 +78,9 @@ public class Pawn extends ChessPiece {
 			if (move.getToRow() == (startingRow + (2 * direction)) 
 					&& move.getFromColumn() == move.getToColumn()) {	
 				if (board.pieceAt(move.getToRow(),
-						move.getToColumn()) == null) {
+						move.getToColumn()) == null
+						&& board.pieceAt(move.getFromRow() + direction,
+								move.getFromColumn()) == null) {
 					enPassant = true;
 					return true;			// Special move was valid
 				}

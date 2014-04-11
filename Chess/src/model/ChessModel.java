@@ -386,11 +386,10 @@ public final class ChessModel implements IChessModel {
 	private void specialMove(final Move move) {
 		IChessPiece piece = pieceAt(move.getToRow(), move.getToColumn());
 		
-        if (piece != null) {
-        	if (piece.type() != "pawn") {
-        		return;
-        	}
+        if (piece == null) {
+        	return;
         }
+        
         enPassant = false;
 		if (piece.type().equals("pawn")) {
 			Pawn pawn = (Pawn) piece;
@@ -420,6 +419,7 @@ public final class ChessModel implements IChessModel {
 		} else if (piece.type().equals("rook")) {
 			((Rook) piece).setFirstMove(false);
 		}
+		System.out.println(piece.type());
 	}
 	/**
 	 * Method promotes pawn.
