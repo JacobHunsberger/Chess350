@@ -64,18 +64,17 @@ public class ChessPresenter {
 	public ChessPresenter(ChessModel m, ChessView v) {
 		model = m;
 		view = v;
+		setupTaken();
 		updateBoard();
 		select = false;
 		inCheck = false;
-		setTaken();
-		view.refresh();
 		view.setVisible(true);
 	}
 	
 	/**
 	 * Initializes the taken space labels.
 	 */
-	private void setTaken() {
+	private void setupTaken() {
 		for (int i = 0; i < size/2; i++) {
 			for (int j = 0; j < size/2; j++) {
 				JLabel whiteLabel = new JLabel();

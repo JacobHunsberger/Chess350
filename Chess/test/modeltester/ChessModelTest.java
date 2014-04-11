@@ -33,44 +33,70 @@ public class ChessModelTest {
 	 */
 	@Test
 	public final void testInCheck() {
-		ChessModel chess = new ChessModel();
-		final int three = 3, four = 4, five = 5, six = 6, seven = 7;
-		Move m = new Move(1, four, 2, four);
-		chess.move(m); //move white pawn down 1.
-		m = new Move(six, 0, five, 0);
-		chess.move(m); //move a black pawn up 1.
-		m = new Move(0, three, four, seven);
-		chess.move(m); //move white queen in position for check.
-		m = new Move(five, 0, four, 0);
-		chess.move(m); //move a black pawn up 1.
-		m = new Move(four, seven, six, five);
-		chess.move(m); //move white queen to position check.
-		m = new Move(six, five, seven, four);
-		//assertTrue(chess.inCheck(m));
+		IChessModel model = new ChessModel();
+		
+		final int three = 3, four = 3, six = 6;
+		
+		// Move white pawn
+		Move m = new Move(1, three, three, three);
+		model.move(m);
+		
+		// Move black pawn
+		m = new Move(six, four, four, four);
+		model.move(m);
+		
+		// Move white bishop to check white
+		m = new Move(0, 2, four, six);
+		model.move(m);
+		
+		assertFalse(model.isComplete());
 	}
 	/**
 	 * Test isComplete method.
 	 */
 	@Test
 	public final void testIsComplete() {
-		ChessModel chess = new ChessModel();
+		IChessModel model;
+		
 		final int three = 3, four = 4, five = 5, six = 6, seven = 7;
-		Move m = new Move(1, four, 2, four);
-		chess.move(m); //move white pawn down 1.
-		m = new Move(six, 0, five, 0);
-		chess.move(m); //move a black pawn up 1.
-		m = new Move(0, three, four, seven);
-		chess.move(m); //move white queen in position for check.
-		m = new Move(five, 0, four, 0);
-		chess.move(m); //move a black pawn up 1.
-		m = new Move(0, five, three, 2);
-		chess.move(m); //move white bishop in position to support check.
-		m = new Move(four, 0, three, 0);
-		chess.move(m); //move a black pawn up 1.
-		m = new Move(four, seven, six, five);
-		chess.move(m); //move white queen to position checkmate.
-		m = new Move(six, five, seven, four);
-		assertFalse(chess.isComplete());
+		
+		// Fool's mate
+		model = new ChessModel();
+		
+		// Move white pawn
+		Move m = new Move(1, 2, 2, 2);
+		model.move(m);
+		
+		// Move black pawn
+		m = new Move(six, three, four, three);
+		model.move(m);
+		
+		// Move white pawn
+		m = new Move(1, 1, three, 1);
+		model.move(m);
+		
+		// Move black queen to checkmate white
+		m = new Move(7, four, three, 0);
+		model.move(m);
+		
+		assertTrue(model.isComplete());
+		
+		// Test check but not mate
+		model = new ChessModel();
+		
+		// Move white pawn
+		m = new Move(1, three, three, three);
+		model.move(m);
+		
+		// Move black pawn
+		m = new Move(six, four, four, four);
+		model.move(m);
+		
+		// Move white bishop to check white
+		m = new Move(0, 2, four, six);
+		model.move(m);
+		
+		assertFalse(model.isComplete());	
 	}
 	/**
 	 * Test move.
@@ -149,65 +175,34 @@ public class ChessModelTest {
 				three = 3, four = 4, five = 5, six = 6, seven = 7;
 		
 		// Move white knight
-		Move move = new Move(zero, six, two, seven);
+		Move move = new Move(0, 1, 2, 0);
 		model.move(move);
-		assertEquals("knight", model.pieceAt(two, seven).type());
-		assertEquals(null, model.pieceAt(zero, six));
 		
 		// Move black pawn forward 
-		move = new Move(six, seven, five, seven);
+		move = new Move(six, 0, five, 0);
 		model.move(move);
-		assertEquals("pawn", model.pieceAt(five, seven).type());
-		assertEquals(null, model.pieceAt(six, seven));
 		
-		//white pawn
-		move = new Move(one, six, two, six);
+		// Move white pawn
+		move = new Move(1, 1, 2, 1);
 		model.move(move);
-		assertEquals("pawn", model.pieceAt(two, six).type());
-		assertEquals(null, model.pieceAt(one, six));
 		
 		// Move black pawn forward 
-		move = new Move(six, six, five, six);
+		move = new Move(six, 2, five, 2);
 		model.move(move);
-		assertEquals("pawn", model.pieceAt(five, six).type());
-		assertEquals(null, model.pieceAt(six, six));
 		
-		// white bishop
-		move = new Move(zero, five, one, six);
+		// Move white bishop
+		move = new Move(0, 2, 1, 1);
 		model.move(move);
-		assertEquals("bishop", model.pieceAt(one, six).type());
-		assertEquals(null, model.pieceAt(zero, five));
 		
 		// Move black pawn forward 
-		move = new Move(five, six, four, six);
+		move = new Move(five, 2, four, 2);
 		model.move(move);
-		assertEquals("pawn", model.pieceAt(four, six).type());
-		assertEquals(null, model.pieceAt(five, six));
 		
 		// CASTLE testing
-		move = new Move(zero, four, zero, seven);
+		move = new Move(0, 0, 0, three);
 		model.move(move);
-		assertEquals("king", model.pieceAt(zero, six).type());
-		assertEquals("rook", model.pieceAt(zero, five).type());
-		
-		// Move black pawn forward 
-		move = new Move(five, seven, four, seven);
-		model.move(move);
-		assertEquals("pawn", model.pieceAt(four, seven).type());
-		assertEquals(null, model.pieceAt(five, seven));
-		
-		move = new Move(zero, six, seven, six);
-		model.move(move);
-		move = new Move(zero, six, one, six);
-		model.move(move);
-		move = new Move(zero, six, zero, five);
-		model.move(move);
-		move = new Move(zero, six, zero, five);
-		model.move(move);
-		move = new Move(zero, five, zero, six);
-		model.move(move);
-
-		
+		assertEquals("king", model.pieceAt(0, 1).type());
+		assertEquals("rook", model.pieceAt(0, 2).type());
 	}
 	/**
 	 * Test enPassant.

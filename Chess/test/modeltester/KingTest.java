@@ -21,8 +21,12 @@ public class KingTest {
 	 */
 	@Test
 	public final void testType() {
-		IChessPiece king = new King(Player.WHITE);
+		King king = new King(Player.WHITE);
 		assertEquals("king", king.type());
+		king.setFirstMove(false);
+		assertFalse(king.firstMove());
+		King copy = new King(king);
+		assertEquals(copy.player(), king.player());
 	}
 	/**
 	 * Test isValidMove.
@@ -56,21 +60,5 @@ public class KingTest {
 		// INDEX OUT OF BOUNDS
 		move = new Move(0, 0, -1, -1);
 		assertFalse(king.isValidMove(move, board));
-	}
-	/**
-	 * Test first move.
-	 */
-	@Test
-	public final void testFirstMove() {
-		IChessPiece king = new King(Player.WHITE);
-		IChessBoard board = new ChessBoard();
-		
-		assertTrue(((King) king).firstMove());
-		
-		board.set(king, 0, 0);
-		Move move = new Move(0, 0, 1, 0);
-		king.isValidMove(move, board);
-		
-		assertFalse(((King) king).firstMove());
 	}
 }
