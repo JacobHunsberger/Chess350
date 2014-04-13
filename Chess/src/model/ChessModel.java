@@ -644,32 +644,17 @@ public final class ChessModel implements IChessModel {
 		// move pieces
 		Move m1;
 		Move m2;
-		final int seven = 7;
-		if (start > 0 && start < seven) {
-			if (stop < start) {
-
-			    m1 = new Move(move.getFromRow(), start, move.getFromRow(),
-			    		start - 2);
-			    m2 = new Move(move.getFromRow(), stop, move.getFromRow(),
-			    		start - 1);
-			} else {
-				m1 = new Move(move.getFromRow(), start, move.getFromRow(),
-						start + 2);
-			    m2 = new Move(move.getFromRow(), stop, move.getFromRow(),
-			    		start + 1);
-			}
+		
+		if (start < stop) {
+			m1 = new Move(move.getFromRow(), stop,
+					move.getFromRow(), stop - 2);
+		    m2 = new Move(move.getFromRow(), start,
+		    		move.getFromRow(), stop - 1);
 		} else {
-			if (start < stop) {
-				m1 = new Move(move.getFromRow(), stop,
-						move.getFromRow(), stop - 2);
-			    m2 = new Move(move.getFromRow(), start,
-			    		move.getFromRow(), stop - 1);
-			} else {
-				m1 = new Move(move.getFromRow(), stop,
-						move.getFromRow(), stop + 2);
-			    m2 = new Move(move.getFromRow(), start,
-			    		move.getFromRow(), stop + 1);
-			}
+			m1 = new Move(move.getFromRow(), stop,
+					move.getFromRow(), stop + 2);
+		    m2 = new Move(move.getFromRow(), start,
+		    		move.getFromRow(), stop + 1);
 		}
 		board.move(m1);
 		board.move(m2);

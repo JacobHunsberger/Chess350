@@ -189,7 +189,143 @@ public class ChessModelTest {
 	public final void testisValidCastle() {
 		IChessModel model = new ChessModel();
 		
-		final int three = 3, four = 4, five = 5, six = 6;
+		final int three = 3, four = 4, five = 5, six = 6, seven = 7;
+		
+		// Move white knight
+		Move move = new Move(0, six, 2, seven);
+		model.move(move);
+		
+		// Move black pawn
+		move = new Move(six, 0, five, 0);
+		model.move(move);
+		
+		// Move white pawn
+		move = new Move(1, six, 2, six);
+		model.move(move);
+		
+		// Move black pawn
+		move = new Move(six, 1, five, 1);
+		model.move(move);
+		
+		// Move white bishop
+		move = new Move(0, five, 1, six);
+		model.move(move);
+		
+		// Move black pawn
+		move = new Move(six, 2, five, 2);
+		model.move(move);
+		
+		// Move white pawn
+		move = new Move(1, five, 2, five);
+		model.move(move);
+		
+		// Move black pawn
+		move = new Move(six, three, five, three);
+		model.move(move);
+		
+		// Move white queen
+		move = new Move(0, four, 1, five);
+		model.move(move);
+		
+		// Move black pawn
+		move = new Move(six, four, five, four);
+		model.move(move);
+		
+		// Castle testing
+		move = new Move(0, seven, 0, three);
+		model.move(move);
+		assertEquals("king", model.pieceAt(0, five).type());
+		assertEquals("rook", model.pieceAt(0, four).type());
+		
+		model = new ChessModel();
+		
+		// Move white knight
+		move = new Move(0, 1, 2, 0);
+		model.move(move);
+		
+		// Move black pawn forward 
+		move = new Move(six, 0, five, 0);
+		model.move(move);
+		
+		// Move white pawn
+		move = new Move(1, 1, 2, 1);
+		model.move(move);
+		
+		// Move black pawn forward 
+		move = new Move(six, 1, five, 1);
+		model.move(move);
+		
+		// Castle with pieces in between failure
+		move = new Move(0, 0, 0, three);
+		model.move(move);
+		
+		// Move white bishop
+		move = new Move(0, 2, 1, 1);
+		model.move(move);
+		
+		// Move black pawn forward 
+		move = new Move(six, 2, five, 2);
+		model.move(move);
+		
+		// Opposite team failure
+		move = new Move(0, 0, seven, 0);
+		model.move(move);
+		
+		// Not rook and king failure
+		move = new Move(0, 0, 0, seven);
+		model.move(move);
+		
+		move = new Move(0, three, 0, three);
+		model.move(move);
+		
+		// Castle testing
+		move = new Move(0, 0, 0, three);
+		model.move(move);
+		assertEquals("king", model.pieceAt(0, 1).type());
+		assertEquals("rook", model.pieceAt(0, 2).type());
+		
+		model = new ChessModel();
+		moveToCastle(model);
+		
+		// Click king first
+		move = new Move(0, three, 0, 0);
+		model.move(move);
+		assertEquals("king", model.pieceAt(0, 1).type());
+		assertEquals("rook", model.pieceAt(0, 2).type());
+		
+		model = new ChessModel();
+		moveToCastle(model);
+		
+		// Move rook back and forth.
+		move = new Move(0, 0, 0, 1);
+		model.move(move);
+		move = new Move(five, 0, four, 0);
+		model.move(move);
+		move = new Move(0, 1, 0, 0);
+		model.move(move);
+		move = new Move(0, 0, 0, three);
+		model.move(move);
+		
+		model = new ChessModel();
+		moveToCastle(model);
+		
+		// Move king back and forth.
+		move = new Move(0, three, 0, 2);
+		model.move(move);
+		move = new Move(five, 0, four, 0);
+		model.move(move);
+		move = new Move(0, 2, 0, three);
+		model.move(move);
+		move = new Move(0, 0, 0, three);
+		model.move(move);
+		
+	}
+	/**
+	 * Moves into position to castle.
+	 * @param model Model of chess game.
+	 */
+	private void moveToCastle(final IChessModel model) {
+		final int three = 3, five = 5, six = 6;
 		
 		// Move white knight
 		Move move = new Move(0, 1, 2, 0);
@@ -204,7 +340,11 @@ public class ChessModelTest {
 		model.move(move);
 		
 		// Move black pawn forward 
-		move = new Move(six, 2, five, 2);
+		move = new Move(six, 1, five, 1);
+		model.move(move);
+		
+		// Castle with pieces in between failure
+		move = new Move(0, 0, 0, three);
 		model.move(move);
 		
 		// Move white bishop
@@ -212,14 +352,8 @@ public class ChessModelTest {
 		model.move(move);
 		
 		// Move black pawn forward 
-		move = new Move(five, 2, four, 2);
+		move = new Move(six, 2, five, 2);
 		model.move(move);
-		
-		// CASTLE testing
-		move = new Move(0, 0, 0, three);
-		model.move(move);
-		assertEquals("king", model.pieceAt(0, 1).type());
-		assertEquals("rook", model.pieceAt(0, 2).type());
 	}
 	/**
 	 * Test enPassant.
