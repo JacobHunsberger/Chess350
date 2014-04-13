@@ -27,12 +27,21 @@ import javax.swing.border.LineBorder;
  */
 public class ChessPresenter {
 
-	final int size = 8;
-	
+	/**
+	 * Size of board.
+	 */
+	private final int size = 8;
+	/**
+	 * Create local view.
+	 */
 	private ChessView view;
-	
+	/**
+	 * Create local model.
+	 */
 	private ChessModel model;
-	
+	/**
+	 * Select or place for the piece.
+	 */
 	private boolean select;
 	
 	/**
@@ -55,13 +64,17 @@ public class ChessPresenter {
 	 *  Local to column int.
 	 */
 	private int toColumn;
-	
+	/**
+	 * Boolean in check.
+	 */
 	private boolean inCheck;
 	
 	/**
 	 * Constructor for ChessPresenter Class.
+	 * @param m model of chess
+	 * @param v view of chess
 	 */
-	public ChessPresenter(ChessModel m, ChessView v) {
+	public ChessPresenter(final ChessModel m, final ChessView v) {
 		model = m;
 		view = v;
 		setupTaken();
@@ -75,16 +88,17 @@ public class ChessPresenter {
 	 * Initializes the taken space labels.
 	 */
 	private void setupTaken() {
-		for (int i = 0; i < size/2; i++) {
-			for (int j = 0; j < size/2; j++) {
+		for (int i = 0; i < size / 2; i++) {
+			for (int j = 0; j < size / 2; j++) {
+				final int fifty = 50;
 				JLabel whiteLabel = new JLabel();
-				whiteLabel.setPreferredSize(new Dimension(50, 50));
+				whiteLabel.setPreferredSize(new Dimension(fifty, fifty));
 				whiteLabel.setBackground(Color.WHITE);
 				whiteLabel.setOpaque(true);
 				view.setWhiteLabel(whiteLabel, i, j);
 				
 				JLabel blackLabel = new JLabel();
-				blackLabel.setPreferredSize(new Dimension(50, 50));
+				blackLabel.setPreferredSize(new Dimension(fifty, fifty));
 				blackLabel.setBackground(Color.WHITE);
 				blackLabel.setOpaque(true);
 				view.setBlackLabel(blackLabel, i, j);
@@ -92,28 +106,38 @@ public class ChessPresenter {
 		}
 	}
 
+	/**
+	 * Local class for mouse listener.
+	 * @author Jonathan Powers, Jacob Hunsberger and Jared Thomas
+	 *
+	 */
 	private class MyMouseListener implements MouseListener {
+		/**
+		 * The temp location of the row and column.
+		 */
 		private int tempRow = 0, tempCol = 0;
 		@Override
-		public void mouseEntered(MouseEvent e) {
+		public void mouseEntered(final MouseEvent e) {
 			JButton temp = (JButton) e.getSource();
-			for (int i = 0; i < 8; i++) {
-				for (int k = 0; k < 8; k++) {
+			final int eight = 8;
+			for (int i = 0; i < eight; i++) {
+				for (int k = 0; k < eight; k++) {
 					if (view.getPieceButton(i, k).equals(temp)) {
 						tempRow = i;
 						tempCol = k;
 					}
 				}
 			}
-			for (int i = 0; i < 8; i++) {
-				for (int k = 0; k < 8; k++) {
+			for (int i = 0; i < eight; i++) {
+				for (int k = 0; k < eight; k++) {
 					if (model.isValidMove(new Move(tempRow, tempCol, i, k))) {
 						Border thickBorder;
+						final int twelve = 12;
 						if (model.pieceAt(i, k) != null) {
-							thickBorder = new LineBorder(Color.red, 12);
+							thickBorder = new LineBorder(Color.red, twelve);
 							view.getPieceButton(i, k).setBorder(thickBorder);
 						} else {
-							thickBorder = new LineBorder(Color.green, 12);
+							thickBorder = new LineBorder(Color.green, twelve);
 							view.getPieceButton(i, k).setBorder(thickBorder);
 						}
 					}
@@ -121,18 +145,19 @@ public class ChessPresenter {
 			}
 		}
 		@Override
-		public void mouseExited(MouseEvent e) {
+		public void mouseExited(final MouseEvent e) {
 			JButton temp = (JButton) e.getSource();
-			for (int i = 0; i < 8; i++) {
-				for (int k = 0; k < 8; k++) {
+			final int eight = 8;
+			for (int i = 0; i < eight; i++) {
+				for (int k = 0; k < eight; k++) {
 					if (view.getPieceButton(i, k).equals(temp)) {
 						tempRow = i;
 						tempCol = k;
 					}
 				}
 			}
-			for (int i = 0; i < 8; i++) {
-				for (int k = 0; k < 8; k++) {
+			for (int i = 0; i < eight; i++) {
+				for (int k = 0; k < eight; k++) {
 					if (model.isValidMove(new Move(tempRow, tempCol, i, k))) {
 						view.getPieceButton(i, k).setBorder(null);
 					}
@@ -140,18 +165,23 @@ public class ChessPresenter {
 			}
 		}
 		@Override
-		public void mousePressed(MouseEvent e) {
+		public void mousePressed(final MouseEvent e) {
 		}
 		@Override
-		public void mouseReleased(MouseEvent e) {
+		public void mouseReleased(final MouseEvent e) {
 		}
 		@Override
-		public void mouseClicked(MouseEvent e) {
+		public void mouseClicked(final MouseEvent e) {
 		}
 	}
+	/**
+	 * Local class for the button listener.
+	 * @author Jonathan Powers, Jacob Hunsberger and Jared Thomas
+	 *
+	 */
 	private class ButtonListener implements ActionListener {
 		@Override
-		public void actionPerformed(ActionEvent e) {
+		public void actionPerformed(final ActionEvent e) {
 			if (!select) {
 				space = (JButton) e.getSource();
 				for (int i = 0; i < size; i++) {
@@ -209,7 +239,9 @@ public class ChessPresenter {
 			}
 		}
 	}
-	
+	/**
+	 * Updates the board.
+	 */
 	private void updateBoard() {
 		final float hue = 4.0f;
 		final float sat = 0.25f;
@@ -219,11 +251,12 @@ public class ChessPresenter {
 		MyMouseListener mouseListener = new MyMouseListener();
 		
 		for (int i = 0; i < size; i++) {
+			final int fifty = 50;
 			for (int j = 0; j < size; j++) {
 				space = new JButton();
 				space.addActionListener(buttonListener);
 				space.addMouseListener(mouseListener);
-				space.setPreferredSize(new Dimension(50, 50));
+				space.setPreferredSize(new Dimension(fifty, fifty));
 				
 				if ((j % 2) == (i % 2)) {
 					space.setBackground(Color.white);
@@ -232,7 +265,7 @@ public class ChessPresenter {
 							hue, sat, bright));
 				}
 				
-				if (model.pieceAt(i,j) != null) {
+				if (model.pieceAt(i, j) != null) {
 					setImage(space, i, j, model.pieceAt(
 							i, j).player());
 				}
@@ -243,8 +276,8 @@ public class ChessPresenter {
 		JLabel label = null;
 		Iterator<IChessPiece> taken = model.getWhiteTaken();
 		outerLoopWhite:
-		for (int i = 0; i < size/2; i++) {
-			for (int j = 0; j < size/2; j++) {
+		for (int i = 0; i < size / 2; i++) {
+			for (int j = 0; j < size / 2; j++) {
 				if (!taken.hasNext()) {
 					break outerLoopWhite;
 				}
@@ -257,8 +290,8 @@ public class ChessPresenter {
 		
 		taken = model.getBlackTaken();
 		outerLoopBlack:
-		for (int i = 0; i < size/2; i++) {
-			for (int j = 0; j < size/2; j++) {
+		for (int i = 0; i < size / 2; i++) {
+			for (int j = 0; j < size / 2; j++) {
 				if (!taken.hasNext()) {
 					break outerLoopBlack;
 				}
@@ -271,7 +304,11 @@ public class ChessPresenter {
 		
 		view.refresh();
 	}
-	
+	/**
+	 * 
+	 * @param label the label of the piece.
+	 * @param piece the peice for the label.
+	 */
 	private void setImageTaken(final JLabel label, 
 			final IChessPiece piece) {
 		Player p = piece.player();
@@ -341,7 +378,6 @@ public class ChessPresenter {
 			e.printStackTrace();
 		}
 	}
-	
 	/**
 	* Highlights a check.
 	* @param row Row to highlight.
