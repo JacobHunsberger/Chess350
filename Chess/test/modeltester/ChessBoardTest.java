@@ -50,8 +50,8 @@ public class ChessBoardTest {
 		assertTrue(board.pieceAt(0, 0).type().equals("rook"));
 		assertTrue(board.pieceAt(seven, 1).type().equals("knight"));
 		assertTrue(board.pieceAt(0, five).type().equals("bishop"));
-		assertTrue(board.pieceAt(seven, four).type().equals("king"));
-		assertTrue(board.pieceAt(0, three).type().equals("queen"));
+		assertTrue(board.pieceAt(seven, four).type().equals("queen"));
+		assertTrue(board.pieceAt(0, three).type().equals("king"));
 	}
 	/**
 	 * Test move.

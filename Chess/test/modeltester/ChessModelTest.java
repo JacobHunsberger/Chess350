@@ -4,8 +4,12 @@ package modeltester;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
+import java.util.Iterator;
+
 import model.IChessModel;
 import model.ChessModel;
+import model.IChessPiece;
 import model.Player;
 import model.Move;
 
@@ -64,7 +68,7 @@ public class ChessModelTest {
 	public final void testIsComplete() {
 		IChessModel model;
 		
-		final int three = 3, four = 4, five = 5, six = 6, seven = 7;
+		final int three = 3, four = 4, six = 6, seven = 7;
 		
 		// Fool's mate
 		model = new ChessModel();
@@ -82,7 +86,7 @@ public class ChessModelTest {
 		model.move(m);
 		
 		// Move black queen to checkmate white
-		m = new Move(7, four, three, 0);
+		m = new Move(seven, four, three, 0);
 		model.move(m);
 		
 		assertTrue(model.isComplete());
@@ -124,6 +128,14 @@ public class ChessModelTest {
 		model.move(move);
 		assertEquals("pawn", model.pieceAt(five, seven).type());
 		assertEquals(null, model.pieceAt(six, seven));
+		
+		// Move white knight out
+		move = new Move(0, 1, 2, 0);
+		model.move(move);
+		
+		// Move black rook forward
+		move = new Move(seven, seven, six, seven);
+		model.move(move);
 	}
 	/**
 	 * Test isValidMove.
@@ -177,8 +189,7 @@ public class ChessModelTest {
 	public final void testisValidCastle() {
 		IChessModel model = new ChessModel();
 		
-		final int zero = 0, one = 1, two = 2,
-				three = 3, four = 4, five = 5, six = 6, seven = 7;
+		final int three = 3, four = 4, five = 5, six = 6;
 		
 		// Move white knight
 		Move move = new Move(0, 1, 2, 0);
@@ -243,5 +254,33 @@ public class ChessModelTest {
 		assertEquals(null, chess.pieceAt(three, seven));
 		assertEquals("pawn", chess.pieceAt(three, five).type());
 		assertEquals("pawn", chess.pieceAt(2, seven).type());		
+	}
+	
+	/**
+	 * Test iterator functionality.
+	 */
+	@Test
+	public final void testIterator() {
+		IChessModel model = new ChessModel();
+		
+		final int three = 3, four = 4, five = 5, six = 6;
+		
+		Iterator<IChessPiece> i = ((ChessModel) model).getWhiteTaken();
+		
+		assertFalse(i.hasNext());
+		
+		// Take a black piece.
+		Move m = new Move(1, four, three, four);
+		model.move(m);
+		
+		m = new Move(six, 1, four, 1);
+		model.move(m);
+		
+		m = new Move(0, five, four, 1);
+		model.move(m);
+		
+		i = ((ChessModel) model).getBlackTaken();
+		
+		assertTrue(i.hasNext());
 	}
 }
