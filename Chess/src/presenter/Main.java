@@ -1,5 +1,7 @@
 package presenter;
 
+import javax.swing.JFrame;
+
 import view.ChessView;
 import model.ChessModel;
 /**
@@ -12,7 +14,7 @@ public final class Main {
 	/**
 	 * Default Constructor.
 	 */
-	private Main() {
+	public Main() {
 		
 	}
 	/**
@@ -21,6 +23,15 @@ public final class Main {
 	 */
 	public static void main(final String[] args) {
 		ChessView view = new ChessView();
+		ChessModel model = new ChessModel();
+		new ChessPresenter(model, view);
+	}
+	/**
+	 * Start a new game.
+	 * @param f the new ChessView.
+	 */
+	public void giveNewFrame(final JFrame f) {
+		ChessView view = (ChessView) f;
 		ChessModel model = new ChessModel();
 		new ChessPresenter(model, view);
 	}

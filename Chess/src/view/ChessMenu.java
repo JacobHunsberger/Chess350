@@ -5,10 +5,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
 
+import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import presenter.Main;
 /**
  * Menu for the game.
  * @author Jacob Hunsberger, Jon Powers, Jared Thomas
@@ -17,6 +19,10 @@ import javax.swing.JOptionPane;
 @SuppressWarnings("serial")
 public class ChessMenu extends JMenuBar {
 
+	/**
+	 * So that the Menu can reset the frame.
+	 */
+	private JFrame localFrame;
 	/**
 	 * JMenu items.
 	 */
@@ -54,6 +60,13 @@ public class ChessMenu extends JMenuBar {
 		add(help);
 	}
 	/**
+	 * So the menu can reset it.
+	 * @param f the chess view frame.
+	 */
+	public final void giveJFrame(final JFrame f) {
+		localFrame = f;
+	}	
+	/**
 	 * Private class to handel the listener.
 	 * @author Jacob Hunsberger, Jon Powers, Jared Thomas
 	 *
@@ -68,7 +81,11 @@ public class ChessMenu extends JMenuBar {
 			if (source.equals(exit)) {
 				System.exit(0);
 			} else if (source.equals(newGame)) {
-				
+				localFrame.removeAll();
+				localFrame.dispose();
+				localFrame = new ChessView();
+				Main main = new Main();
+				main.giveNewFrame(localFrame);
 			} else if (source.equals(rules)) {
 				final String urlString = 
 						"http://en.wikipedia.org/wiki/Rules_of_chess";
