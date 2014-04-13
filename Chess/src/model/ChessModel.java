@@ -93,13 +93,18 @@ public final class ChessModel implements IChessModel {
 		
 		return true;
 	}
-	
-	private boolean moveOutOfCheck(ChessPiece piece,
-			int fromRow, int fromColumn) {
+	/**
+	 * 
+	 * @param piece the piece that may move.
+	 * @param fromRow the from row of the piece
+	 * @param fromColumn the from column of the piece
+	 * @return boolean true or false if you can move out of check 
+	 */
+	private boolean moveOutOfCheck(final ChessPiece piece,
+			final int fromRow, final int fromColumn) {
 		if (piece.player() != currentPlayer()) {
 			return false;
 		}
-		
 		Move m = null;
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
@@ -111,22 +116,20 @@ public final class ChessModel implements IChessModel {
 				}
 			}
 		}
-		
 		return false;
 	}
-
 	/**
 	 * 
 	 * @param defending assumes this piece is the one you want to protect
 	 * @param taker assumes this piece is the taker 
 	 * @return boolean true or false for blocking.
 	 */
+	/**
 	private boolean canBlock(final IChessPiece defending, 
 			final IChessPiece taker) {
 		/* If the taker piece is a knight you can't block a knight.
 		 * You also can't block a pawn or a King because they only can
 		 * take one one spot at a time. 
-		*/
 		if (taker.type() == "knight" || taker.type() == "king" 
 				|| taker.type() == "pawn") {
 			return false;
@@ -155,14 +158,13 @@ public final class ChessModel implements IChessModel {
 			return blockCheckmate2(takePoint[0], defPoint[1], defPoint[0]);
 		}
 		return true;
-	}
+	}*/
 	/**
 	 * 
 	 * @param point1 row 
 	 * @param point2 column
 	 * @param point3 row of other piece
 	 * @return boolean
-	 */
 	private boolean blockCheckmate2(final int point1, 
 			final int point2, final int point3) {
 		int dist = point1 - point3;
@@ -182,13 +184,14 @@ public final class ChessModel implements IChessModel {
 			}
 		}
 		return false;
-	}
+	}*/
 	/**
 	 * 
 	 * @param point1 row
 	 * @param point2 column
 	 * @return boolean
 	 */
+	/*
 	private boolean blockCheckmate1(final int point1, final int point2) {
 		int dist = point1 - point2;
 		Move m;
@@ -213,7 +216,6 @@ public final class ChessModel implements IChessModel {
 	 * or for strategy for the A.I.
 	 * @param h row and column array
 	 * @return the piece that can take another piece
-	 */
 	private IChessPiece pieceTakePiece(final int[] h) {
 		IChessPiece temp = null;
 		Move m;
@@ -231,7 +233,7 @@ public final class ChessModel implements IChessModel {
 			}
 		}
 		return temp;
-	}
+	}*/
 	/**
 	 * @param move input the move of the piece
 	 * @return boolean true or false if the move is valid
@@ -264,13 +266,15 @@ public final class ChessModel implements IChessModel {
 					} else if (temp.pieceAt(i, k).type() == "rook") {
 						board.set(new Rook((Rook) temp.pieceAt(i, k)), i, k);
 					} else if (temp.pieceAt(i, k).type() == "bishop") {
-						board.set(new Bishop((Bishop) temp.pieceAt(i, k)), i, k);
+						board.set(new Bishop((Bishop) temp.pieceAt(i, k)), 
+								i, k);
 					} else if (temp.pieceAt(i, k).type() == "queen") {
 						board.set(new Queen((Queen) temp.pieceAt(i, k)), i, k);
 					} else if (temp.pieceAt(i, k).type() == "king") {
 						board.set(new King((King) temp.pieceAt(i, k)), i, k);
 					} else if (temp.pieceAt(i, k).type() == "knight") {
-						board.set(new Knight((Knight) temp.pieceAt(i, k)), i, k);
+						board.set(new Knight((Knight) temp.pieceAt(i, k)), 
+								i, k);
 					}	
 				} catch (NullPointerException npe) {
 					board.set(null, i, k);
@@ -354,10 +358,10 @@ public final class ChessModel implements IChessModel {
 	
 	/**
 	 * Determines if a piece is on the board.
-	 * 
+	 * @param piece the piece in question.
 	 * @return true if piece is on the board, otherwise false.
 	 */
-	private boolean contains(IChessPiece piece) {
+	private boolean contains(final IChessPiece piece) {
 		IChessPiece temp = null;
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
@@ -370,11 +374,17 @@ public final class ChessModel implements IChessModel {
 		
 		return false;
 	}
-	
+	/**
+	 * White taken.
+	 * @return Iterator<IChessPiece>
+	 */
 	public Iterator<IChessPiece> getWhiteTaken() {
 		return whiteTaken.iterator();
 	}
-	
+	/**
+	 * Black taken.
+	 * @return Iterator<IChessPiece>
+	 */
 	public Iterator<IChessPiece> getBlackTaken() {
 		return blackTaken.iterator();
 	}
@@ -496,7 +506,7 @@ public final class ChessModel implements IChessModel {
 	 * @param c the column of the King.
 	 * @param p the player of the King that might be in check.
 	 * @return boolean if the king is in check.
-	 */
+	 *//*
 	private boolean boardCheckHelper(final int r, final int c, final Player p) {
 		final int max = 8;
 		for (int i = 0; i < max; i++) {
@@ -510,7 +520,7 @@ public final class ChessModel implements IChessModel {
 			}
 		}
 		return false;
-	}
+	}*/
 	/**
 	 * Helper method to find the king piece.
 	 * @return int[] an array with the values of row and column of the king
@@ -569,7 +579,7 @@ public final class ChessModel implements IChessModel {
 	 * 
 	 * @param p the piece specified
 	 * @return int[] the row and column of r=the piece
-	 */
+	 *//*
 	private int[] pieceAtReverse(final IChessPiece p) {
 		int[] temp = new int[2];
 		final int max = 8;
@@ -587,7 +597,7 @@ public final class ChessModel implements IChessModel {
 		}
 		return temp;
 	}
-	
+	*/
 	/**
 	 * This method moves the piece if it is valid.
 	 * @param move input the move of the piece
@@ -725,12 +735,17 @@ public final class ChessModel implements IChessModel {
 		ChessBoard temp = board;
 		return temp;
 	}
-	
+	/**
+	 * Simply prints the board.
+	 */
 	public void printBoard() {
-		for (int i = 0; i < 8; i++) {
-			for (int j = 0; j < 8; j++) {
+		final int eight = 8;
+		final int four = 4;
+		for (int i = 0; i < eight; i++) {
+			for (int j = 0; j < eight; j++) {
 				try {
-					System.out.print(board.pieceAt(i, j).type().substring(0,4) + " ");
+					System.out.print(board.pieceAt(i, j).type()
+							.substring(0, four) + " ");
 				} catch (NullPointerException e) {
 					System.out.print("     ");
 				}
