@@ -105,7 +105,6 @@ public class ChessPresenter {
 			}
 		}
 	}
-
 	/**
 	 * Local class for mouse listener.
 	 * @author Jonathan Powers, Jacob Hunsberger and Jared Thomas
@@ -144,6 +143,9 @@ public class ChessPresenter {
 										twelve);
 								view.getPieceButton(i, k)
 								.setBorder(thickBorder);
+								final int six = 6;
+								view.getPieceButton(tempRow, tempCol)
+								.setBorder(new LineBorder(Color.blue, six));
 							}
 						}
 					}
@@ -168,6 +170,7 @@ public class ChessPresenter {
 						if (model.isValidMove(new Move(tempRow, 
 								tempCol, i, k))) {
 						view.getPieceButton(i, k).setBorder(null);
+						view.getPieceButton(tempRow, tempCol).setBorder(null);
 						}
 					}
 				}
@@ -254,11 +257,9 @@ public class ChessPresenter {
 	private void updateBoard() {
 		final float hue = 4.0f;
 		final float sat = 0.25f;
-		final float bright = 0.40f;
-		
+		final float bright = 0.40f;	
 		ButtonListener buttonListener = new ButtonListener();
 		MyMouseListener mouseListener = new MyMouseListener();
-		
 		for (int i = 0; i < size; i++) {
 			final int fifty = 50;
 			for (int j = 0; j < size; j++) {

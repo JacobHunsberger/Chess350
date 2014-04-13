@@ -7,15 +7,25 @@ import java.awt.GridLayout;
 public class ChessViewBoard extends JPanel {
 	
 	final int size = 8;
-	
+	/**
+	 * 2D JButton for the board.
+	 */
 	private JButton[][] board;
-	
+	/**
+	 * Constructor for the board to set it up.
+	 */
 	public ChessViewBoard() {
 		setLayout(new GridLayout(size, size));
 		board = new JButton[size][size];
 	}
-	
-	public void setPieceButton(JButton piece, int row, int column) {
+	/**
+	 * 
+	 * @param piece to set.
+	 * @param row the row of the piece.
+	 * @param column the column of piece.
+	 */
+	public final void setPieceButton(final JButton piece, final int row, 
+			final int column) {
 		try {
 			remove(board[row][column]);
 		} catch (NullPointerException e) {
