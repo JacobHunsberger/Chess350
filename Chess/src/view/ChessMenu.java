@@ -1,11 +1,14 @@
 package view;
 
+import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 /**
  * Menu for the game.
  * @author Jacob Hunsberger, Jon Powers, Jared Thomas
@@ -36,9 +39,11 @@ public class ChessMenu extends JMenuBar {
 		exit = new JMenuItem("Exit");
 		exit.addActionListener(menuLis);
 		about = new JMenuItem("About");
+		about.addActionListener(menuLis);
 		newGame = new JMenuItem("New");
 		newGame.addActionListener(menuLis);
 		rules = new JMenuItem("Rules");
+		rules.addActionListener(menuLis);
 		help.add(about);
 		help.add(rules);
 		help.getPopupMenu().setLightWeightPopupEnabled(false);
@@ -65,9 +70,21 @@ public class ChessMenu extends JMenuBar {
 			} else if (source.equals(newGame)) {
 				
 			} else if (source.equals(rules)) {
-				
+				final String urlString = 
+						"http://en.wikipedia.org/wiki/Rules_of_chess";
+				try {
+					Desktop.getDesktop().browse(new URL(urlString).toURI());
+				} catch (Exception ex) {
+			        ex.printStackTrace();
+			    }
 			} else if (source.equals(about)) {
-				
+				final String displayString = "Version: 1.3\nRelease: 2014\n"
+						+ "\nDevelopers:\nJacob Hunsberger\nJon Powers\nJar"
+						+ "ed Thomas";
+				final String titleString = "About";
+				final int messageType = 1;
+				JOptionPane.showMessageDialog(null, displayString,
+						titleString, messageType);
 			}
         }
 	}
