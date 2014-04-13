@@ -243,8 +243,11 @@ public class ChessPresenter {
 						if (model.isComplete()) {
 							view.getPieceButton(temp[1], temp[0])
 							.setBackground(Color.pink);
-							JOptionPane.showMessageDialog(null,
-									"Checkmate!");
+							ImageIcon icon = new ImageIcon(getClass()
+									.getResource(
+							"images/checkmate.gif"));
+							JOptionPane.showMessageDialog(null, null,
+									"Checkmate!", 1, icon);
 						}
 					}
 				}
