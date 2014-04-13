@@ -83,7 +83,6 @@ public class ChessPresenter {
 		inCheck = false;
 		view.setVisible(true);
 	}
-	
 	/**
 	 * Initializes the taken space labels.
 	 */

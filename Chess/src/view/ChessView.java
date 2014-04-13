@@ -41,6 +41,7 @@ public final class ChessView extends JFrame {
 		getContentPane().add(taken, BorderLayout.EAST);
 		pack();
 		setSize(sevenHun, fiveHun);
+		menu.giveJFrame(this);
 	}
 	/**
 	 * 
