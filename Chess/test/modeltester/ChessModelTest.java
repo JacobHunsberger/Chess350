@@ -64,7 +64,7 @@ public class ChessModelTest {
 	public final void testIsComplete() {
 		IChessModel model;
 		
-		final int three = 3, four = 4, five = 5, six = 6, seven = 7;
+		final int three = 3, four = 4, six = 6, seven = 7;
 		
 		// Fool's mate
 		model = new ChessModel();
@@ -80,9 +80,8 @@ public class ChessModelTest {
 		// Move white pawn
 		m = new Move(1, 1, three, 1);
 		model.move(m);
-		
 		// Move black queen to checkmate white
-		m = new Move(7, four, three, 0);
+		m = new Move(seven, four, three, 0);
 		model.move(m);
 		
 		assertTrue(model.isComplete());
@@ -177,8 +176,7 @@ public class ChessModelTest {
 	public final void testisValidCastle() {
 		IChessModel model = new ChessModel();
 		
-		final int zero = 0, one = 1, two = 2,
-				three = 3, four = 4, five = 5, six = 6, seven = 7;
+		final int three = 3, four = 4, five = 5, six = 6;
 		
 		// Move white knight
 		Move move = new Move(0, 1, 2, 0);
