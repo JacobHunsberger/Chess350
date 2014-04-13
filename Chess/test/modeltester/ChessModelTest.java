@@ -35,7 +35,7 @@ public class ChessModelTest {
 	public final void testInCheck() {
 		IChessModel model = new ChessModel();
 		
-		final int three = 3, four = 3, six = 6;
+		final int three = 3, four = 4, five = 5, six = 6, seven = 7;
 		
 		// Move white pawn
 		Move m = new Move(1, three, three, three);
@@ -49,7 +49,13 @@ public class ChessModelTest {
 		m = new Move(0, 2, four, six);
 		model.move(m);
 		
-		assertFalse(model.isComplete());
+		// Try to move without getting out of check.
+		m = new Move(six, three, five, three);
+		assertTrue(model.inCheck(m));
+		
+		// Move out of check
+		m = new Move(seven, four, six, four);
+		assertFalse(model.inCheck(m));
 	}
 	/**
 	 * Test isComplete method.
