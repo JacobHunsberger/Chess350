@@ -16,49 +16,87 @@ public final class ChessView extends JFrame {
 	 * The menu bar.
 	 */
 	private ChessMenu menu;
-	
+	/**
+	 * Local copy of the board.
+	 */
 	private ChessViewBoard board;
-	
+	/**
+	 * Local copy of the chess view taken.
+	 */
 	private ChessViewTaken taken;
 	
 	/**
 	 * Constructor for ChessView Class.
 	 */
 	public ChessView() {
+		this.setResizable(false);
 		menu = new ChessMenu();
 		board = new ChessViewBoard();
 		taken = new ChessViewTaken();
-		
+		final int sevenHun = 700, fiveHun = 500;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setJMenuBar(menu);
 		setLayout(new BorderLayout());
 		getContentPane().add(board, BorderLayout.CENTER);
 		getContentPane().add(taken, BorderLayout.EAST);
 		pack();
-		setSize(700,500);
+		setSize(sevenHun, fiveHun);
 	}
-	
-	public void setPieceButton(JButton button, int row, int column) {
+	/**
+	 * 
+	 * @param button to set the piece at. 
+	 * @param row of the button.
+	 * @param column of the button.
+	 */
+	public void setPieceButton(final JButton button, 
+			final int row, final int column) {
 		board.setPieceButton(button, row, column);
 	}
-	
-	public JButton getPieceButton(int row, int column) {
+	/**
+	 * Get the button for the piece.
+	 * @param row the row of the piece.
+	 * @param column the column of the piece.
+	 * @return JButton for the piece.
+	 */
+	public JButton getPieceButton(final int row, final int column) {
 		return board.getPieceButton(row, column);
 	}
-	
-	public void setWhiteLabel(JLabel piece, int row, int column) {
+	/**
+	 * White only.
+	 * @param piece for the label.
+	 * @param row of the piece.
+	 * @param column of the piece.
+	 */
+	public void setWhiteLabel(final JLabel piece, 
+			final int row, final int column) {
 		taken.setWhiteTaken(piece, row, column);
 	}
-	
-	public JLabel getWhiteLabel(int row, int column) {
+	/**
+	 * 
+	 * @param row of the jlabel.
+	 * @param column of the jlabel.
+	 * @return JLabel white.
+	 */
+	public JLabel getWhiteLabel(final int row, final int column) {
 		return taken.getWhiteTaken(row, column);
 	}
-	
-	public void setBlackLabel(JLabel piece, int row, int column) {
+	/**
+	 * Black only.
+	 * @param piece jlabel for the piece.
+	 * @param row of the piece.
+	 * @param column of the piece.
+	 */
+	public void setBlackLabel(final JLabel piece, 
+			final int row, final int column) {
 		taken.setBlackTaken(piece, row, column);
 	}
-	
-	public JLabel getBlackLabel(int row, int column) {
+	/**
+	 * Black only.
+	 * @param row of the label.
+	 * @param column of the jlabel.
+	 * @return JLabel of the piece.
+	 */
+	public JLabel getBlackLabel(final int row, final int column) {
 		return taken.getBlackTaken(row, column);
 	}
 	

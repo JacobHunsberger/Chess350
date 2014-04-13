@@ -2,8 +2,6 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-
-import presenter.ChessPresenterSide;
 /**
  * Chess model for the game.
  * @author Jonathan Powers, Jacob Hunsberger and Jared Thomas
@@ -86,11 +84,8 @@ public final class ChessModel implements IChessModel {
 				
 			}
 		}
-		
-		// TODO Castle out of check.
 		// Check if castling is valid move,
 		// then check if castling is out of check.
-		
 		return true;
 	}
 	/**
@@ -405,7 +400,7 @@ public final class ChessModel implements IChessModel {
 			Pawn pawn = (Pawn) piece;
 			
 			if (pawn.isPromotion(move.getToRow())) {
-				piece = promotePawn(piece);
+				//piece = promotePawn(piece);
 				board.unset(move.getToRow(), move.getToColumn());
 				board.set(piece, move.getToRow(), move.getToColumn());
 			}
@@ -435,10 +430,10 @@ public final class ChessModel implements IChessModel {
 	 * @return IChessPiece the piece that the pawn was promoted to.
 	 * @param p Piece to promote.
 	 */
-	private IChessPiece promotePawn(final IChessPiece p) {
-		ChessPresenterSide temp = new ChessPresenterSide(0);
-		return temp.promotion(p.player());
-	}
+	//private IChessPiece promotePawn(final IChessPiece p) {
+	//	ChessPresenterSide temp = new ChessPresenterSide(0);
+	//	return temp.promotion(p.player());
+	//}
 	/**
 	 * This method checks if the King is in check.
 	 * This has been modified to simply check if the king is in check for the
