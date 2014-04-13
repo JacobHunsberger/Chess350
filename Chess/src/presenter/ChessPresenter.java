@@ -128,17 +128,23 @@ public class ChessPresenter {
 					}
 				}
 			}
-			for (int i = 0; i < eight; i++) {
-				for (int k = 0; k < eight; k++) {
-					if (model.isValidMove(new Move(tempRow, tempCol, i, k))) {
-						Border thickBorder;
-						final int twelve = 12;
-						if (model.pieceAt(i, k) != null) {
-							thickBorder = new LineBorder(Color.red, twelve);
-							view.getPieceButton(i, k).setBorder(thickBorder);
-						} else {
-							thickBorder = new LineBorder(Color.green, twelve);
-							view.getPieceButton(i, k).setBorder(thickBorder);
+			if (!select) {
+				for (int i = 0; i < eight; i++) {
+					for (int k = 0; k < eight; k++) {
+						if (model.isValidMove(new Move(tempRow, 
+								tempCol, i, k))) {
+							Border thickBorder;
+							final int twelve = 12;
+							if (model.pieceAt(i, k) != null) {
+								thickBorder = new LineBorder(Color.red, twelve);
+								view.getPieceButton(i, k)
+								.setBorder(thickBorder);
+							} else {
+								thickBorder = new LineBorder(Color.green,
+										twelve);
+								view.getPieceButton(i, k)
+								.setBorder(thickBorder);
+							}
 						}
 					}
 				}
@@ -156,10 +162,13 @@ public class ChessPresenter {
 					}
 				}
 			}
-			for (int i = 0; i < eight; i++) {
-				for (int k = 0; k < eight; k++) {
-					if (model.isValidMove(new Move(tempRow, tempCol, i, k))) {
+			if (!select) {
+				for (int i = 0; i < eight; i++) {
+					for (int k = 0; k < eight; k++) {
+						if (model.isValidMove(new Move(tempRow, 
+								tempCol, i, k))) {
 						view.getPieceButton(i, k).setBorder(null);
+						}
 					}
 				}
 			}
