@@ -24,9 +24,9 @@ public class Pawn extends ChessPiece {
 	 */
 	private boolean enPassant;
 	/**
-	 * Starting row of black pawns;
+	 * Starting row of black pawns.
 	 */
-	final int blackStart = 6;
+	private final int blackStart = 6;
 	
 	/**
 	 * Constructs a new Pawn object.
@@ -141,7 +141,7 @@ public class Pawn extends ChessPiece {
 	 * Sets first move.
 	 * @param f status of first move.
 	 */
-	public void setFirstMove(boolean f) {
+	public final void setFirstMove(final boolean f) {
 		firstMove = f;
 	}
 	/**

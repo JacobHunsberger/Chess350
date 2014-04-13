@@ -74,7 +74,7 @@ public class King extends ChessPiece {
      * Set status that this King has moved.
      * @param f Status of this King.
      */
-    public void setFirstMove(boolean f) {
+    public final void setFirstMove(final boolean f) {
     	firstMove = f;
     }
 }

@@ -91,7 +91,7 @@ public class Rook extends ChessPiece {
      * Sets status that this Rook has moved.
      * @param f Status of this Rook.
      */
-    public void setFirstMove(boolean f) {
+    public final void setFirstMove(final boolean f) {
     	firstMove = f;
     }
 }
