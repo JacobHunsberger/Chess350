@@ -84,7 +84,6 @@ public class ChessModelTest {
 		// Move white pawn
 		m = new Move(1, 1, three, 1);
 		model.move(m);
-		
 		// Move black queen to checkmate white
 		m = new Move(seven, four, three, 0);
 		model.move(m);
