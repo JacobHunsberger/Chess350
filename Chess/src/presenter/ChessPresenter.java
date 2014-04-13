@@ -241,6 +241,8 @@ public class ChessPresenter {
 					if (inCheck) {
 						highlightCheck(temp[1], temp[0]);
 						if (model.isComplete()) {
+							view.getPieceButton(temp[1], temp[0])
+							.setBackground(Color.pink);
 							JOptionPane.showMessageDialog(null,
 									"Checkmate!");
 						}
