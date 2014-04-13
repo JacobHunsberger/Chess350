@@ -3,7 +3,7 @@
   realizations="true" associations="true" dependencies="true" nesting-relationships="true">  
   <class id="1" language="java" name="model.ChessBoard" project="Chess" file="/Chess/src/model/ChessBoard.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="646" y="268"/>    
+    <position height="-1" width="-1" x="850" y="277"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -12,7 +12,7 @@
   </class>  
   <class id="2" language="java" name="model.ChessPiece" project="Chess" file="/Chess/src/model/ChessPiece.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="108" y="270"/>    
+    <position height="-1" width="-1" x="109" y="280"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -30,7 +30,7 @@
   </class>  
   <class id="4" language="java" name="model.Rook" project="Chess" file="/Chess/src/model/Rook.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="108" y="454"/>    
+    <position height="-1" width="-1" x="108" y="484"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -39,7 +39,7 @@
   </class>  
   <class id="5" language="java" name="model.Pawn" project="Chess" file="/Chess/src/model/Pawn.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="408" y="212"/>    
+    <position height="-1" width="-1" x="356" y="247"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -48,7 +48,7 @@
   </class>  
   <class id="6" language="java" name="model.Queen" project="Chess" file="/Chess/src/model/Queen.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="409" y="64"/>    
+    <position height="-1" width="-1" x="595" y="98"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -57,7 +57,7 @@
   </class>  
   <class id="7" language="java" name="model.Knight" project="Chess" file="/Chess/src/model/Knight.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="408" y="356"/>    
+    <position height="-1" width="-1" x="622" y="251"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -66,7 +66,7 @@
   </class>  
   <class id="8" language="java" name="model.Bishop" project="Chess" file="/Chess/src/model/Bishop.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="406" y="475"/>    
+    <position height="-1" width="-1" x="607" y="402"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -79,7 +79,7 @@
   </generalization>  
   <dependency id="10">    
     <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="4"/>  
+    <end type="TARGET" refId="7"/>  
   </dependency>  
   <generalization id="11">    
     <end type="SOURCE" refId="6"/>    
@@ -87,12 +87,12 @@
   </generalization>  
   <dependency id="12">    
     <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="7"/>  
+    <end type="TARGET" refId="3"/>  
   </dependency>  
-  <dependency id="13">    
-    <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="5"/>  
-  </dependency>  
+  <generalization id="13">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="2"/>  
+  </generalization>  
   <generalization id="14">    
     <end type="SOURCE" refId="3"/>    
     <end type="TARGET" refId="2"/>  
@@ -102,7 +102,7 @@
     <end type="TARGET" refId="2"/>  
   </generalization>  
   <generalization id="16">    
-    <end type="SOURCE" refId="5"/>    
+    <end type="SOURCE" refId="4"/>    
     <end type="TARGET" refId="2"/>  
   </generalization>  
   <dependency id="17">    
@@ -111,16 +111,20 @@
   </dependency>  
   <dependency id="18">    
     <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="3"/>  
+    <end type="TARGET" refId="6"/>  
   </dependency>  
   <dependency id="19">    
     <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="6"/>  
+    <end type="TARGET" refId="5"/>  
   </dependency>  
-  <generalization id="20">    
-    <end type="SOURCE" refId="4"/>    
+  <dependency id="20">    
+    <end type="SOURCE" refId="1"/>    
     <end type="TARGET" refId="2"/>  
-  </generalization>  
+  </dependency>  
+  <dependency id="21">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="4"/>  
+  </dependency>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     accessors="true" visibility="true">    
     <attributes public="true" package="true" protected="true" private="true" static="true"/>    
