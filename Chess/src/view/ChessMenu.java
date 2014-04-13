@@ -6,13 +6,29 @@ import java.awt.event.ActionListener;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-
+/**
+ * Menu for the game.
+ * @author Jacob Hunsberger, Jon Powers, Jared Thomas
+ *
+ */
 @SuppressWarnings("serial")
-public class ChessMenu extends JMenuBar{
+public class ChessMenu extends JMenuBar {
 
-	JMenu menu, help;
-	JMenuItem exit, about, newGame, rules;
-	MenuListener menuLis;
+	/**
+	 * JMenu items.
+	 */
+	private JMenu menu, help;
+	/**
+	 * Menu items to choose from.
+	 */
+	private JMenuItem exit, about, newGame, rules;
+	/**
+	 * Menu listener to add to items.
+	 */
+	private MenuListener menuLis;
+	/**
+	 * Constructor for class to setup the menu bar.
+	 */
 	public ChessMenu() {
 		menuLis = new MenuListener();
 		menu = new JMenu("File");
@@ -32,17 +48,26 @@ public class ChessMenu extends JMenuBar{
 		add(menu);
 		add(help);
 	}
+	/**
+	 * Private class to handel the listener.
+	 * @author Jacob Hunsberger, Jon Powers, Jared Thomas
+	 *
+	 */
 	private class MenuListener implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
+		/**
+		 * Get the action for the menu item.
+		 * @param e the event that happened.
+		 */
+		public void actionPerformed(final ActionEvent e) {
 			JMenuItem source = (JMenuItem) (e.getSource());
 			if (source.equals(exit)) {
 				System.exit(0);
 			} else if (source.equals(newGame)) {
 				
 			} else if (source.equals(rules)) {
-				//TODO needs to be implemented.
+				
 			} else if (source.equals(about)) {
-				//TODO needs to be implemented.
+				
 			}
         }
 	}
