@@ -1,7 +1,5 @@
 package model;
 
-import java.util.ArrayList;
-
 /**
  * Creates the chess board in a game of chess.
  * @author Jonathan Powers, Jacob Hunsberger and Jared Thomas
@@ -22,10 +20,6 @@ public class ChessBoard implements IChessBoard {
 	 * The number of columns on the board.
 	 */
 	private final int numColumns = 8;
-	/**
-	 * keep track of the moves in an array list.
-	 */
-	private ArrayList<Move> allMoves = new ArrayList<Move>();
 	
 	/**
 	 * Constructor for the board that creats the board.
@@ -75,29 +69,6 @@ public class ChessBoard implements IChessBoard {
 				board[move.getFromRow()][move.getFromColumn()];
 		unset(move.getFromRow(), move.getFromColumn());
 		set(piece, move.getToRow(), move.getToColumn());
-		updateMoveList(move);
-	}
-	/**
-	 * Update the move list.
-	 * @param move the move of the piece
-	 */
-	private void updateMoveList(final Move move) {
-		allMoves.add(move);
-	}
-	/**
-	 * get the move you need from the list.
-	 * @param x the move you need
-	 * @return Move the move you specified
-	 */
-	protected final Move getMove(final int x) {
-		return allMoves.get(x);
-	}
-	/**
-	 * 
-	 * @return int the length 
-	 */
-	protected final int getMoveLength() {
-		return allMoves.size();
 	}
 	
 	/**

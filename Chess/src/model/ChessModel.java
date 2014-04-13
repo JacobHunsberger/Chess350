@@ -267,7 +267,7 @@ public final class ChessModel implements IChessModel {
 						board.set(new Queen((Queen) temp.pieceAt(i, k)), i, k);
 					} else if (temp.pieceAt(i, k).type() == "king") {
 						board.set(new King((King) temp.pieceAt(i, k)), i, k);
-					} else if (temp.pieceAt(i, k).type() == "knight") {
+					} else {
 						board.set(new Knight((Knight) temp.pieceAt(i, k)), 
 								i, k);
 					}	
@@ -391,19 +391,15 @@ public final class ChessModel implements IChessModel {
 	private void specialMove(final Move move) {
 		IChessPiece piece = pieceAt(move.getToRow(), move.getToColumn());
 		
-        if (piece == null) {
-        	return;
-        }
-        
         enPassant = false;
 		if (piece.type().equals("pawn")) {
 			Pawn pawn = (Pawn) piece;
 			
-			if (pawn.isPromotion(move.getToRow())) {
-				//piece = promotePawn(piece);
-				board.unset(move.getToRow(), move.getToColumn());
-				board.set(piece, move.getToRow(), move.getToColumn());
-			}
+//			if (pawn.isPromotion(move.getToRow())) {
+//				//piece = promotePawn(piece);
+//				board.unset(move.getToRow(), move.getToColumn());
+//				board.set(piece, move.getToRow(), move.getToColumn());
+//			}
 	
 			if (pawn.firstMove()) {
 				if (pawn.enPassant()) {
@@ -721,32 +717,5 @@ public final class ChessModel implements IChessModel {
 		}
 		
 		return false;
-	}
-	/**
-	 * 
-	 * @return board returned.
-	 */
-	public ChessBoard getCopyBoard() {
-		ChessBoard temp = board;
-		return temp;
-	}
-	/**
-	 * Simply prints the board.
-	 */
-	public void printBoard() {
-		final int eight = 8;
-		final int four = 4;
-		for (int i = 0; i < eight; i++) {
-			for (int j = 0; j < eight; j++) {
-				try {
-					System.out.print(board.pieceAt(i, j).type()
-							.substring(0, four) + " ");
-				} catch (NullPointerException e) {
-					System.out.print("     ");
-				}
-			}
-			System.out.println();
-		}
-		System.out.println();
 	}
 }
