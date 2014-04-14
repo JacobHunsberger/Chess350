@@ -45,7 +45,7 @@ public class ChessViewTaken extends JPanel {
 			remove(white);
 			remove(black);
 		} catch (NullPointerException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		white.setPiece(piece, row, column);
 		add(white);
@@ -63,7 +63,7 @@ public class ChessViewTaken extends JPanel {
 			remove(white);
 			remove(black);
 		} catch (NullPointerException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		black.setPiece(piece, row, column);
 		add(white);

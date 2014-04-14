@@ -351,7 +351,7 @@ public class ChessPresenter {
 			label.setOpaque(true);
 			label.setIcon(is);
 		} catch (NullPointerException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 	
@@ -389,7 +389,7 @@ public class ChessPresenter {
 			}
 			b.setIcon(is);
 		} catch (NullPointerException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 	/**

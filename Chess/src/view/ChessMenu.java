@@ -92,7 +92,7 @@ public class ChessMenu extends JMenuBar {
 				try {
 					Desktop.getDesktop().browse(new URL(urlString).toURI());
 				} catch (Exception ex) {
-			        ex.printStackTrace();
+			        //ex.printStackTrace();
 			    }
 			} else if (source.equals(about)) {
 				final String displayString = "Version: 1.3\nRelease: 2014\n"

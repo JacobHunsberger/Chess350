@@ -37,7 +37,7 @@ public class TakenPiecesPanel extends JPanel {
 		try {
 			remove(takenPieces[row][column]);
 		} catch (NullPointerException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		
 		takenPieces[row][column] = piece;

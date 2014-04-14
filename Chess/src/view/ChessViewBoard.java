@@ -37,7 +37,7 @@ public class ChessViewBoard extends JPanel {
 		try {
 			remove(board[row][column]);
 		} catch (NullPointerException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		board[row][column] = piece;
 		add(board[row][column]);
