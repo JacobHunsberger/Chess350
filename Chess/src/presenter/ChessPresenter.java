@@ -158,9 +158,9 @@ public class ChessPresenter {
 										twelve);
 								view.getPieceButton(i, k)
 								.setBorder(thickBorder);
-								final int six = 6;
-								view.getPieceButton(tempRow, tempCol)
-								.setBorder(new LineBorder(Color.blue, six));
+//								final int six = 6;
+//								view.getPieceButton(tempRow, tempCol)
+//								.setBorder(new LineBorder(Color.blue, six));
 							}
 						}
 					}
@@ -209,37 +209,36 @@ public class ChessPresenter {
 	private class ButtonListener implements ActionListener {
 		@Override
 		public void actionPerformed(final ActionEvent e) {
+			int r = 0, c = 0;
+			
+			space = (JButton) e.getSource();
+			for (int i = 0; i < size; i++) {
+				for (int j = 0; j < size; j++) {
+					if (space == view.getPieceButton(i, j)) {
+						r = i;
+						c = j;
+					}
+				}
+			}
+			
 			if (!select) {
-				space = (JButton) e.getSource();
-				for (int i = 0; i < size; i++) {
-					for (int j = 0; j < size; j++) {
-						if (space == view.getPieceButton(i, j)) {
-							if (model.pieceAt(i, j) != null) {
-								if (model.pieceAt(i, j).player().
-									equals(model.currentPlayer())) {
-									select = true;
-									fromRow = i;
-									fromColumn = j;
-									i = size;
-									j = size;
-								}
-							}
-						}
+				if (model.pieceAt(r, c) != null) {
+					if (model.pieceAt(r, c).player().
+						equals(model.currentPlayer())) {
+						select = true;
+						fromRow = r;
+						fromColumn = c;
+						final int six = 6;
+						view.getPieceButton(r, c)
+						.setBorder(new LineBorder(Color.blue, six));
+						r = size;
+						c = size;
 					}
 				}
 			} else {
-				space = (JButton) e.getSource();
-				for (int i = 0; i < size; i++) {
-					for (int j = 0; j < size; j++) {
-						if (space == view.getPieceButton(i, j)) {
-								select = true;
-								toRow = i;
-								toColumn = j;
-								i = size;
-								j = size;
-						}
-					}
-				}
+				select = true;
+				toRow = r;
+				toColumn = c;
 				Move m = new Move(fromRow, fromColumn, toRow, toColumn);
 				if (!model.inCheck(m)) {
 					model.move(m);
