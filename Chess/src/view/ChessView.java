@@ -5,6 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionListener;
 
 /**
  * The main class to start the game.
@@ -99,6 +100,14 @@ public final class ChessView extends JFrame {
 	 */
 	public JLabel getBlackLabel(final int row, final int column) {
 		return taken.getBlackTaken(row, column);
+	}
+	
+	/**
+	 * Adds an ActionListener to the undo button in the menu.
+	 * @param a ActionListener that handles undo functionality.
+	 */
+	public void addUndoButton(ActionListener a) {
+		menu.addUndoButton(a);
 	}
 	
 	/**

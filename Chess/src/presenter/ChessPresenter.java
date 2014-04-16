@@ -82,6 +82,22 @@ public class ChessPresenter {
 		select = false;
 		inCheck = false;
 		view.setVisible(true);
+		
+		view.addUndoButton(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				undo();
+			}
+			
+		});
+	}
+	/**
+	 * Undo functionality.
+	 */
+	private void undo() {
+		model.undo();
+		updateBoard();
+		view.refresh();
 	}
 	/**
 	 * Initializes the taken space labels.
@@ -289,29 +305,29 @@ public class ChessPresenter {
 		
 		JLabel label = null;
 		Iterator<IChessPiece> taken = model.getWhiteTaken();
-		outerLoopWhite:
 		for (int i = 0; i < size / 2; i++) {
 			for (int j = 0; j < size / 2; j++) {
-				if (!taken.hasNext()) {
-					break outerLoopWhite;
-				}
-
 				label = view.getWhiteLabel(i, j);
-				setImageTaken(label, taken.next());
+				if (!taken.hasNext()) {
+					label.setIcon(null);
+				}
+				else {
+					setImageTaken(label, taken.next());
+				}
 				view.setWhiteLabel(label, i, j);
 			}
 		}
 		
 		taken = model.getBlackTaken();
-		outerLoopBlack:
 		for (int i = 0; i < size / 2; i++) {
 			for (int j = 0; j < size / 2; j++) {
+				label = view.getBlackLabel(i, j);
 				if (!taken.hasNext()) {
-					break outerLoopBlack;
+					label.setIcon(null);
 				}
-
-				label = view.getBlackLabel(i,  j);
-				setImageTaken(label, taken.next());
+				else {
+					setImageTaken(label, taken.next());
+				}
 				view.setBlackLabel(label, i, j);
 			}
 		}

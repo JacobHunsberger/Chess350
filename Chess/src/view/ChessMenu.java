@@ -26,11 +26,11 @@ public class ChessMenu extends JMenuBar {
 	/**
 	 * JMenu items.
 	 */
-	private JMenu menu, help;
+	private JMenu menu, edit, help;
 	/**
 	 * Menu items to choose from.
 	 */
-	private JMenuItem exit, about, newGame, rules;
+	private JMenuItem exit, about, newGame, rules, undo;
 	/**
 	 * Menu listener to add to items.
 	 */
@@ -41,9 +41,11 @@ public class ChessMenu extends JMenuBar {
 	public ChessMenu() {
 		menuLis = new MenuListener();
 		menu = new JMenu("File");
+		edit = new JMenu("Edit");
 		help = new JMenu("Help");
 		exit = new JMenuItem("Exit");
 		exit.addActionListener(menuLis);
+		undo = new JMenuItem("Undo");
 		about = new JMenuItem("About");
 		about.addActionListener(menuLis);
 		newGame = new JMenuItem("New");
@@ -56,7 +58,10 @@ public class ChessMenu extends JMenuBar {
 		menu.add(newGame);
 		menu.add(exit);
 		menu.getPopupMenu().setLightWeightPopupEnabled(false);
+		edit.add(undo);
+		edit.getPopupMenu().setLightWeightPopupEnabled(false);
 		add(menu);
+		add(edit);
 		add(help);
 	}
 	/**
@@ -104,5 +109,13 @@ public class ChessMenu extends JMenuBar {
 						titleString, messageType);
 			}
         }
+	}
+	
+	/**
+	 * Adds a listener to the undo button.
+	 * @param a ActionListener that handles undo clicks.
+	 */
+	public void addUndoButton(ActionListener a) {
+		undo.addActionListener(a);
 	}
 }

@@ -11,35 +11,27 @@ public final class ChessModel implements IChessModel {
 	/**
 	 * A 2D array of IChessPieces to make up the board.
 	 */
-	private ChessBoard board;
+	private ChessBoard board, undoBoard;
 	/**
 	 * The currect player kept in the model.
 	 */
-	private Player currentPlayer;
+	private Player currentPlayer, undoPlayer;
 	/**
 	 * Indicates that en passant may be taken.
 	 */
-	private boolean enPassant;
+	private boolean enPassant, undoEnPassant;
 	/**
 	 * Valid column for en passant.
 	 */
-	private int enPassantColumn;
+	private int enPassantColumn, undoEnPassantColumn;
 	/**
 	 * Valide row for en passant.
 	 */
-	private int enPassantRow;
+	private int enPassantRow, undoEnPassantRow;
 	/**
 	 * Dimension of board.
 	 */
 	private final int size = 8;
-	/**
-	 * White pieces.
-	 */
-	private ArrayList<IChessPiece> whitePieces;
-	/**
-	 * Black pieces.
-	 */
-	private ArrayList<IChessPiece> blackPieces;
 	/**
 	 * White taken pieces.
 	 */
@@ -48,22 +40,24 @@ public final class ChessModel implements IChessModel {
 	 * Black taken pieces.
 	 */
 	private ArrayList<IChessPiece> blackTaken;
+	/**
+	 * Does not save undo.
+	 */
+	private boolean undo;
 	
 	/**
 	 * Set the board up.
 	 */
 	public ChessModel() {
-		board = new ChessBoard();
+		board = undoBoard = new ChessBoard();
 		board.setBoard();
-		currentPlayer = Player.WHITE;
-		enPassant = false;
+		currentPlayer = undoPlayer = Player.WHITE;
+		enPassant = undoEnPassant = false;
 		
-		whitePieces = new ArrayList<IChessPiece>();
-		blackPieces = new ArrayList<IChessPiece>();
 		whiteTaken = new ArrayList<IChessPiece>();
 		blackTaken = new ArrayList<IChessPiece>();
 		
-		recordPieces();		// Start of game.
+		undo = true;
 	}
 	
 	/**
@@ -244,6 +238,41 @@ public final class ChessModel implements IChessModel {
 		}
 		return piece.isValidMove(move, board);
 	}
+	
+	private void saveUndo() {
+		if (!undo) {
+			return;
+		}
+		undoBoard = new ChessBoard();
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < size; j++) {
+				try {
+					if (board.pieceAt(i, j).type() == "pawn") {
+						undoBoard.set(new Pawn((Pawn) board.pieceAt(i, j)), i, j);
+					} else if (board.pieceAt(i, j).type() == "rook") {
+						undoBoard.set(new Rook((Rook) board.pieceAt(i, j)), i, j);
+					} else if (board.pieceAt(i, j).type() == "bishop") {
+						undoBoard.set(new Bishop((Bishop) board.pieceAt(i, j)), 
+								i, j);
+					} else if (board.pieceAt(i, j).type() == "queen") {
+						undoBoard.set(new Queen((Queen) board.pieceAt(i, j)), i, j);
+					} else if (board.pieceAt(i, j).type() == "king") {
+						undoBoard.set(new King((King) board.pieceAt(i, j)), i, j);
+					} else {
+						undoBoard.set(new Knight((Knight) board.pieceAt(i, j)), 
+								i, j);
+					}	
+				} catch (NullPointerException npe) {
+					board.set(null, i, j);
+				}
+			}
+		}
+		
+		undoPlayer = currentPlayer();
+		undoEnPassant = enPassant;
+		undoEnPassantRow = enPassantRow;
+		undoEnPassantColumn = enPassantColumn;
+	}
 
 	/**
 	 * Copies a board.
@@ -283,91 +312,116 @@ public final class ChessModel implements IChessModel {
 	 * @param move input the move of the piece
 	 */
 	public void move(final Move move) {	
+		saveUndo();
+		
 		if (isValidMove(move)) {
 			board.move(move);
-			currentPlayer = currentPlayer.next();
 			specialMove(move);
+			nextTurn();
 		}
 		
 		if (isValidCastle(move)) {
-			currentPlayer = currentPlayer.next();
-			return;
+			nextTurn();
 		}
 		
 		if (isValidEnPassant(move)) {
 			board.move(move);
 			// Remove opponent piece
 			board.unset(move.getFromRow(), move.getToColumn());
-			currentPlayer = currentPlayer.next();
 			enPassant = false;
+			nextTurn();
 		}
-		
-		recordTakenPieces();		// Check which pieces are missing.
+	}
+	
+	/**
+	 * Updates turn.
+	 */
+	private void nextTurn() {
+		currentPlayer = currentPlayer.next();
+		setTaken();
+	}
+	
+	private void setTaken() {
+		countTakenPieces(Player.WHITE);
+		countTakenPieces(Player.BLACK);
 	}
 	
 	/**
 	 * Records what pieces were taken since the last time
 	 * recordPieces() was called.
 	 */
-	private void recordTakenPieces() {
+	private void countTakenPieces(Player p) {
+		ArrayList<IChessPiece> player = null;
+		if (p == Player.WHITE) {
+			player = whiteTaken;
+		} else {
+			player = blackTaken;
+		}
+		
+		player.clear();
+		
+		final int maxPawns = 8;
+		final int maxRoyal = 1;
+		final int maxRegular = 2;
+		
+		int pawns = 0, rooks = 0, knights = 0, kings = 0,
+				queens = 0, bishops = 0;
+		
 		IChessPiece piece = null;
-		whiteTaken.clear();
-		blackTaken.clear();
-		
-		for (int i = 0; i < whitePieces.size(); i++) {
-			piece = whitePieces.get(i);
-			if (!contains(piece)) {
-				whiteTaken.add(piece);
-			}
-		}
-		
-		for (int i = 0; i < blackPieces.size(); i++) {
-			piece = blackPieces.get(i);
-			if (!contains(piece)) {
-				blackTaken.add(piece);
-			}
-		}
-	}
-	
-	/**
-	 * Records what pieces are currently on the board.
-	 */
-	private void recordPieces() {
-		ChessPiece piece = null;
-		whitePieces.clear();
-		blackPieces.clear();
-		
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
-				piece = (ChessPiece) board.pieceAt(i, j);
-				if (piece != null) {
-					if (piece.player() == Player.WHITE) {
-						whitePieces.add(piece);
-					} else {
-						blackPieces.add(piece);
+				piece = pieceAt(i, j);
+				try {
+					if (piece.player() == p) {
+						if (piece.type().equals("pawn")) {
+							pawns++;
+						}
+						if (piece.type().equals("rook")) {
+							rooks++;
+						}
+						if (piece.type().equals("knight")) {
+							knights++;
+						}
+						if (piece.type().equals("bishop")) {
+							bishops++;
+						}
+						if (piece.type().equals("king")) {
+							kings++;
+						}
+						if (piece.type().equals("queen")) {
+							queens++;
+						}
 					}
-				}
-			}
-		}
-	}
-	
-	/**
-	 * Determines if a piece is on the board.
-	 * @param piece the piece in question.
-	 * @return true if piece is on the board, otherwise false.
-	 */
-	private boolean contains(final IChessPiece piece) {
-		IChessPiece temp = null;
-		for (int i = 0; i < size; i++) {
-			for (int j = 0; j < size; j++) {
-				temp = board.pieceAt(i, j);
-				if (piece == temp) {
-					return true;
+				} catch (NullPointerException e) {
+					
 				}
 			}
 		}
 		
-		return false;
+		// Count pawns
+		for (int i = pawns; i < maxPawns; i++) {
+			player.add(new Pawn(p));
+		}
+		// Count rooks
+		for (int i = rooks; i < maxRegular; i++) {
+			player.add(new Rook(p));
+		}
+		// Count knights
+		for (int i = knights; i < maxRegular; i++) {
+			player.add(new Knight(p));
+		}
+		// Count bishops
+		for (int i = bishops; i < maxRegular; i++) {
+			player.add(new Bishop(p));
+		}
+		// Count kings
+		for (int i = kings; i < maxRoyal; i++) {
+			player.add(new King(p));
+		}
+		// Count queens
+		for (int i = queens; i < maxRoyal; i++) {
+			player.add(new Queen(p));
+		}
 	}
 	/**
 	 * White taken.
@@ -442,6 +496,8 @@ public final class ChessModel implements IChessModel {
 		int [] temp = null;
 		final int eight = 8;
 		
+		undo = false;
+		
 		// Save everything from the real model.
 		ChessBoard tempBoard    = copyBoard();
 		boolean tempEnPassant   = enPassant;
@@ -473,6 +529,10 @@ public final class ChessModel implements IChessModel {
 					if (isValidMove(new Move(i, k, temp[1], temp[0]))) {
 						currentPlayer = tempPlayer;
 						board = tempBoard;
+						enPassant = tempEnPassant;
+						enPassantRow = tempEnPassantRow;
+						enPassantColumn = tempEnPassantColumn;
+						undo = true;
 						return true;
 					}
 				}
@@ -487,6 +547,7 @@ public final class ChessModel implements IChessModel {
 		enPassant = tempEnPassant;
 		enPassantRow = tempEnPassantRow;
 		enPassantColumn = tempEnPassantColumn;
+		undo = true;
 		return false;
 		
 	}
@@ -702,5 +763,17 @@ public final class ChessModel implements IChessModel {
 		}
 		
 		return false;
+	}
+
+	/**
+	 * Undoes the previous valid move.
+	 */
+	public void undo() {
+		board = undoBoard;
+		setTaken();
+		currentPlayer = undoPlayer;
+		enPassant = undoEnPassant;
+		enPassantRow = undoEnPassantRow;
+		enPassantColumn = undoEnPassantColumn;
 	}
 }
